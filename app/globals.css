@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Anek+Kannada:wght@100..800&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  @apply bg-light;
+}
+
+@layer components {
+  .shadow {
+    box-shadow: 4px 4px 10px #00000010;
+  }
+
+  .accent-font {
+    font-family: 'Anek Kannada', sans-serif;
+    font-weight: bold;
+  }
+
+  .plain-font {
+    font-family: 'Rubik', sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .descriptor-font {
+    font-family: 'Rubik', sans-serif;
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .bold-transition {
+    @apply transition-all hover:font-bold;
+  }
+
+  .link-text {
+    @apply plain-font bold-transition;
+  }
+
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+}
