@@ -13,6 +13,10 @@ html {
   @apply bg-light;
 }
 
+body{
+  overscroll-behavior: none;
+}
+
 @layer components {
   .shadow {
     box-shadow: 4px 4px 10px #00000010;
@@ -21,6 +25,8 @@ html {
   .accent-font {
     font-family: 'Anek Kannada', sans-serif;
     font-weight: bold;
+    font-size: 36px;
+    line-height: 48px;
   }
 
   .plain-font {
@@ -43,7 +49,27 @@ html {
     @apply plain-font bold-transition;
   }
 
+  .text-button {
+    @apply plain-font text-red transition-all cursor-pointer hover:text-red-hovered;
+  }
+
   .flex-center {
     @apply flex items-center justify-center;
+  }
+
+  .button {
+    @apply plain-font font-bold inline-flex px-[30px] py-[10px] bg-red rounded-[5px] text-light transition-all hover:bg-red-hovered;
+  }
+
+  .tab {
+    @apply px-[30px] py-[10px] plain-font bg-gray rounded-[26px] data-[active]:bg-dark data-[active]:text-light;
+  }
+
+  .card{
+    @apply p-6 bg-white rounded-[16px] w-[300px] border border-gray transition-shadow duration-500 hover:shadow;
+  }
+
+  .input{
+    @apply block p-4 rounded-[5px] border border-gray placeholder:text-gray w-[400px];
   }
 }

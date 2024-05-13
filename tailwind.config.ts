@@ -13,8 +13,11 @@ const config: Config = {
         dark: '#363636',
         gray: '#DBDBDB',
         light: '#F8F8F8',
-        'red-hovered': '#DC2F2F',
+        "red-hovered": '#DC2F2F70',
       },
+      boxShadow: {
+        "DEFAULT": "4px 4px 10px rgba(0,0,0,0.1)"
+      }
     },
   },
   plugins: [],
