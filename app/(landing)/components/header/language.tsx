@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useRef, useEffect } from 'react';
 import LanguageButton from './language/button';
-import { LanguagePopup } from './language/popup';
+import LanguagePopup from './language/popup';
 
 export default function Language(props: React.ComponentPropsWithoutRef<"div">) {
   const [isOpened, setOpened] = useState<boolean>(false);

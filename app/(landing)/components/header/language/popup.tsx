@@ -4,7 +4,7 @@ import { Transition } from '@headlessui/react';
 
 type PopupProps = React.ComponentPropsWithRef<'div'> & { isOpened: boolean };
 
-export const LanguagePopup = forwardRef<HTMLDivElement, PopupProps>(
+const LanguagePopup = forwardRef<HTMLDivElement, PopupProps>(
   (props, ref) => {
     const { isOpened, ...restProps } = props;
     return (
@@ -69,3 +69,6 @@ export const LanguagePopup = forwardRef<HTMLDivElement, PopupProps>(
     );
   }
 );
+
+LanguagePopup.displayName = "LanguagePopup";
+export default LanguagePopup;
