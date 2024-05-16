@@ -35,6 +35,10 @@ body{
     line-height: 24px;
   }
 
+  .plain-bold-font{
+    @apply plain-font font-bold leading-[36px] text-[24px];
+  }
+
   .descriptor-font {
     font-family: 'Rubik', sans-serif;
     font-size: 12px;
@@ -62,14 +66,14 @@ body{
   }
 
   .tab {
-    @apply px-[30px] py-[10px] plain-font bg-gray rounded-[26px] data-[active]:bg-dark data-[active]:text-light;
+    @apply px-[30px] py-[10px] plain-font bg-gray rounded-[26px] data-[active]:bg-dark transition-all duration-500 data-[active]:text-light hover:bg-red-hovered hover:text-light;
   }
 
   .card{
-    @apply p-6 bg-white rounded-[16px] w-[300px] border border-gray transition-shadow duration-500 hover:shadow;
+    @apply p-6 bg-white rounded-[16px]  border border-gray transition-shadow duration-500 hover:shadow;
   }
 
   .input{
-    @apply block p-4 rounded-[5px] border border-gray placeholder:text-gray w-[400px];
+    @apply block p-4 rounded-[5px] border border-gray placeholder:text-gray sm:w-[400px] w-[200px];
   }
 }

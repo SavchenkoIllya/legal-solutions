@@ -1,10 +1,12 @@
 import type { Config } from 'tailwindcss';
+import flowbit from "flowbite-react/tailwind";
 
 const config: Config = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
+    flowbit.content(),
   ],
   theme: {
     extend: {
@@ -17,9 +19,14 @@ const config: Config = {
       },
       boxShadow: {
         "DEFAULT": "4px 4px 10px rgba(0,0,0,0.1)"
-      }
+      },
+      backgroundImage: {
+        logo: "url('/app/accets/Logo.svg')",
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    flowbit.plugin()
+  ],
 };
 export default config;

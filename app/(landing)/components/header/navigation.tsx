@@ -1,8 +1,9 @@
 import Link from 'next/link';
+import React from 'react';
 
-export default function Navigation() {
+export default function Navigation(props: React.ComponentPropsWithoutRef<"nav">) {
   return (
-    <nav>
+    <nav {...props}>
       <ul className="flex gap-[20px]">
         <li>
           <Link className="link-text" href="#">

@@ -4,7 +4,7 @@ export default function Footer() {
             <div className="container p-16 mx-auto">
                 <p className="descriptor-font">Work hours</p>
                 <p className="plain-font">16:00 — 18:00</p>
-                <div className="flex justify-between mt-4">
+                <div className="flex justify-between flex-wrap gap-4 mt-4">
                     <div>
                         <p>+1234567890</p>
                         <p>legal-solutions@gmail.com</p>
