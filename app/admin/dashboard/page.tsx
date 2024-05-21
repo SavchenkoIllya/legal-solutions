@@ -1,10 +1,3 @@
-import Sidebar from "./components/sidebar.tsx"
-
 export default async function Dashboard() {
-    return (
-        <section className="bg-light">
-
-
-
-        </section>)
+  return <section className="min-h-[90dvh]">Hi dashboard</section>;
 }
