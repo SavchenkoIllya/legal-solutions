@@ -8,7 +8,7 @@ import {
   HiPresentationChartBar,
   HiDatabase,
 } from "react-icons/hi";
-import { useState } from "react";
+import { SyntheticEvent, useState } from "react";
 import { signOut } from "next-auth/react";
 
 const sidebarTheme: CustomFlowbiteTheme["sidebar"] = {
@@ -22,6 +22,11 @@ export default function CustomSidebar() {
 
   const toggle = () => {
     setIsCollapsed((prev) => !prev);
+  };
+
+  const handleLogout = async (e: SyntheticEvent) => {
+    e.preventDefault();
+    await signOut();
   };
 
   return (
@@ -53,7 +58,13 @@ export default function CustomSidebar() {
             </Sidebar.Item>
           </Sidebar.ItemGroup>
           <Sidebar.ItemGroup>
-            <Sidebar.Item as="button" icon={HiOutlineLogout}>Logout</Sidebar.Item>
+            <Sidebar.Item
+              as="button"
+              onClick={handleLogout}
+              icon={HiOutlineLogout}
+            >
+              Logout
+            </Sidebar.Item>
           </Sidebar.ItemGroup>
         </Sidebar.Items>
       </Sidebar>

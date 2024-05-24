@@ -1,4 +1,4 @@
-import { cn } from '@/utils/cn';
+import { cn } from '@/app/utils/cn';
 import { forwardRef } from 'react';
 import { Transition } from '@headlessui/react';
 
