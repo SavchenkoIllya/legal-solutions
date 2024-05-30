@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Anek+Kannada:wght@100..800&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Anek+Kannada:wght@100..800&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -13,7 +13,7 @@ html {
   @apply bg-light;
 }
 
-body{
+body {
   overscroll-behavior: none;
 }
 
@@ -23,24 +23,24 @@ body{
   }
 
   .accent-font {
-    font-family: 'Anek Kannada', sans-serif;
+    font-family: "Anek Kannada", sans-serif;
     font-weight: bold;
     font-size: 36px;
     line-height: 48px;
   }
 
   .plain-font {
-    font-family: 'Rubik', sans-serif;
+    font-family: "Rubik", sans-serif;
     font-size: 16px;
     line-height: 24px;
   }
 
-  .plain-bold-font{
+  .plain-bold-font {
     @apply plain-font font-bold leading-[36px] text-[24px];
   }
 
   .descriptor-font {
-    font-family: 'Rubik', sans-serif;
+    font-family: "Rubik", sans-serif;
     font-size: 12px;
     line-height: 16px;
   }
@@ -69,15 +69,35 @@ body{
     @apply px-[30px] py-[10px] plain-font bg-gray rounded-[26px] data-[active]:bg-dark transition-all duration-500 data-[active]:text-light hover:bg-red-hovered hover:text-light;
   }
 
-  .card{
+  .card {
     @apply p-6 bg-white rounded-[16px]  border border-gray transition-shadow duration-500 hover:shadow;
   }
 
-  .input{
+  .input {
     @apply block p-4 rounded-[5px] border border-gray placeholder:text-gray sm:w-[400px] w-[200px];
   }
 
-  .dashboard__button{
-    @apply text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800;
+  .asterisk {
+    @apply after:content-['*'] after:text-red after:ml-1;
+  }
+
+  .dashboard__button {
+    @apply text-white inline-flex items-center bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 disabled:bg-blue-300;
+  }
+
+  .dashboard__button__outlined {
+    @apply text-blue-500 inline-flex items-center focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center border border-blue-500;
+  }
+
+  .dashboard__button-accept {
+    @apply text-white inline-flex items-center bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 disabled:bg-green-300;
+  }
+
+  .dashboard__button-decline {
+    @apply text-white inline-flex items-center bg-rose-700 hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-rose-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-rose-600 dark:hover:bg-rose-700 dark:focus:ring-rose-800 disabled:bg-rose-300;
+  }
+
+  .dashboard__input {
+    @apply bg-zinc-50 border border-zinc-300 text-zinc-900 text-sm rounded-lg block w-full p-2.5 dark:bg-zinc-600 dark:border-zinc-500 dark:placeholder-zinc-400 dark:text-white;
   }
 }

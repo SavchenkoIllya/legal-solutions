@@ -23,7 +23,7 @@ export default function Register({
     clearErrors,
     watch,
     reset,
-    formState: { errors, isSubmitting, isSubmitSuccessful },
+    formState: { errors, isSubmitting, isSubmitSuccessful, isValid },
   } = useForm<UserForm>({ resolver: zodResolver(UserSchema) });
   const confirmPasswordRef = useRef<HTMLInputElement | null>(null);
   const password = watch("password");
@@ -167,7 +167,10 @@ export default function Register({
               )}
             </div>
           </div>
-          <button type="submit" className="self-center dashboard__button">
+          <button 
+          type="submit"
+          disabled={isValid}
+          className="self-center dashboard__button">
             {isSubmitting && (
               <span className="mr-4">
                 <Spinner />

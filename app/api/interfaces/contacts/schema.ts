@@ -9,9 +9,9 @@ export const ContactsSchema = z.object({
     .string()
     .email({ message: "It's isn't email" })
     .min(3, { message: "To short" }),
-  telegram: z.string().optional(),
-  instagram: z.string().optional(),
-  whatsapp: z.string().optional(),
+  telegram: z.string(),
+  instagram: z.string(),
+  whatsapp: z.string(),
 });
 
 export type ContactsForm = z.infer<typeof ContactsSchema>;

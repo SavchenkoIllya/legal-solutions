@@ -15,8 +15,8 @@ export default function DashboardLayout({
     <section className="h-full flex">
       <CustomSidebar />
 
-      <div className="p-4 bg-white h-full w-full">
-        <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+      <div className="sm:p-4 ml-16 bg-white h-full w-full overflow-hidden">
+        <div className="p-4 rounded-lg dark:border-gray-700 overflow-auto">
           {children}
         </div>
       </div>

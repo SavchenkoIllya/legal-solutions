@@ -1,11 +1,5 @@
 import { getAllUsersForDashboard } from "@/app/api/interfaces/users/users.api";
-import {
-  TableHeadCell,
-  TableBody,
-  TableHead,
-  Table,
-  Spinner,
-} from "flowbite-react";
+import { Spinner } from "flowbite-react";
 import { Suspense } from "react";
 import { UserList } from "./components/users-list";
 
@@ -16,23 +10,25 @@ export default async function Users() {
   const users = await getAllUsersForDashboard();
 
   return (
-    <section className="max-h-[90dvh]">
+    <section className="max-h-[90dvh] min-w-max">
       <a href="/admin/dashboard/users/new" className="dashboard__button mb-4">
         Add new user
       </a>
-      <Table>
-        <TableHead>
-          <TableHeadCell>id</TableHeadCell>
-          <TableHeadCell>name</TableHeadCell>
-          <TableHeadCell>email</TableHeadCell>
-          <TableHeadCell>Edit/Delete</TableHeadCell>
-        </TableHead>
-        <TableBody>
-          <Suspense fallback={<Spinner />}>
+      <table className="w-full rounded-t-lg">
+        <thead>
+          <tr className="bg-blue-600 text-left text-xs font-semibold uppercase tracking-widest text-white">
+            <th className="px-5 py-3">ID</th>
+            <th className="px-5 py-3">Name</th>
+            <th className="px-5 py-3">Email</th>
+            <th className="px-5 py-3">Edit/delete</th>
+          </tr>
+        </thead>
+        <tbody className="text-zinc-500">
+          <Suspense fallback={<Spinner className="m-4" />}>
             <UserList users={users} />
           </Suspense>
-        </TableBody>
-      </Table>
+        </tbody>
+      </table>
     </section>
   );
 }
