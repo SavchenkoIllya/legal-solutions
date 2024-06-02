@@ -25,10 +25,14 @@ export default function FirstRegistration() {
 
   return (
     <>
-      <Register
-        onSuccess={handleOnSuccess}
-        customSuccessText={`You would be redirected in 3 sec`}
-      />
+      <div className="relative bg-white  rounded-lg shadow dark:bg-gray-700">
+        <div className="relative p-4 w-full my-8 max-w-md">
+          <Register
+            onSuccess={handleOnSuccess}
+            customSuccessText={`You would be redirected in 3 sec`}
+          />
+        </div>
+      </div>
     </>
   );
 }

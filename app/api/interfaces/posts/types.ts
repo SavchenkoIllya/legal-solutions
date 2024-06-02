@@ -1,4 +1,4 @@
-interface Post {
+export interface Post {
   id: number;
   author_id: number;
   title_ru: string;
@@ -12,4 +12,8 @@ interface Post {
   created_at: Date;
   updated_at: Date;
   is_published: boolean;
+  seo_ru: string;
+  seo_en: string;
+  seo_pl: string;
+  seo_ua: string;
 }

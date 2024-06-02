@@ -11,3 +11,4 @@ export interface Carousel {
   image_src: string;
   dev_name: string;
 }
+

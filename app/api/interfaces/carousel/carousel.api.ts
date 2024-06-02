@@ -3,7 +3,7 @@ import { sql } from "@vercel/postgres";
 import { Carousel } from "./types";
 import { CarouselForm } from "./schema";
 
-export async function getContacts() {
+export async function getCarousels() {
   try {
     const request = await sql<Carousel>`SELECT * FROM carousel`;
     return request.rows;
@@ -13,59 +13,92 @@ export async function getContacts() {
   }
 }
 
-export async function createContacts(formData: CarouselForm) {
+export async function getCarouselById(id: number) {
   try {
-    // const { work_hours, email, telephone, telegram, whatsapp } = formData;
-    // await sql`
-    //             INSERT INTO carousel (work_hours, email, telephone, telegram, whatsapp)
-    //             VALUES(${work_hours}, ${email}, ${telephone} , ${telegram} , ${whatsapp})
-    //         `;
+    const request = await sql<Carousel>`SELECT * FROM carousel
+                                        WHERE id=${id}
+                                        `;
+    return request.rows[0];
   } catch (error) {
     console.error(error);
-    throw new Error("Failed to registrate new carousel");
+    throw new Error("Something went wrong on getting carousel data");
   }
 }
 
-export async function updateContacts(formData: Partial<CarouselForm>) {
+export async function createCarousel(formData: CarouselForm) {
   try {
-    // const { work_hours, email, telephone, telegram, whatsapp } = formData;
-
-    // let updateFields = [];
-    // let values = [];
-
-    // if (work_hours !== undefined) {
-    //   updateFields.push("work_hours = $1");
-    //   values.push(work_hours);
-    // }
-    // if (email !== undefined) {
-    //   updateFields.push("email = $2");
-    //   values.push(email);
-    // }
-    // if (telephone !== undefined) {
-    //   updateFields.push("telephone = $3");
-    //   values.push(telephone);
-    // }
-    // if (telegram !== undefined) {
-    //   updateFields.push("telegram = $4");
-    //   values.push(telegram);
-    // }
-    // if (whatsapp !== undefined) {
-    //   updateFields.push("whatsapp = $5");
-    //   values.push(whatsapp);
-    // }
-
-    // if (updateFields.length > 0) {
-    //   const setClause = updateFields.join(", ");
-    //   const query = `
-    //       UPDATE contacts
-    //       SET ${setClause}
-    //       WHERE id = 1
-    //   `;
-
-    //   await sql.query(query, values);
-    // }
+    const {
+      dev_name,
+      title_en,
+      title_pl,
+      title_ru,
+      title_ua,
+      description_en,
+      description_pl,
+      description_ru,
+      description_ua,
+      image_src,
+    } = formData;
+    await sql`
+                INSERT INTO carousel (dev_name, title_en, title_pl, title_ru, title_ua, description_en, description_pl, description_ru, description_ua, image_src)
+                VALUES(${dev_name}, ${title_en || ""}, ${title_pl || ""} , ${
+      title_ru || ""
+    } , ${title_ua || ""}, ${description_en || ""}, ${description_pl || ""}, ${
+      description_ru || ""
+    }, ${description_ua || ""}, ${image_src})
+              `;
   } catch (error) {
     console.error(error);
-    throw new Error("Failed to update user");
+    throw new Error("Failed to create new carousel");
+  }
+}
+
+export async function updateCarousel(
+  formData: Partial<CarouselForm>,
+  id: number
+) {
+  try {
+    const {
+      dev_name,
+      title_en,
+      title_pl,
+      title_ru,
+      title_ua,
+      description_en,
+      description_pl,
+      description_ru,
+      description_ua,
+      image_src,
+    } = formData;
+
+    await sql`
+                UPDATE carousel
+                SET dev_name = ${dev_name},
+                title_en = ${title_en},
+                title_pl = ${title_pl},
+                title_ru = ${title_ru},
+                title_ua = ${title_ua},
+                description_en = ${description_en},
+                description_pl = ${description_pl},
+                description_ru = ${description_ru},
+                description_ua = ${description_ua},
+                image_src = ${image_src}
+                WHERE id = ${id};
+              `;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to update carousel");
+  }
+}
+
+export async function deleteCarousel(id: number) {
+  try {
+    await sql`
+              DELETE FROM carousel
+              WHERE id=${id}
+              `;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed deleting carousel");
   }
 }

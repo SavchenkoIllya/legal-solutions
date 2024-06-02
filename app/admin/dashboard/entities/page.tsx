@@ -2,15 +2,16 @@ import { getContacts } from "@/app/api/interfaces/contacts/contacts.api";
 import Entities from "./components/entities";
 import { Suspense } from "react";
 import { Spinner } from "flowbite-react";
+import { getCarousels } from "@/app/api/interfaces/carousel/carousel.api";
 
 export const revalidate = 0;
 
 export default async function EntitiesPage() {
   const contacts = await getContacts();
-  const data = { contacts };
+  const carousel = await getCarousels();
+  const data = { contacts, carousel };
 
-
-  // FIXME: suspense 
+  // FIXME: suspense
   return (
     <section className="min-h-[90dvh]">
       <Suspense fallback={<Spinner className="m-4" />}>
