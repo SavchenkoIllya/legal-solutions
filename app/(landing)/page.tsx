@@ -7,13 +7,12 @@ import Footer from "./components/footer";
 
 export default function Home() {
   return (
-    <main className="">
-      <Header />
+    <>
       <Carousel />
       <Cards />
       <About />
       <Form />
       <Footer />
-    </main>
+    </>
   );
 }
