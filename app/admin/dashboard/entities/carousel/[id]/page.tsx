@@ -1,5 +1,5 @@
 import { getCarouselById } from "@/app/api/interfaces/carousel/carousel.api";
-import CarouselFormView from "../components/carousel/carousel-form";
+import CarouselFormView from "../../components/carousel/carousel-form";
 
 export const revalidate = 0;
 

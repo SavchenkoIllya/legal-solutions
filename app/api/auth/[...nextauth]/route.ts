@@ -59,8 +59,6 @@ const handler = NextAuth({
 
           return { id, name, email } as any;
         } else {
-          console.log("You are here");
-          
           return null;
         }
       },

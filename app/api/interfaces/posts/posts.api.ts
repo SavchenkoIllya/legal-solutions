@@ -2,6 +2,8 @@
 import { sql } from "@vercel/postgres";
 import { Post } from "./types";
 import { PostsForm } from "./schema";
+import { auth } from "@/app/api/auth/[...nextauth]/route";
+import { getUserOnAuth } from "../users/users.api";
 
 export async function getPosts() {
   try {
@@ -25,7 +27,7 @@ export async function getPostById(id: number) {
   }
 }
 
-export async function createCarousel(formData: PostsForm) {
+export async function createPost(formData: PostsForm) {
   try {
     const {
       title_ru,
@@ -42,8 +44,15 @@ export async function createCarousel(formData: PostsForm) {
       seo_ua,
       is_published,
     } = formData;
+    const session = await auth();
+
+    if (!session?.user?.email) {
+      throw new Error("You are not authorized");
+    }
+    const user = await getUserOnAuth(session?.user?.email);
+
     await sql`
-            INSERT INTO posts (title_ru, title_en, title_pl, title_ua, description_en, description_pl, description_ru, description_ua, seo_ru, seo_en, seo_pl, seo_ua, is_published, created_at)
+            INSERT INTO posts (title_ru, title_en, title_pl, title_ua, description_en, description_pl, description_ru, description_ua, seo_ru, seo_en, seo_pl, seo_ua, is_published, author_id, created_at)
             VALUES(${title_ru},
                    ${title_en || ""},
                    ${title_pl || ""},
@@ -57,6 +66,7 @@ export async function createCarousel(formData: PostsForm) {
                    ${seo_pl || ""},
                    ${seo_ua || ""},
                    ${is_published},
+                   ${user.id},
                    NOW())
             `;
   } catch (error) {

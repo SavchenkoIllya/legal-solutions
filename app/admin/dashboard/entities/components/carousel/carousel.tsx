@@ -17,15 +17,14 @@ export default function CarouselEntity({ carousels }: CarouselsProps) {
       <DisclosureButton className="px-2 py-4 text-white bg-blue-500 w-full text-left rounded-lg data-[open]:rounded-b-none flex items-center justify-between">
         <h1>Carousel</h1>
         <div onClick={(e) => e.stopPropagation()}>
-          <a href="/admin/dashboard/entities/new/carousel">
+          <a href="/admin/dashboard/entities/carousel/new">
             <HiOutlinePlus size={24} className="hover:scale-110" />
           </a>
         </div>
       </DisclosureButton>
       <DisclosurePanel className="px-2 py-4 text-zinc-500 border border-zinc-300 border-t-0 rounded-b-lg max-h-[1000px] overflow-hidden">
-        <div className="space-y-2 overflow-scroll">
+        <div className="space-y-2">
           {!carousels.length && <h2>You don't have any carousel items yet</h2>}
-          {/* TODO: render carousel elements links and edit/remove */}
           {carousels.map((element) => (
             <div className="flex items-center justify-between">
               <p className="overflow-hidden truncate max-w-full">
@@ -34,7 +33,7 @@ export default function CarouselEntity({ carousels }: CarouselsProps) {
               <div className="flex flex-nowrap items-center gap-4">
                 <a
                   className="leading-none"
-                  href={`/admin/dashboard/entities/${element.id}`}
+                  href={`/admin/dashboard/entities/carousel/${element.id}`}
                 >
                   <EditIcon />
                 </a>

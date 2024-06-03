@@ -1,3 +1,5 @@
+import { Post } from "@/app/api/interfaces/posts/types";
+
 const DEFAULT_CONTENT = "";
 
 export enum FormActionsTypes {
@@ -10,11 +12,12 @@ export enum FormActionsTypes {
   "SET_SEO_UA",
   "SET_SEO_EN",
   "SET_SEO_PL",
+  "SET_INITIAL",
 }
 
 interface FormAction {
   type: FormActionsTypes;
-  payload?: string;
+  payload?: string | Post;
 }
 
 interface IFormState {
@@ -47,25 +50,25 @@ export function formReducer(state: IFormState, action: FormAction): IFormState {
     case FormActionsTypes.SET_DESCRIPTION_RU: {
       return {
         ...state,
-        description_ru: payload,
+        description_ru: payload as string,
       };
     }
     case FormActionsTypes.SET_DESCRIPTION_UA: {
       return {
         ...state,
-        description_ua: payload,
+        description_ua: payload as string,
       };
     }
     case FormActionsTypes.SET_DESCRIPTION_EN: {
       return {
         ...state,
-        description_en: payload,
+        description_en: payload as string,
       };
     }
     case FormActionsTypes.SET_DESCRIPTION_PL: {
       return {
         ...state,
-        description_pl: payload,
+        description_pl: payload as string,
       };
     }
     case FormActionsTypes.SET_IS_PUBLISHED: {
@@ -75,16 +78,41 @@ export function formReducer(state: IFormState, action: FormAction): IFormState {
       };
     }
     case FormActionsTypes.SET_SEO_RU: {
-      return { ...state, seo_ru: payload };
+      return { ...state, seo_ru: payload as string };
     }
     case FormActionsTypes.SET_SEO_UA: {
-      return { ...state, seo_ua: payload };
+      return { ...state, seo_ua: payload as string };
     }
     case FormActionsTypes.SET_SEO_EN: {
-      return { ...state, seo_en: payload };
+      return { ...state, seo_en: payload as string };
     }
     case FormActionsTypes.SET_SEO_PL: {
-      return { ...state, seo_pl: payload };
+      return { ...state, seo_pl: payload as string };
+    }
+    case FormActionsTypes.SET_INITIAL: {
+      let {
+        description_ru,
+        description_ua,
+        description_en,
+        description_pl,
+        is_published,
+        seo_ru,
+        seo_ua,
+        seo_en,
+        seo_pl,
+      } = payload as Post;
+      return {
+        ...state,
+        description_ru,
+        description_ua,
+        description_en,
+        description_pl,
+        is_published,
+        seo_ru,
+        seo_ua,
+        seo_en,
+        seo_pl,
+      };
     }
     default:
       return state;
