@@ -1,5 +1,4 @@
 import { getPostById } from "@/app/api/interfaces/posts/posts.api";
-import CarouselFormView from "../../components/carousel/carousel-form";
 import PostsFormView from "../components/post-form";
 
 export const revalidate = 0;
