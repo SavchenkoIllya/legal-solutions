@@ -77,6 +77,10 @@ body {
     @apply block p-4 rounded-[5px] border border-gray placeholder:text-gray sm:w-[400px] w-[200px];
   }
 
+  .dial-icon{
+    @apply fill-red h-8 w-8 transition-transform hover:scale-105;
+  }
+
   .asterisk {
     @apply after:content-['*'] after:text-red after:ml-1;
   }

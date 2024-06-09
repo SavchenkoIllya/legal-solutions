@@ -219,9 +219,9 @@ export default function PostsFormView({ postData }: PostsFormViewProps) {
         <div data-color-mode="light">
           <label
             className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
-            htmlFor="description_ru"
+            htmlFor="description_pl"
           >
-            Description ru
+            Description pl
           </label>
           <MDEditor
             id="description_pl"
@@ -360,7 +360,7 @@ export default function PostsFormView({ postData }: PostsFormViewProps) {
 
       <div className="flex justify-center mb-4">
         {isSubmitSuccessful && (
-          <p className="text-green-500">Created successfully</p>
+          <p className="text-green-500">{postData?.id ? "Updated" : "Created"} successfully</p>
         )}
         {errors.root && <p className="text-rose-500">{errors.root.message}</p>}
       </div>

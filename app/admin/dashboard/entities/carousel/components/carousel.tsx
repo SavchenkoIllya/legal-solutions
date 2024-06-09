@@ -17,6 +17,7 @@ type CarouselsProps = { carousels: Carousel[] };
 
 export default function CarouselEntity({ carousels }: CarouselsProps) {
   const [isOpened, setIsOpened] = useState(false);
+  const [selectedId, setSelectedId] = useState<number>(0);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
@@ -56,13 +57,11 @@ export default function CarouselEntity({ carousels }: CarouselsProps) {
                   >
                     <EditIcon />
                   </a>
-                  <DeleteIcon onClick={() => setIsOpened(true)} />
-                  <Modal
-                    isOpened={isOpened}
-                    title="You are going to delete carousel. Are you sure?"
-                    description="This action is irreversible. Once you are going to delete it you cannot retrieve it back again. Do you really want to delete carousel?"
-                    setToggle={setIsOpened}
-                    callback={() => handleDelete(element.id)}
+                  <DeleteIcon
+                    onClick={() => {
+                      setIsOpened(true);
+                      setSelectedId(element.id);
+                    }}
                   />
                 </div>
               </div>
@@ -70,6 +69,13 @@ export default function CarouselEntity({ carousels }: CarouselsProps) {
             </>
           ))}
         </div>
+        <Modal
+          isOpened={isOpened}
+          title="You are going to delete carousel. Are you sure?"
+          description="This action is irreversible. Once you are going to delete it you cannot retrieve it back again. Do you really want to delete carousel?"
+          setToggle={setIsOpened}
+          callback={() => handleDelete(selectedId)}
+        />
       </DisclosurePanel>
     </Disclosure>
   );

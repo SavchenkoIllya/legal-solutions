@@ -10,7 +10,7 @@ import {
 import { Carousel } from "@/app/api/interfaces/carousel/types";
 import {
   createCarousel,
-  updateCarousel
+  updateCarousel,
 } from "@/app/api/interfaces/carousel/carousel.api";
 
 type CarouselFormViewProps = {
@@ -47,7 +47,6 @@ export default function CarouselFormView({
   ) => {
     try {
       if (carouselData?.id) {
-        // do update
         await updateCarousel(data, carouselData.id);
         console.log("updated");
       } else {
@@ -234,7 +233,9 @@ export default function CarouselFormView({
 
       <div className="flex justify-center mb-4">
         {isSubmitSuccessful && (
-          <p className="text-green-500">Created successfully</p>
+          <p className="text-green-500">
+            {carouselData?.id ? "Updated" : "Created"} successfully
+          </p>
         )}
         {errors.root && <p className="text-rose-500">{errors.root.message}</p>}
       </div>
@@ -248,7 +249,7 @@ export default function CarouselFormView({
             <Spinner />
           </span>
         )}
-        Create
+        {carouselData?.id ? "Update" : "Create"}
       </button>
     </form>
   );

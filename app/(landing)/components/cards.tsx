@@ -16,10 +16,12 @@ export default async function Cards({
             id="tabs"
             className="flex flex-center flex-wrap p-8 sm:gap-12 gap-4"
           >
-            <button data-active className="tab">
-              Private
-            </button>
-            <button className="tab">Business</button>
+            <div className="space-x-8 bg-red p-4 rounded-full text-white">
+              <button data-active className="bg-dark py-4 px-4 rounded-full">
+                Private
+              </button>
+              <button className="py-4 px-4">Business</button>
+            </div>
           </div>
           <div id="cards" className="my-[40px] grid grid-cols-5 gap-6 w-[100%]">
             {groups.map((group) => (

@@ -27,7 +27,7 @@ export default async function Home({
       <About />
       <Form />
       <Footer {...contacts} />
-      <SpeedDial />
+      <SpeedDial {...contacts} />
     </>
   );
 }

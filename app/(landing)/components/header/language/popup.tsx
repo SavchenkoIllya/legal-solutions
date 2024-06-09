@@ -2,6 +2,7 @@ import { cn } from "@/app/utils/cn";
 import { forwardRef } from "react";
 import { Transition } from "@headlessui/react";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import LandingLocales from "@/app/locales/landing/locales";
 
 type PopupProps = React.ComponentPropsWithRef<"div"> & { isOpened: boolean };
 
@@ -37,14 +38,16 @@ const LanguagePopup = forwardRef<HTMLDivElement, PopupProps>((props, ref) => {
       >
         <div className="p-4 pt-6 pb-0 text-zinc-900 md:pb-4">
           <ul className="space-y-4" aria-labelledby="mega-menu-dropdown-button">
-            <li>
-              <button
-                className="bold-transition descriptor-font text-zinc-500  hover:text-red-hovered"
-                onClick={() => handleChangeLanguage("en")}
-              >
-                en
-              </button>
-            </li>
+            {Object.keys(LandingLocales).map((language) => (
+              <li key={language}>
+                <button
+                  className="bold-transition descriptor-font text-zinc-500  hover:text-red-hovered"
+                  onClick={() => handleChangeLanguage(language)}
+                >
+                  {language}
+                </button>
+              </li>
+            ))}
           </ul>
         </div>
       </div>

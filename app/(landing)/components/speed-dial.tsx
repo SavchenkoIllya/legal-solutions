@@ -9,9 +9,11 @@ import {
 import { HiOutlinePlus } from "react-icons/hi";
 import { FaTelegram } from "react-icons/fa";
 import { IoLogoWhatsapp, IoMdMail } from "react-icons/io";
-// TODO: add right links
+import { AiFillInstagram } from "react-icons/ai";
 
-export default function SpeedDial() {
+import { Contacts } from "@/app/api/interfaces/contacts/types";
+
+export default function SpeedDial(props: Partial<Contacts>) {
   return (
     <Menu
       as="button"
@@ -30,16 +32,16 @@ export default function SpeedDial() {
       >
         <MenuItems
           anchor="top"
-          className="origin-top transition bg-white list-none p-4 pb-8 rounded-xl shadow-lg space-y-4"
+          className="origin-top transition bg-white list-none p-4 pb-8 rounded-xl shadow-lg flex flex-col gap-2"
         >
-          <MenuItem as="li">
-            <FaTelegram className="fill-red h-8 w-8 transition-transform hover:scale-105" />
+          <MenuItem as="a" href={props.telegram} target={"_blank"}>
+            <FaTelegram className="dial-icon" />
           </MenuItem>
-          <MenuItem as="li">
-            <IoLogoWhatsapp className="fill-red w-8 h-8 transition-transform hover:scale-105" />
+          <MenuItem as="a" href={props.whatsapp} target={"_blank"}>
+            <IoLogoWhatsapp className="dial-icon" />
           </MenuItem>
-          <MenuItem as="li">
-            <IoMdMail className="fill-red w-8 h-8 transition-transform hover:scale-105" />
+          <MenuItem as="a" href={props.instagram} target={"_blank"}>
+            <AiFillInstagram className="dial-icon" />
           </MenuItem>
         </MenuItems>
       </Transition>
