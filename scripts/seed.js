@@ -86,8 +86,7 @@ async function seedGroups(client) {
         description_en VARCHAR(500),
         price_range VARCHAR(100),
         posts_id INTEGER[] DEFAULT '{}',
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );`;
 
     console.log("successfully created posts table");

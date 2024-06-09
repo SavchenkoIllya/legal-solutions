@@ -2,6 +2,8 @@
 import { Carousel as FlowbitCarousel } from "flowbite-react";
 import { useRef } from "react";
 import { CustomFlowbiteTheme } from "flowbite-react";
+import { Carousel as CarouselType } from "@/app/api/interfaces/carousel/types";
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
 
 const carouselTheme: CustomFlowbiteTheme["carousel"] = {
   scrollContainer: {
@@ -9,11 +11,11 @@ const carouselTheme: CustomFlowbiteTheme["carousel"] = {
   },
 };
 
-export default function Carousel() {
+export default function Carousel({ carousels }: { carousels: CarouselType[] }) {
   const leftArrowRef = useRef<HTMLButtonElement | null>(null);
   const rightArrowRef = useRef<HTMLButtonElement | null>(null);
-  const apiLink =
-    "https://st2.depositphotos.com/4021139/5864/i/450/depositphotos_58644741-stock-photo-api-concept.jpg";
+  const searchParams = useSearchParams();
+  const language = searchParams.get("lang") || "ru";
 
   return (
     <section className="pt-20">
@@ -33,41 +35,21 @@ export default function Carousel() {
                   - remake ability to catch right src's for different screen sizes
                   - change schema for 
           */}
-          <div
-            className="flex align-center justify-center flex-col p-16 bg-[#7D1F12] h-full bg-cover bg-no-repeat bg-center"
-            style={{ backgroundImage: `url(${apiLink})` }}
-          >
-            <h1 className="max-w-2xl mb-2 accent-font text-light">
-              Payments tool for software companies
-            </h1>
-            <p className="max-w-2xl mb-6 mt-4 mb-2 plain-font text-light">
-              From checkout to global sales tax compliance, companies around the
-              world use Flowbite to simplify their payment stack.
-            </p>
-            <a href="#" className="button w-fit">
-              Get started
-            </a>
-          </div>
-          <img
-            src="https://flowbite.com/docs/images/carousel/carousel-1.svg"
-            alt="..."
-          />
-          <img
-            src="https://flowbite.com/docs/images/carousel/carousel-2.svg"
-            alt="..."
-          />
-          <img
-            src="https://flowbite.com/docs/images/carousel/carousel-3.svg"
-            alt="..."
-          />
-          <img
-            src="https://flowbite.com/docs/images/carousel/carousel-4.svg"
-            alt="..."
-          />
-          <img
-            src="https://flowbite.com/docs/images/carousel/carousel-5.svg"
-            alt="..."
-          />
+          {carousels.map((item) => {
+            return (
+              <div
+                className="flex align-center justify-center flex-col p-16 bg-[#7D1F12] h-full bg-cover bg-no-repeat bg-center"
+                style={{ backgroundImage: `url(${item.image_src})` }}
+              >
+                <h1 className="max-w-2xl mb-2 accent-font text-light">
+                  {item[`title_${language}` as keyof CarouselType]}
+                </h1>
+                <p className="max-w-2xl mt-4 mb-2 plain-font text-light">
+                  {item[`description_${language}` as keyof CarouselType]}
+                </p>
+              </div>
+            );
+          })}
         </FlowbitCarousel>
         <div className="flex absolute right-0 bottom-0 mx-4 md:mx-16 my-4 gap-4">
           <button

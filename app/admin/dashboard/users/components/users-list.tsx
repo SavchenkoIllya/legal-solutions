@@ -8,12 +8,7 @@ import { HiCheck } from "react-icons/hi";
 import { deleteUser, updateUser } from "@/app/api/interfaces/users/users.api";
 import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
-import {
-  Description,
-  Dialog,
-  DialogPanel,
-  DialogTitle,
-} from "@headlessui/react";
+import Modal from "../../components/modal/modal";
 
 type DefaultFormStates = "untouched" | "loading" | "editing";
 
@@ -50,63 +45,33 @@ export function UserList({ users }: { users: User[] }) {
   const triggerModal = () => {
     setDeleteModal(true);
   };
-
-  const closeModal = () => setDeleteModal(false);
-
   const handleDeleteUser = async (id: number) => {
     try {
       await deleteUser(id).then(() => {
-        closeModal();
         signOut();
         router.refresh();
       });
     } catch (error) {
-      closeModal();
       setError(String(error));
     }
   };
 
   return users.map((user) => (
     <>
-      <Dialog
-        key={user.id}
-        open={deleteModal}
-        onClose={() => setDeleteModal(false)}
-        className="relative z-50"
-      >
-        <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
-          <DialogPanel className="max-w-lg flex flex-col items-center rounded-md nbn px-8 py-10 text-zinc-800 shadow-lg">
-            <DialogTitle className="font-bold">
-              You are trying to delete user!
-            </DialogTitle>
-            <Description className="flex justify-between w-full my-2">
-              You cannot cancel this event so be careful deleting users. Once
-              you deleted one of them you cannot restore it and have to create
-              new user account.
-            </Description>
-            <div className="flex gap-4">
-              <button
-                className="dashboard__button__outlined"
-                onClick={() => setDeleteModal(false)}
-              >
-                Cancel
-              </button>
-              <button
-                className="dashboard__button-decline"
-                onClick={() => handleDeleteUser(user.id)}
-              >
-                Delete
-              </button>
-            </div>
-          </DialogPanel>
-        </div>
-      </Dialog>
-
+      <Modal
+        callback={() => handleDeleteUser(user.id)}
+        isOpened={deleteModal}
+        setToggle={setDeleteModal}
+        title="You are trying to delete user!"
+        description={`You cannot cancel this event so be careful deleting users. Once
+      you deleted one of them you cannot restore it and have to create
+      new user account.`}
+      />
       <tr key={user.id} className="border-x border-zinc-200">
-        <td className="border-b border-zinc-200 bg-white px-5 py-5 text-sm">
+        <td className="px-5 py-5 text-sm bg-white border-b border-zinc-200">
           <p className="whitespace-no-wrap">{user.id}</p>
         </td>
-        <td className="border-b border-zinc-200 bg-white px-5 py-5 text-sm">
+        <td className="px-5 py-5 text-sm bg-white border-b border-zinc-200">
           <div className="flex items-center">
             <div className="">
               <p
@@ -118,7 +83,7 @@ export function UserList({ users }: { users: User[] }) {
             </div>
           </div>
         </td>
-        <td className="border-b border-zinc-200 bg-white px-5 py-5 text-sm">
+        <td className="px-5 py-5 text-sm bg-white border-b border-zinc-200">
           <p className="whitespace-no-wrap">
             <p
               ref={editEmailRef}
@@ -128,9 +93,9 @@ export function UserList({ users }: { users: User[] }) {
             </p>
           </p>
         </td>
-        <td className="border-b border-zinc-200 bg-white px-5 py-5 text-sm">
+        <td className="px-5 py-5 text-sm bg-white border-b border-zinc-200">
           <p className="whitespace-no-wrap">
-            <div className="space-x-4 flex items-center">
+            <div className="flex items-center space-x-4">
               {formState === "untouched" && (
                 <EditIcon onClick={handleEdit} className="hover:scale-110" />
               )}

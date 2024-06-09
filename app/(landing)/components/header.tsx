@@ -54,10 +54,12 @@ export default function Header() {
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
       >
+        {/* FIXME: why here is md:hidden and md:block at the same time? */}
+
         <div ref={dropdownRef} className="md:hidden fixed pt-[5rem] bg-light z-[10] w-full md:block md:w-auto" id="navbar-default">
           <ul className="font-medium flex flex-col p-4 md:p-0 bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             <li>
-              <a href="#" className="block py-2 px-3 plain-font text-dark" aria-current="page">Home</a>
+              <a href="#" className="block py-2 px-3 plain-font text-dark hover:underline" aria-current="page">Home</a>
             </li>
           </ul>
         </div>

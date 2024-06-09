@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { Spinner } from "flowbite-react";
 import { getCarousels } from "@/app/api/interfaces/carousel/carousel.api";
 import { getPosts } from "@/app/api/interfaces/posts/posts.api";
+import { getAllGroups } from "@/app/api/interfaces/groups/groups.api";
 
 export const revalidate = 0;
 
@@ -11,8 +12,9 @@ export default async function EntitiesPage() {
   const contacts = await getContacts();
   const carousel = await getCarousels();
   const posts = await getPosts();
-  const data = { contacts, carousel, posts };
-  
+  const groups = await getAllGroups();
+  const data = { contacts, carousel, posts, groups };
+
   return (
     <section className="min-h-[90dvh]">
       <Suspense fallback={<Spinner className="m-4" />}>

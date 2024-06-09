@@ -27,6 +27,17 @@ export async function getPostById(id: number) {
   }
 }
 
+export async function getRequestedPosts(ids: number[]) {
+  try {
+    const queryText = `SELECT * FROM groups WHERE id = ANY($1::int[])`;
+    const res = await sql.query(queryText, [ids]);
+    return res.rows;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Something went wrong on getting posts");
+  }
+}
+
 export async function createPost(formData: PostsForm) {
   try {
     const {
@@ -116,6 +127,8 @@ export async function updatePost(formData: Partial<PostsForm>, id: number) {
 }
 
 export async function deletePost(id: number) {
+  // FIXME: on delete post we have to find all groups that includes this posts and remove from them
+
   try {
     await sql`
               DELETE FROM posts

@@ -1,10 +1,14 @@
 import { cn } from '@/app/utils/cn';
+import { useSearchParams } from 'next/navigation'
 
 export default function LanguageButton({
   className,
   isOpened,
   ...props
 }: React.ComponentPropsWithoutRef<'button'> & { isOpened: boolean }) {
+  const searchParams = useSearchParams()
+  const language = searchParams.get('lang') || "ru"
+
   return (
     <button
       {...props}
@@ -15,7 +19,7 @@ export default function LanguageButton({
         className
       )}
     >
-      en
+      {language}
       <svg
         className={cn(
           'w-[12px] h-[6px] transition-all duration-400',

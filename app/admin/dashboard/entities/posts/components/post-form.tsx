@@ -8,7 +8,7 @@ import {
   initialFormState,
   formReducer,
   FormActionsTypes,
-} from "../../components/posts/utils/formReducer";
+} from "./utils/formReducer";
 import { Checkbox } from "@headlessui/react";
 import { PostsForm, PostsSchema } from "@/app/api/interfaces/posts/schema";
 import { createPost, updatePost } from "@/app/api/interfaces/posts/posts.api";

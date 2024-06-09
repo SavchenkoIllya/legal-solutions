@@ -1,74 +1,56 @@
-import { cn } from '@/app/utils/cn';
-import { forwardRef } from 'react';
-import { Transition } from '@headlessui/react';
+import { cn } from "@/app/utils/cn";
+import { forwardRef } from "react";
+import { Transition } from "@headlessui/react";
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
 
-type PopupProps = React.ComponentPropsWithRef<'div'> & { isOpened: boolean };
+type PopupProps = React.ComponentPropsWithRef<"div"> & { isOpened: boolean };
 
-const LanguagePopup = forwardRef<HTMLDivElement, PopupProps>(
-  (props, ref) => {
-    const { isOpened, ...restProps } = props;
-    return (
-      <Transition
-        show={isOpened}
-        enter="transition-opacity duration-500"
-        enterFrom="opacity-0"
-        enterTo="opacity-100"
-        leave="transition-opacity duration-500"
-        leaveFrom="opacity-100"
-        leaveTo="opacity-0"
+const LanguagePopup = forwardRef<HTMLDivElement, PopupProps>((props, ref) => {
+  const { isOpened, ...restProps } = props;
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
+
+  const handleChangeLanguage = (lang: string) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("lang", lang);
+    replace(`${pathname}?${params.toString()}`);
+  };
+
+  return (
+    <Transition
+      show={isOpened}
+      enter="transition-opacity duration-500"
+      enterFrom="opacity-0"
+      enterTo="opacity-100"
+      leave="transition-opacity duration-500"
+      leaveFrom="opacity-100"
+      leaveTo="opacity-0"
+    >
+      <div
+        id="mega-menu-dropdown"
+        className={cn(
+          "absolute z-10 -mt-4 text-sm text-center bg-gray rounded-lg shadow-md w-[68px] opacity-0 open:opacity-100 open:transition-opacity open:duration-500"
+        )}
+        ref={ref}
+        {...restProps}
       >
-        <div
-          id="mega-menu-dropdown"
-          className={cn(
-            'absolute z-10 -mt-4 text-sm text-center bg-gray rounded-lg shadow-md w-[68px] opacity-0 open:opacity-100 open:transition-opacity open:duration-500'
-          )}
-          ref={ref}
-          {...restProps}
-        >
-          <div className="p-4 pt-6 pb-0 text-gray-900 md:pb-4">
-            <ul
-              className="space-y-4"
-              aria-labelledby="mega-menu-dropdown-button"
-            >
-              <li>
-                <a
-                  href="#"
-                  className="bold-transition descriptor-font text-gray-500  hover:text-blue-600 dark:hover:text-blue-500"
-                >
-                  en
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-500  hover:text-blue-600 dark:hover:text-blue-500"
-                >
-                  ru
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-500 hover:text-blue-600 dark:hover:text-blue-500"
-                >
-                  pl
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-500 hover:text-blue-600 dark:hover:text-blue-500"
-                >
-                  ua
-                </a>
-              </li>
-            </ul>
-          </div>
+        <div className="p-4 pt-6 pb-0 text-zinc-900 md:pb-4">
+          <ul className="space-y-4" aria-labelledby="mega-menu-dropdown-button">
+            <li>
+              <button
+                className="bold-transition descriptor-font text-zinc-500  hover:text-red-hovered"
+                onClick={() => handleChangeLanguage("en")}
+              >
+                en
+              </button>
+            </li>
+          </ul>
         </div>
-      </Transition>
-    );
-  }
-);
+      </div>
+    </Transition>
+  );
+});
 
 LanguagePopup.displayName = "LanguagePopup";
 export default LanguagePopup;
