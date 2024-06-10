@@ -5,13 +5,14 @@ export const MailSchema = z.object({
   phone: z
     .string()
     .min(5, { message: "Too  short it's cannot be phone number" }),
-  email: z
-    .string()
-    .email({ message: "Invalid email address" })
-    .min(3, { message: "To short" }),
+  email: z.string().optional(),
   comment: z.string().optional(),
   region: z.string().optional(),
 });
+
+export const emailSchema = z
+  .string()
+  .email({ message: "Invalid email address" });
 
 // TODO: create regexp for phone numbers
 

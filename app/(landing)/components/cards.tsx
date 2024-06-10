@@ -1,5 +1,6 @@
 import { Groups } from "@/app/api/interfaces/groups/types";
 import Card from "./card/card";
+import CategoryToggler from "./category-toggler";
 
 export default async function Cards({
   groups,
@@ -12,7 +13,8 @@ export default async function Cards({
     <section className="my-16">
       <div id="wrapper" className="flex-center container mx-auto">
         <div id="content" className="w-[100%] px-8">
-          <div
+          <CategoryToggler />
+          {/* <div
             id="tabs"
             className="flex flex-center flex-wrap p-8 sm:gap-12 gap-4"
           >
@@ -22,7 +24,7 @@ export default async function Cards({
               </button>
               <button className="py-4 px-4">Business</button>
             </div>
-          </div>
+          </div> */}
           <div id="cards" className="my-[40px] grid grid-cols-5 gap-6 w-[100%]">
             {groups.map((group) => (
               <Card

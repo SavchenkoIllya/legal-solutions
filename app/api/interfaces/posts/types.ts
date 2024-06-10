@@ -16,4 +16,5 @@ export interface Post {
   seo_en: string;
   seo_pl: string;
   seo_ua: string;
+  price_range?: string;
 }

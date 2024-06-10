@@ -54,6 +54,7 @@ export async function createPost(formData: PostsForm) {
       seo_pl,
       seo_ua,
       is_published,
+      price_range,
     } = formData;
     const session = await auth();
 
@@ -77,6 +78,7 @@ export async function createPost(formData: PostsForm) {
                    ${seo_pl || ""},
                    ${seo_ua || ""},
                    ${is_published},
+                   ${price_range}
                    ${user.id},
                    NOW())
             `;
@@ -98,6 +100,7 @@ export async function updatePost(formData: Partial<PostsForm>, id: number) {
       description_pl,
       description_ua,
       is_published,
+      price_range,
       seo_ru,
       seo_en,
       seo_pl,
@@ -117,6 +120,7 @@ export async function updatePost(formData: Partial<PostsForm>, id: number) {
                              seo_pl = ${seo_pl || ""},
                              seo_ua = ${seo_ua || ""},
                              is_published = ${is_published},
+                             price_range = ${price_range},
                              updated_at = NOW()
                              WHERE id = ${id};
             `;

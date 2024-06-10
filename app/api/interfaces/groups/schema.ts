@@ -11,6 +11,7 @@ export const GroupsSchema = z.object({
   description_en: z.string().optional(),
   price_range: z.string().optional(),
   posts_id: z.array(z.number()).min(1),
+  category: z.enum(['private', 'business']).default('private'),
 });
 
 export type GroupsForm = z.infer<typeof GroupsSchema>;

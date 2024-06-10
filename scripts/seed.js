@@ -135,21 +135,21 @@ async function seedMails(client) {
   }
 }
 
-async function main() {
-  const client = await db.connect();
+// async function main() {
+//   const client = await db.connect();
 
-  await seedUsers(client);
-  await seedCarouselContent(client);
-  await seedPosts(client);
-  await seedContacts(client);
-  await seedGroups(client);
-  await seedMails(client);
+//   await seedUsers(client);
+//   await seedCarouselContent(client);
+//   await seedPosts(client);
+//   await seedContacts(client);
+//   await seedGroups(client);
+//   await seedMails(client);
 
-  await client.end();
-}
+//   await client.end();
+// }
 
-main().catch((_) => {
-  console.error(
-    "An error occurred while attempting to seed the databases:"
-  );
-});
+// main().catch((_) => {
+//   console.error(
+//     "An error occurred while attempting to seed the databases:"
+//   );
+// });

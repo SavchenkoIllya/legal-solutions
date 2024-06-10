@@ -1,0 +1,13 @@
+.react-international-phone-input-container {
+  width: 340px !important;
+}
+
+.phone-input-custom {
+  height: 58px !important;
+  width: 100%;
+}
+
+.custom .react-international-phone-country-selector-button {
+  height: 58px;
+  width: 105%;
+}

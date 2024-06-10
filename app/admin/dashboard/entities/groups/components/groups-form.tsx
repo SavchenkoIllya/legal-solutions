@@ -93,11 +93,11 @@ export default function GroupsForm({ posts, groupData }: GroupsFormProps) {
             {...register("title_ru")}
           />
         </div>
-        <div className="flex justify-center mb-4">
-          {errors.title_ru && (
+        {errors.title_ru && (
+          <div className="flex justify-center mb-4">
             <p className="text-rose-500">{errors.title_ru.message}</p>
-          )}
-        </div>
+          </div>
+        )}
         <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
           <label
             htmlFor="title_ua"
@@ -144,6 +144,22 @@ export default function GroupsForm({ posts, groupData }: GroupsFormProps) {
             placeholder="Type title here"
             {...register("title_en")}
           />
+        </div>
+        <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
+          <label
+            htmlFor="category"
+            className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
+          >
+            Choose category
+          </label>
+          <select
+            id="category"
+            className="dashboard__input capitalize"
+            {...register("category")}
+          >
+            <option>private</option>
+            <option>business</option>
+          </select>
         </div>
 
         <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">

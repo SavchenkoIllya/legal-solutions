@@ -1,10 +1,18 @@
 "use client";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { MailForm, MailSchema } from "@/app/api/interfaces/mails/schema";
+import {
+  MailForm,
+  MailSchema,
+  emailSchema,
+} from "@/app/api/interfaces/mails/schema";
 import { Regions } from "@/app/api/constants/Regions";
 import { Spinner } from "flowbite-react";
 import { createMail } from "@/app/api/interfaces/mails/mails.api";
+import { PhoneInput } from "react-international-phone";
+import { useEffect, useState } from "react";
+import "react-international-phone/style.css";
+import "./form.css";
 
 export default function Form() {
   const {
@@ -12,13 +20,31 @@ export default function Form() {
     setError,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors, isSubmitting, isSubmitSuccessful, isValid },
   } = useForm<MailForm>({
     resolver: zodResolver(MailSchema),
   });
 
+  const [phone, setPhone] = useState("");
+
+  useEffect(() => {
+    setValue("phone", phone);
+  }, [phone]);
+
   const onSubmit: SubmitHandler<MailForm> = async (data: MailForm) => {
-    console.log(isValid);
+    if (data.email) {
+      try {
+        emailSchema.parse(data.email);
+      } catch (error) {
+        setError("email", {
+          type: "pattern",
+          message: String("That's not valid email"),
+        });
+        return 0;
+      }
+    }
+
     try {
       await createMail(data).then(() => {
         reset();
@@ -55,11 +81,18 @@ export default function Form() {
           <label htmlFor="telephone" className="plain-font asterisk">
             Phone number
           </label>
-          <input
+          {/* <input
             id="telephone"
             className="input"
             placeholder="+48 22 1234567"
-            {...register("phone")}
+            // {...register("phone")}
+          /> */}
+          <PhoneInput
+            defaultCountry="pl"
+            value={phone}
+            onChange={(phone) => setPhone(phone)}
+            inputClassName="phone-input-custom"
+            countrySelectorStyleProps={{ className: "custom" }}
           />
           {errors.phone && (
             <p className="text-red descriptor-font text-center mt-1">
@@ -92,11 +125,6 @@ export default function Form() {
               <option key={region}>{region}</option>
             ))}
           </select>
-          {errors.region && (
-            <p className="text-red descriptor-font text-center mt-1">
-              {errors.region.message}
-            </p>
-          )}
         </div>
         <div>
           <label htmlFor="comment" className="plain-font">
@@ -108,11 +136,6 @@ export default function Form() {
             placeholder="Any text that you would like to share"
             {...register("comment")}
           />
-          {errors.comment && (
-            <p className="text-red descriptor-font text-center mt-1">
-              {errors.comment.message}
-            </p>
-          )}
           {errors.root && (
             <p className="text-red descriptor-font text-center mt-1">
               {errors.root.message}
@@ -127,8 +150,7 @@ export default function Form() {
         <button
           type="submit"
           disabled={!isValid}
-          className="button w-fit self-center"
-          onClick={handleSubmit(onSubmit)}
+          className="button disabled:bg-dark w-fit self-center"
         >
           {isSubmitting ? (
             <>

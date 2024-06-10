@@ -11,9 +11,14 @@ const LanguagePopup = forwardRef<HTMLDivElement, PopupProps>((props, ref) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
+  const params = new URLSearchParams(searchParams);
+
+  if (!params.get("lang")) {
+    params.set("lang", "ru");
+    replace(`${pathname}?${params.toString()}`);
+  }
 
   const handleChangeLanguage = (lang: string) => {
-    const params = new URLSearchParams(searchParams);
     params.set("lang", lang);
     replace(`${pathname}?${params.toString()}`);
   };

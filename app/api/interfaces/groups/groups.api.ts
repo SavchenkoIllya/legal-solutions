@@ -1,6 +1,6 @@
 "use server";
 import { sql } from "@vercel/postgres";
-import { Groups } from "./types";
+import { Categories, Groups } from "./types";
 import { GroupsForm } from "./schema";
 
 export async function getAllGroups() {
@@ -25,6 +25,18 @@ export async function getGroupById(id: number) {
   }
 }
 
+export async function getCategorizedGroups(category: Categories) {
+  try {
+    const request = await sql<Groups>`SELECT * FROM groups
+                                      WHERE category=${category}
+                                      `;
+    return request.rows;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Something went wrong on getting group");
+  }
+}
+
 export async function createGroup(formData: GroupsForm) {
   try {
     const formattedData = Object.values(formData);
@@ -40,8 +52,9 @@ export async function createGroup(formData: GroupsForm) {
       description_en,
       price_range,
       posts_id,
+      category,
       created_at
-    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, NOW())
+    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, NOW())
   `;
     await sql.query(queryText, formattedData);
   } catch (error) {
@@ -67,8 +80,9 @@ export async function updateGroup(formData: GroupsForm, id: number) {
           description_pl = COALESCE($7, description_pl),
           description_en = COALESCE($8, description_en),
           price_range = COALESCE($9, price_range),
-          posts_id = COALESCE($10, posts_id)
-        WHERE id = $11
+          posts_id = COALESCE($10, posts_id),
+          category = COALESCE($11, posts_id),
+        WHERE id = $12
         RETURNING *
       `;
     await sql.query(queryText, formattedData);

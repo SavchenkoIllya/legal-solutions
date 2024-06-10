@@ -14,6 +14,7 @@ export const PostsSchema = z.object({
   seo_ua: z.string().optional(),
   seo_en: z.string().optional(),
   is_published: z.boolean(),
+  price_range: z.string().optional(),
 });
 
 export type PostsForm = z.infer<typeof PostsSchema>;

@@ -10,17 +10,14 @@ import { HiOutlinePlus } from "react-icons/hi";
 import { FaTelegram } from "react-icons/fa";
 import { IoLogoWhatsapp, IoMdMail } from "react-icons/io";
 import { AiFillInstagram } from "react-icons/ai";
-
+import { HiMiniPlusCircle } from "react-icons/hi2";
 import { Contacts } from "@/app/api/interfaces/contacts/types";
 
 export default function SpeedDial(props: Partial<Contacts>) {
   return (
-    <Menu
-      as="button"
-      className="fixed bottom-0 right-0 m-8 z-50 py-3 px-4 rounded-full bg-red"
-    >
+    <Menu as="button" className="fixed bottom-0 right-0 m-8 z-50">
       <MenuButton className="transition-transform data-[open]:rotate-45">
-        <HiOutlinePlus color="white" size={30} />
+        <HiMiniPlusCircle className="fill-red" size={60} />
       </MenuButton>
       <Transition
         enter="duration-200 ease-out"
@@ -32,7 +29,7 @@ export default function SpeedDial(props: Partial<Contacts>) {
       >
         <MenuItems
           anchor="top"
-          className="origin-top transition bg-white list-none p-4 pb-8 rounded-xl shadow-lg flex flex-col gap-2"
+          className="origin-top transition bg-white list-none p-4 rounded-xl shadow-lg flex flex-col gap-4"
         >
           <MenuItem as="a" href={props.telegram} target={"_blank"}>
             <FaTelegram className="dial-icon" />

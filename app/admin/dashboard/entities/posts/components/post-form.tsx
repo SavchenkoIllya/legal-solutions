@@ -70,6 +70,7 @@ export default function PostsFormView({ postData }: PostsFormViewProps) {
     setValue("seo_ua", state.seo_ua);
     setValue("seo_pl", state.seo_pl);
     setValue("is_published", state.is_published);
+    setValue("is_published", state.is_published);
   }, [
     state.description_ru,
     state.description_en,
@@ -148,7 +149,21 @@ export default function PostsFormView({ postData }: PostsFormViewProps) {
           {...register("title_en")}
         />
       </div>
-
+      <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
+        <label
+          htmlFor="price_range"
+          className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
+        >
+          Price range
+        </label>
+        <input
+          type="text"
+          id="price_range"
+          className="dashboard__input"
+          placeholder="Type Price range here"
+          {...register("price_range")}
+        />
+      </div>
       <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4">
         <div data-color-mode="light">
           <label
@@ -360,7 +375,9 @@ export default function PostsFormView({ postData }: PostsFormViewProps) {
 
       <div className="flex justify-center mb-4">
         {isSubmitSuccessful && (
-          <p className="text-green-500">{postData?.id ? "Updated" : "Created"} successfully</p>
+          <p className="text-green-500">
+            {postData?.id ? "Updated" : "Created"} successfully
+          </p>
         )}
         {errors.root && <p className="text-rose-500">{errors.root.message}</p>}
       </div>

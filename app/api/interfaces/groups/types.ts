@@ -1,5 +1,3 @@
-// FIXME: !!! add group's class "private" or "business" also change in DB
-
 export interface Groups {
   id: number;
   title_ru: string;
@@ -13,4 +11,7 @@ export interface Groups {
   price_range?: string | undefined;
   posts_id: number[];
   created_at: Date;
+  category: "private" | "business";
 }
+
+export type Categories = "private" | "business";
