@@ -32,12 +32,9 @@ export default async function Cards({
               />
             ))}
           </div>
-          <Link
-            href="/group"
-            className="text-button underline flex flex-center"
-          >
-            Get to see all
-          </Link>
+          <a href="/group" className="text-button underline flex flex-center">
+            Go to see all
+          </a>
         </div>
       </div>
     </section>

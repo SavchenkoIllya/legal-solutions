@@ -77,7 +77,7 @@ export default function Form() {
   };
 
   return (
-    <section className="py-16 flex-center flex-col">
+    <section className="py-16 flex-center flex-col" id="form">
       <h1 className="accent-font text-center mb-[40px]">Contact us</h1>
       <form className="flex gap-4 flex-col" onSubmit={handleSubmit(onSubmit)}>
         <div>
