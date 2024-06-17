@@ -1,6 +1,7 @@
 import { Groups } from "@/app/api/interfaces/groups/types";
 import Card from "./card/card";
-import CategoryToggler from "./category-toggler";
+import CategoryToggler from "./card/category-toggler";
+import Link from "next/link";
 
 export default async function Cards({
   groups,
@@ -14,17 +15,11 @@ export default async function Cards({
       <div id="wrapper" className="flex-center container mx-auto">
         <div id="content" className="w-[100%] px-8">
           <CategoryToggler />
-          {/* <div
-            id="tabs"
-            className="flex flex-center flex-wrap p-8 sm:gap-12 gap-4"
-          >
-            <div className="space-x-8 bg-red p-4 rounded-full text-white">
-              <button data-active className="bg-dark py-4 px-4 rounded-full">
-                Private
-              </button>
-              <button className="py-4 px-4">Business</button>
-            </div>
-          </div> */}
+          {!groups.length && (
+            <h1 className="accent-font text-center my-[40px] grid grid-cols-1 gap-6 w-[100%]">
+              No groups at this moment
+            </h1>
+          )}
           <div id="cards" className="my-[40px] grid grid-cols-5 gap-6 w-[100%]">
             {groups.map((group) => (
               <Card
@@ -37,6 +32,12 @@ export default async function Cards({
               />
             ))}
           </div>
+          <Link
+            href="/group"
+            className="text-button underline flex flex-center"
+          >
+            Get to see all
+          </Link>
         </div>
       </div>
     </section>

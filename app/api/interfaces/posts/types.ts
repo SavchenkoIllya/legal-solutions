@@ -1,3 +1,5 @@
+import { Categories } from "../groups/types";
+
 export interface Post {
   id: number;
   author_id: number;
@@ -17,4 +19,5 @@ export interface Post {
   seo_pl: string;
   seo_ua: string;
   price_range?: string;
+  category: Categories
 }

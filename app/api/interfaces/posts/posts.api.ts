@@ -4,6 +4,7 @@ import { Post } from "./types";
 import { PostsForm } from "./schema";
 import { auth } from "@/app/api/auth/[...nextauth]/route";
 import { getUserOnAuth } from "../users/users.api";
+import { Categories } from "../groups/types";
 
 export async function getPosts() {
   try {
@@ -23,7 +24,20 @@ export async function getPostById(id: number) {
     return request.rows[0];
   } catch (error) {
     console.error(error);
-    throw new Error("Something went wrong on getting post");
+    throw new Error("Something went wrong on getting post by id");
+  }
+}
+
+export async function getPostsByCategory(category: Categories) {
+  try {
+    const request =
+      await sql<Post>`SELECT id, title_ru, title_ua, title_en, title_pl, price_range, is_published
+                                    FROM posts
+                                    WHERE category=${category} AND is_published = true`;
+    return request.rows;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Something went wrong on getting post by categories");
   }
 }
 
@@ -55,6 +69,7 @@ export async function createPost(formData: PostsForm) {
       seo_ua,
       is_published,
       price_range,
+      category,
     } = formData;
     const session = await auth();
 
@@ -64,7 +79,7 @@ export async function createPost(formData: PostsForm) {
     const user = await getUserOnAuth(session?.user?.email);
 
     await sql`
-            INSERT INTO posts (title_ru, title_en, title_pl, title_ua, description_en, description_pl, description_ru, description_ua, seo_ru, seo_en, seo_pl, seo_ua, is_published, author_id, created_at)
+            INSERT INTO posts (title_ru, title_en, title_pl, title_ua, description_en, description_pl, description_ru, description_ua, seo_ru, seo_en, seo_pl, seo_ua, is_published, price-range, category, author_id, created_at)
             VALUES(${title_ru},
                    ${title_en || ""},
                    ${title_pl || ""},
@@ -79,6 +94,7 @@ export async function createPost(formData: PostsForm) {
                    ${seo_ua || ""},
                    ${is_published},
                    ${price_range}
+                   ${category}
                    ${user.id},
                    NOW())
             `;
@@ -105,6 +121,7 @@ export async function updatePost(formData: Partial<PostsForm>, id: number) {
       seo_en,
       seo_pl,
       seo_ua,
+      category,
     } = formData;
     await sql`
             UPDATE posts SET title_ru = ${title_ru},
@@ -121,6 +138,7 @@ export async function updatePost(formData: Partial<PostsForm>, id: number) {
                              seo_ua = ${seo_ua || ""},
                              is_published = ${is_published},
                              price_range = ${price_range},
+                             category = ${category}
                              updated_at = NOW()
                              WHERE id = ${id};
             `;

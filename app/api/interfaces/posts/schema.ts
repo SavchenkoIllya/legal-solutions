@@ -15,6 +15,7 @@ export const PostsSchema = z.object({
   seo_en: z.string().optional(),
   is_published: z.boolean(),
   price_range: z.string().optional(),
+  category: z.enum(["private", "business"]).default("private"),
 });
 
 export type PostsForm = z.infer<typeof PostsSchema>;

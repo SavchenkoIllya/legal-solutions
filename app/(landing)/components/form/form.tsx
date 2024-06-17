@@ -11,6 +11,7 @@ import { Spinner } from "flowbite-react";
 import { createMail } from "@/app/api/interfaces/mails/mails.api";
 import { PhoneInput } from "react-international-phone";
 import { useEffect, useState } from "react";
+
 import "react-international-phone/style.css";
 import "./form.css";
 
@@ -33,6 +34,20 @@ export default function Form() {
   }, [phone]);
 
   const onSubmit: SubmitHandler<MailForm> = async (data: MailForm) => {
+    const expirationTimeStr = localStorage.getItem("expirationTime");
+
+    if (expirationTimeStr) {
+      const expirationTime = JSON.parse(expirationTimeStr);
+      const currentTime = new Date();
+      if (currentTime < expirationTime) {
+        setError("root", {
+          type: "disabled",
+          message: String("You cannot send us emails so often"),
+        });
+        return 0;
+      }
+    }
+
     if (data.email) {
       try {
         emailSchema.parse(data.email);
@@ -46,7 +61,11 @@ export default function Form() {
     }
 
     try {
-      await createMail(data).then(() => {
+      await createMail(data).then((_) => {
+        localStorage.setItem(
+          "expirationTime",
+          JSON.stringify(Date.now() + 48 * 60 * 60 * 1000)
+        );
         reset();
       });
     } catch (error) {
@@ -81,12 +100,6 @@ export default function Form() {
           <label htmlFor="telephone" className="plain-font asterisk">
             Phone number
           </label>
-          {/* <input
-            id="telephone"
-            className="input"
-            placeholder="+48 22 1234567"
-            // {...register("phone")}
-          /> */}
           <PhoneInput
             defaultCountry="pl"
             value={phone}

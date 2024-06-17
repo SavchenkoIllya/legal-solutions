@@ -15,12 +15,12 @@ const LanguagePopup = forwardRef<HTMLDivElement, PopupProps>((props, ref) => {
 
   if (!params.get("lang")) {
     params.set("lang", "ru");
-    replace(`${pathname}?${params.toString()}`);
+    replace(`${pathname}?${params.toString()}`, { scroll: false });
   }
 
   const handleChangeLanguage = (lang: string) => {
     params.set("lang", lang);
-    replace(`${pathname}?${params.toString()}`);
+    replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
   return (

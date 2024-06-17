@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { put, del, list } from "@vercel/blob";
-import { NextApiRequest } from "next";
 
 export async function POST(req: Request) {
   const form = await req.formData();

@@ -38,6 +38,7 @@ export default function Carousel({ carousels }: { carousels: CarouselType[] }) {
           {carousels.map((item) => {
             return (
               <div
+                key={item.id}
                 className="flex align-center justify-center flex-col p-16 bg-[#7D1F12] h-full bg-cover bg-no-repeat bg-center"
                 style={{ backgroundImage: `url(${item.image_src})` }}
               >

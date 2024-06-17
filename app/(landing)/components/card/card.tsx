@@ -1,15 +1,19 @@
+import Link from "next/link";
+
 var beforeElement =
   "first:before:absolute first:before:content-[' '] first:before:h-[500px] first:before:w-[500px] first:before: inset-0 first:before:opacity-30 first:before:bg-[url('/_next/static/media/Logo.c69687ea.svg')] first:before:bg-no-repeat first:before:transform first:before:translate-x-[50%] first:before:translate-y-[10%] first:before:rotate-45";
 
 type CardProps = {
   title: string | undefined;
-  description: string | undefined;
+  description?: string | undefined;
   price: string | undefined;
+  link?: URL | string;
 };
 
-export default function Card({ title, description, price }: CardProps) {
+export default function Card({ title, description, price, link }: CardProps) {
   return (
-    <div
+    <Link
+      href={link || "#"}
       id="card"
       className={`
     overflow-hidden relative min-h-[250px] card col-span-5 
@@ -26,10 +30,8 @@ export default function Card({ title, description, price }: CardProps) {
           {title}
         </h1>
         <p>{description}</p>
-        <a className="text-button">asd</a>
         <p className="self-end mt-[17%] z-[50]">{price}</p>
-        {/* <button className="text-start">More</button> */}
       </div>
-    </div>
+    </Link>
   );
 }
