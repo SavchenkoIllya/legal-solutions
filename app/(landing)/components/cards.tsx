@@ -1,7 +1,6 @@
 import { Groups } from "@/app/api/interfaces/groups/types";
 import Card from "./card/card";
 import CategoryToggler from "./card/category-toggler";
-import Link from "next/link";
 
 export default async function Cards({
   groups,
@@ -29,12 +28,10 @@ export default async function Cards({
                   group[`description_${lang}` as keyof Groups]
                 )}
                 price={group.price_range}
+                link={`/group?category=${group.category}`}
               />
             ))}
           </div>
-          <a href="/group" className="text-button underline flex flex-center">
-            Go to see all
-          </a>
         </div>
       </div>
     </section>

@@ -1,7 +1,6 @@
 "use client";
 import { Categories } from "@/app/api/interfaces/groups/types";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
 
 export default function CategoryToggler() {
   const searchParams = useSearchParams();
@@ -24,14 +23,14 @@ export default function CategoryToggler() {
       <button
         onClick={() => handleChangeCategory("private")}
         data-active={params.get("category") === "private"}
-        className="data-[active=true]:bg-dark py-2 px-4 rounded-full"
+        className="data-[active=true]:bg-dark data-[active=false]:hover:bg-dark/50 py-2 px-4 rounded-full"
       >
         Private
       </button>
       <button
         data-active={params.get("category") === "business"}
         onClick={() => handleChangeCategory("business")}
-        className="data-[active=true]:bg-dark py-2 px-4 rounded-full"
+        className="data-[active=true]:bg-dark data-[active=false]:hover:bg-dark/50 py-2 px-4 rounded-full"
       >
         Business
       </button>

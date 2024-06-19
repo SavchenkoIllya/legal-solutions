@@ -1,4 +1,4 @@
-type IsReadStates = "unread" | "read" | "progress" | "complete";
+export type IsReadStates = "unread" | "read" | "progress" | "complete";
 
 export interface Mail {
   id: number;

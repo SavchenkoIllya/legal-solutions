@@ -10,7 +10,6 @@ import { Regions } from "@/app/api/constants/Regions";
 import { Spinner } from "flowbite-react";
 import { createMail } from "@/app/api/interfaces/mails/mails.api";
 import { PhoneInput } from "react-international-phone";
-import { useEffect, useState } from "react";
 
 import "react-international-phone/style.css";
 import "./form.css";
@@ -21,20 +20,20 @@ export default function Form() {
     setError,
     handleSubmit,
     reset,
+    getValues,
     setValue,
     formState: { errors, isSubmitting, isSubmitSuccessful, isValid },
   } = useForm<MailForm>({
     resolver: zodResolver(MailSchema),
   });
 
-  const [phone, setPhone] = useState("");
-
-  useEffect(() => {
-    setValue("phone", phone);
-  }, [phone]);
+  const handleTelephone = (phone: string) =>
+    setValue("phone", phone, { shouldValidate: true });
 
   const onSubmit: SubmitHandler<MailForm> = async (data: MailForm) => {
     const expirationTimeStr = localStorage.getItem("expirationTime");
+
+    /* Logic for prevention extra sends */
 
     if (expirationTimeStr) {
       const expirationTime = JSON.parse(expirationTimeStr);
@@ -102,8 +101,8 @@ export default function Form() {
           </label>
           <PhoneInput
             defaultCountry="pl"
-            value={phone}
-            onChange={(phone) => setPhone(phone)}
+            value={getValues("phone")}
+            onChange={handleTelephone}
             inputClassName="phone-input-custom"
             countrySelectorStyleProps={{ className: "custom" }}
           />
