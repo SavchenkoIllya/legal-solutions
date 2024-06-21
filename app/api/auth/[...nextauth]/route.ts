@@ -1,18 +1,7 @@
 import NextAuth from "next-auth";
-import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { loginUser } from "../../interfaces/users/users.api";
-
-const SECRET_KEY = "pMXEqOO3xX7Y2U3slnSqqIvdLwBczbHV3y3lqq12Btc=";
-
-export const authConfig = {
-  pages: {
-    signIn: "/admin/signin",
-  },
-  secret: SECRET_KEY,
-  callbacks: {},
-  providers: [],
-} satisfies NextAuthOptions;
+import { authConfig } from "./auth";
 
 const handler = NextAuth({
   ...authConfig,
