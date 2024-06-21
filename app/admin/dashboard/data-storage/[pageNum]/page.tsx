@@ -2,6 +2,8 @@ import { getBlobs } from "@/app/api/interfaces/files/route";
 import UploadButton from "./components/upload";
 import DataCard from "./components/data-card";
 
+export const revalidate = 0;
+
 export default async function DataStoragePage() {
   const blobs = await getBlobs();
 

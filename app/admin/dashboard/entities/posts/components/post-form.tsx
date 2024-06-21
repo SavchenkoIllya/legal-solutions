@@ -1,7 +1,7 @@
 "use client";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Spinner } from "flowbite-react";
+import { SpinnerDiamond } from "spinners-react";
 import MDEditor from "@uiw/react-md-editor";
 import { useReducer, useEffect } from "react";
 import {
@@ -388,7 +388,7 @@ export default function PostsFormView({ postData }: PostsFormViewProps) {
       >
         {isSubmitting && (
           <span className="mr-4">
-            <Spinner />
+            <SpinnerDiamond color="white" />
           </span>
         )}
         {postData?.id ? "Update" : "Create"}

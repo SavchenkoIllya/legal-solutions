@@ -72,7 +72,6 @@ body {
   .card {
     @apply p-6 bg-white rounded-[16px]  border border-gray transition-shadow duration-500 hover:shadow;
   }
-  /* sm:w-[400px] w-[100%] */
   .input {
     @apply block p-4 min-w-[340px] rounded-[5px] border border-gray placeholder:text-gray;
   }
@@ -102,6 +101,6 @@ body {
   }
 
   .dashboard__input {
-    @apply bg-zinc-50 border border-zinc-300 text-zinc-900 text-sm rounded-lg block w-full p-2.5 dark:bg-zinc-600 dark:border-zinc-500 dark:placeholder-zinc-400 dark:text-white;
+    @apply bg-zinc-50 border border-zinc-300 text-zinc-900 text-sm rounded-lg block w-full p-2.5;
   }
 }

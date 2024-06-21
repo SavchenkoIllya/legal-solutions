@@ -7,12 +7,12 @@ import {
   emailSchema,
 } from "@/app/api/interfaces/mails/schema";
 import { Regions } from "@/app/api/constants/Regions";
-import { Spinner } from "flowbite-react";
+import { SpinnerDiamond } from "spinners-react";
 import { createMail } from "@/app/api/interfaces/mails/mails.api";
 import { PhoneInput } from "react-international-phone";
-
+import { cn } from "@/app/utils/cn";
 import "react-international-phone/style.css";
-import "./form.css";
+import "./form.css"
 
 export default function Form() {
   const {
@@ -85,7 +85,7 @@ export default function Form() {
           </label>
           <input
             id="name"
-            className="input"
+            className={cn("input", errors.name ? "border-red" : "")}
             placeholder="Name"
             {...register("name")}
           />
@@ -103,7 +103,11 @@ export default function Form() {
             defaultCountry="pl"
             value={getValues("phone")}
             onChange={handleTelephone}
-            inputClassName="phone-input-custom"
+            inputClassName={
+              errors.phone
+                ? "phone-input-custom phone-input-error"
+                : "phone-input-custom"
+            }
             countrySelectorStyleProps={{ className: "custom" }}
           />
           {errors.phone && (
@@ -118,7 +122,7 @@ export default function Form() {
           </label>
           <input
             id="email"
-            className="input"
+            className={cn("input", errors.email ? "border-red" : "")}
             placeholder="example@mail.com"
             {...register("email")}
           />
@@ -166,7 +170,8 @@ export default function Form() {
         >
           {isSubmitting ? (
             <>
-              <Spinner /> <span className="ml-2">Submitting</span>
+              <SpinnerDiamond color="white" />
+              <span className="ml-2">Submitting</span>
             </>
           ) : (
             "Send me"

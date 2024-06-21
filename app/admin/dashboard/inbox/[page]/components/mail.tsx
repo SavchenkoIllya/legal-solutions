@@ -1,6 +1,5 @@
 "use client";
 import {
-  changeMailStatus,
   deleteMail,
 } from "@/app/api/interfaces/mails/mails.api";
 import { Mail } from "@/app/api/interfaces/mails/types";

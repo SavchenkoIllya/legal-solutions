@@ -1,6 +1,5 @@
 "use client";
 import { User } from "@/app/api/interfaces/users/types";
-import { Spinner } from "flowbite-react";
 import EditIcon from "../../components/icons/edit-icon";
 import DeleteIcon from "../../components/icons/delete-icon";
 import { useState, useRef } from "react";
@@ -9,6 +8,7 @@ import { deleteUser, updateUser } from "@/app/api/interfaces/users/users.api";
 import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 import Modal from "../../components/modal/modal";
+import { SpinnerDiamond } from "spinners-react";
 
 type DefaultFormStates = "untouched" | "loading" | "editing";
 
@@ -106,7 +106,7 @@ export function UserList({ users }: { users: User[] }) {
                   onClick={() => handleSubmitChanges(user.id)}
                 />
               )}
-              {formState === "loading" && <Spinner size={"md"} />}
+              {formState === "loading" && <SpinnerDiamond color="black" />}
               <DeleteIcon onClick={triggerModal} className="hover:scale-110" />
             </div>
           </p>

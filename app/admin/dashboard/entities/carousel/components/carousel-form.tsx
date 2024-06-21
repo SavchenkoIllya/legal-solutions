@@ -1,7 +1,7 @@
 "use client";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Spinner } from "flowbite-react";
+import { SpinnerDiamond } from "spinners-react";
 
 import {
   CarouselForm,
@@ -70,7 +70,7 @@ export default function CarouselFormView({
       <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
         <label
           htmlFor="dev_name"
-          className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white asterisk"
+          className="block mb-2 text-sm font-medium text-zinc-900  asterisk"
         >
           Name for dashboard
         </label>
@@ -90,7 +90,7 @@ export default function CarouselFormView({
       <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
         <label
           htmlFor="image_src"
-          className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white asterisk"
+          className="block mb-2 text-sm font-medium text-zinc-900 asterisk"
         >
           Image source
         </label>
@@ -110,7 +110,7 @@ export default function CarouselFormView({
       <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
         <label
           htmlFor="title_ru"
-          className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
+          className="block mb-2 text-sm font-medium text-zinc-900"
         >
           Title ru
         </label>
@@ -125,7 +125,7 @@ export default function CarouselFormView({
       <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
         <label
           htmlFor="title_ua"
-          className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
+          className="block mb-2 text-sm font-medium text-zinc-900"
         >
           Title ua
         </label>
@@ -140,7 +140,7 @@ export default function CarouselFormView({
       <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
         <label
           htmlFor="title_pl"
-          className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
+          className="block mb-2 text-sm font-medium text-zinc-900"
         >
           Title pl
         </label>
@@ -155,7 +155,7 @@ export default function CarouselFormView({
       <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
         <label
           htmlFor="title_en"
-          className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
+          className="block mb-2 text-sm font-medium text-zinc-900 "
         >
           Title en
         </label>
@@ -171,7 +171,7 @@ export default function CarouselFormView({
       <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
         <label
           htmlFor="description_ru"
-          className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
+          className="block mb-2 text-sm font-medium text-zinc-900 "
         >
           Description ru
         </label>
@@ -186,7 +186,7 @@ export default function CarouselFormView({
       <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
         <label
           htmlFor="description_ua"
-          className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
+          className="block mb-2 text-sm font-medium text-zinc-900 "
         >
           Description ua
         </label>
@@ -202,7 +202,7 @@ export default function CarouselFormView({
       <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
         <label
           htmlFor="description_pl"
-          className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
+          className="block mb-2 text-sm font-medium text-zinc-900 "
         >
           Description pl
         </label>
@@ -218,7 +218,7 @@ export default function CarouselFormView({
       <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
         <label
           htmlFor="description_en"
-          className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
+          className="block mb-2 text-sm font-medium text-zinc-900 "
         >
           Description en
         </label>
@@ -246,7 +246,7 @@ export default function CarouselFormView({
       >
         {isSubmitting && (
           <span className="mr-4">
-            <Spinner />
+            <SpinnerDiamond color="white" />
           </span>
         )}
         {carouselData?.id ? "Update" : "Create"}

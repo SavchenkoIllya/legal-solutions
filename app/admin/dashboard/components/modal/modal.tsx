@@ -1,4 +1,5 @@
 "use client";
+import { cn } from "@/app/utils/cn";
 import {
   Description,
   Dialog,
@@ -8,11 +9,17 @@ import {
 import { Dispatch, ReactNode, SetStateAction } from "react";
 
 type ModalProps = {
-  callback: (...args: any[]) => any | void;
   isOpened: boolean;
   setToggle: Dispatch<SetStateAction<boolean>>;
-  title?: string | undefined;
+  callback?: (...args: any[]) => any | void;
+  title?: string | undefined | ReactNode;
   description?: string | undefined | ReactNode;
+  cancelText?: string | undefined | ReactNode;
+  confirmText?: string | undefined | ReactNode;
+  confirmButtonStyles?: string;
+  cancelButtonStyles?: string;
+  confirmButton?: ReactNode | undefined;
+  cancelButton?: ReactNode | undefined;
 };
 
 export default function Modal({
@@ -21,6 +28,29 @@ export default function Modal({
   description,
   isOpened,
   setToggle,
+  cancelText = "Cancel",
+  confirmText = "Delete",
+  confirmButtonStyles = "",
+  cancelButtonStyles = "",
+  confirmButton = (
+    <button
+      className={cn("dashboard__button-decline", confirmButtonStyles)}
+      onClick={() => {
+        callback?.();
+        setToggle(false);
+      }}
+    >
+      {confirmText}
+    </button>
+  ),
+  cancelButton = (
+    <button
+      className={cn("dashboard__button__outlined", cancelButtonStyles)}
+      onClick={() => setToggle(false)}
+    >
+      {cancelText}
+    </button>
+  ),
 }: ModalProps) {
   return (
     <Dialog
@@ -37,21 +67,8 @@ export default function Modal({
             </Description>
           )}
           <div className="flex gap-4">
-            <button
-              className="dashboard__button__outlined"
-              onClick={() => setToggle(false)}
-            >
-              Cancel
-            </button>
-            <button
-              className="dashboard__button-decline"
-              onClick={() => {
-                callback?.();
-                setToggle(false);
-              }}
-            >
-              Delete
-            </button>
+            {cancelButton}
+            {confirmButton}
           </div>
         </DialogPanel>
       </div>

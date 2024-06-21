@@ -1,7 +1,7 @@
 import { getAllUsersForDashboard } from "@/app/api/interfaces/users/users.api";
-import { Spinner } from "flowbite-react";
 import { Suspense } from "react";
 import { UserList } from "./components/users-list";
+import { SpinnerDiamond } from "spinners-react";
 
 // Very nextjs staff don't touch
 export const revalidate = 0;
@@ -24,7 +24,7 @@ export default async function Users() {
           </tr>
         </thead>
         <tbody className="text-zinc-500">
-          <Suspense fallback={<Spinner className="m-4" />}>
+          <Suspense fallback={<SpinnerDiamond color="black" />}>
             <UserList users={users} />
           </Suspense>
         </tbody>

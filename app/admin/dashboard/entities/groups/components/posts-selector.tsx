@@ -15,7 +15,7 @@ export default function PostsSelect({
       <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
         <label
           htmlFor="title_ru"
-          className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
+          className="block mb-2 text-sm font-medium text-zinc-900 "
         >
           Posts
         </label>

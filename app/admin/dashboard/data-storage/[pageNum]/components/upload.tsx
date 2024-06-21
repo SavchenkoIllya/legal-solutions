@@ -1,24 +1,31 @@
 "use client";
-import { Modal } from "flowbite-react";
+import { useState } from "react";
+import Modal from "../../../components/modal/modal";
+import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
 
 export default function UploadButton() {
   const [openModal, setOpenModal] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const router = useRouter();
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     const formData = new FormData();
     formData.append("file", file as Blob);
-
-    const response = await fetch("/api/interfaces/files", {
-      method: "POST",
-      body: formData,
-    });
-    setOpenModal(false);
-    router.refresh();
+    try {
+      await fetch("/api/interfaces/files", {
+        method: "POST",
+        body: formData,
+      }).then(() => {
+        toast.success("uploaded successfully", {
+          onClose: () => router.refresh(),
+        });
+      });
+      toast("...uploading");
+      setOpenModal(false);
+    } catch (error) {
+      toast.error("error occurred during uploading");
+    }
   };
 
   return (
@@ -26,9 +33,13 @@ export default function UploadButton() {
       <button onClick={() => setOpenModal(true)} className="dashboard__button">
         Upload new
       </button>
-      <Modal show={openModal} onClose={() => setOpenModal(false)}>
-        <Modal.Header>Terms of Service</Modal.Header>
-        <Modal.Body>
+      <Modal
+        cancelText="Cancel"
+        confirmText="Save"
+        callback={handleSubmit}
+        setToggle={setOpenModal}
+        title="Upload new picture"
+        description={
           <form onSubmit={handleSubmit}>
             <label htmlFor="large-file-input" className="sr-only">
               Choose file
@@ -47,25 +58,11 @@ export default function UploadButton() {
                         dark:file:bg-neutral-700 dark:file:text-neutral-400"
             />
           </form>
-        </Modal.Body>
-        <Modal.Footer>
-          <button
-            onClick={handleSubmit}
-            type="submit"
-            className="dashboard__button bg-green-500 hover:bg-green-600"
-          >
-            Save
-          </button>
-          <button
-            type="button"
-            className="dashboard__button bg-rose-500 hover:bg-rose-600"
-            color="gray"
-            onClick={() => setOpenModal(false)}
-          >
-            Decline
-          </button>
-        </Modal.Footer>
-      </Modal>
+        }
+        isOpened={openModal}
+        confirmButtonStyles="bg-green-500 hover:bg-green-600"
+      />
+      <ToastContainer position="bottom-center" />
     </>
   );
 }

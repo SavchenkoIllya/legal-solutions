@@ -1,5 +1,5 @@
 "use client";
-import { Spinner } from "flowbite-react";
+import { SpinnerDiamond } from "spinners-react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import PostsSelect from "./posts-selector";
 import {
@@ -81,7 +81,7 @@ export default function GroupsForm({ posts, groupData }: GroupsFormProps) {
         <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
           <label
             htmlFor="title_ru"
-            className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
+            className="block mb-2 text-sm font-medium text-zinc-900"
           >
             Title ru
           </label>
@@ -101,7 +101,7 @@ export default function GroupsForm({ posts, groupData }: GroupsFormProps) {
         <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
           <label
             htmlFor="title_ua"
-            className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
+            className="block mb-2 text-sm font-medium text-zinc-900 "
           >
             Title ua
           </label>
@@ -117,7 +117,7 @@ export default function GroupsForm({ posts, groupData }: GroupsFormProps) {
         <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
           <label
             htmlFor="title_pl"
-            className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
+            className="block mb-2 text-sm font-medium text-zinc-900 "
           >
             Title pl
           </label>
@@ -133,7 +133,7 @@ export default function GroupsForm({ posts, groupData }: GroupsFormProps) {
         <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
           <label
             htmlFor="title_en"
-            className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
+            className="block mb-2 text-sm font-medium text-zinc-900"
           >
             Title en
           </label>
@@ -148,7 +148,7 @@ export default function GroupsForm({ posts, groupData }: GroupsFormProps) {
         <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
           <label
             htmlFor="category"
-            className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
+            className="block mb-2 text-sm font-medium text-zinc-900"
           >
             Choose category
           </label>
@@ -165,7 +165,7 @@ export default function GroupsForm({ posts, groupData }: GroupsFormProps) {
         <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
           <label
             htmlFor="description_ru"
-            className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
+            className="block mb-2 text-sm font-medium text-zinc-900"
           >
             Description ru
           </label>
@@ -180,7 +180,7 @@ export default function GroupsForm({ posts, groupData }: GroupsFormProps) {
         <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
           <label
             htmlFor="description_ua"
-            className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
+            className="block mb-2 text-sm font-medium text-zinc-900 "
           >
             Description ua
           </label>
@@ -195,7 +195,7 @@ export default function GroupsForm({ posts, groupData }: GroupsFormProps) {
         <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
           <label
             htmlFor="description_pl"
-            className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
+            className="block mb-2 text-sm font-medium text-zinc-900 "
           >
             Description pl
           </label>
@@ -210,7 +210,7 @@ export default function GroupsForm({ posts, groupData }: GroupsFormProps) {
         <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
           <label
             htmlFor="description_en"
-            className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
+            className="block mb-2 text-sm font-medium text-zinc-900 "
           >
             Description en
           </label>
@@ -225,7 +225,7 @@ export default function GroupsForm({ posts, groupData }: GroupsFormProps) {
         <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
           <label
             htmlFor="price_range"
-            className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
+            className="block mb-2 text-sm font-medium text-zinc-900 "
           >
             Price range
           </label>
@@ -263,7 +263,7 @@ export default function GroupsForm({ posts, groupData }: GroupsFormProps) {
         >
           {isSubmitting && (
             <span className="mr-4">
-              <Spinner />
+              <SpinnerDiamond color="white" />
             </span>
           )}
           {groupData?.id ? "Update" : "Create"} group

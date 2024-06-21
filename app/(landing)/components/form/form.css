@@ -8,6 +8,10 @@
   padding-left: 25px !important;
 }
 
+.phone-input-error{
+  border-color: #DC2F2F !important;
+}
+
 .custom .react-international-phone-country-selector-button {
   height: 58px;
   width: 140%;

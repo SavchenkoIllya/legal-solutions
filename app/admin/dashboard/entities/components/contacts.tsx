@@ -1,6 +1,6 @@
 "use client";
 import { Contacts as ContactsType } from "@/app/api/interfaces/contacts/types";
-import { Spinner } from "flowbite-react";
+import { SpinnerDiamond } from "spinners-react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -63,7 +63,7 @@ export default function Contacts({ contacts }: ContactsProps) {
           <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
             <label
               htmlFor="email"
-              className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
+              className="block mb-2 text-sm font-medium text-zinc-900 "
             >
               Email
             </label>
@@ -83,7 +83,7 @@ export default function Contacts({ contacts }: ContactsProps) {
           <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
             <label
               htmlFor="telephone"
-              className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
+              className="block mb-2 text-sm font-medium text-zinc-900 "
             >
               Telephone
             </label>
@@ -103,7 +103,7 @@ export default function Contacts({ contacts }: ContactsProps) {
           <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
             <label
               htmlFor="work_hours"
-              className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
+              className="block mb-2 text-sm font-medium text-zinc-900"
             >
               Work hours
             </label>
@@ -123,7 +123,7 @@ export default function Contacts({ contacts }: ContactsProps) {
           <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
             <label
               htmlFor="telegram"
-              className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
+              className="block mb-2 text-sm font-medium text-zinc-900 "
             >
               Telegram
             </label>
@@ -143,7 +143,7 @@ export default function Contacts({ contacts }: ContactsProps) {
           <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
             <label
               htmlFor="instagram"
-              className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
+              className="block mb-2 text-sm font-medium text-zinc-900 "
             >
               Instagram
             </label>
@@ -164,7 +164,7 @@ export default function Contacts({ contacts }: ContactsProps) {
           <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
             <label
               htmlFor="whatsapp"
-              className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
+              className="block mb-2 text-sm font-medium text-zinc-900 "
             >
               Whatsapp
             </label>
@@ -196,7 +196,7 @@ export default function Contacts({ contacts }: ContactsProps) {
           >
             {isSubmitting && (
               <span className="mr-4">
-                <Spinner />
+                <SpinnerDiamond color="white" />
               </span>
             )}
             Update contacts

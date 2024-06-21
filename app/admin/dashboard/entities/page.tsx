@@ -1,7 +1,7 @@
 import { getContacts } from "@/app/api/interfaces/contacts/contacts.api";
 import Entities from "./components/entities";
 import { Suspense } from "react";
-import { Spinner } from "flowbite-react";
+import { SpinnerDiamond } from "spinners-react";
 import { getCarousels } from "@/app/api/interfaces/carousel/carousel.api";
 import { getPosts } from "@/app/api/interfaces/posts/posts.api";
 import { getAllGroups } from "@/app/api/interfaces/groups/groups.api";
@@ -17,7 +17,7 @@ export default async function EntitiesPage() {
 
   return (
     <section className="min-h-[90dvh]">
-      <Suspense fallback={<Spinner className="m-4" />}>
+      <Suspense fallback={<SpinnerDiamond color="black" />}>
         <Entities data={data} />
       </Suspense>
     </section>
