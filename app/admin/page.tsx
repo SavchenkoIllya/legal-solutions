@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { isExistUsers } from "../api/interfaces/users/users.api";
 import FirstRegistration from "./components/first-registration";
-import { auth } from "@/app/api/auth/[...nextauth]/route";
+import { auth } from "../api/auth/[...nextauth]/auth";
 
 // Very nextjs staff don't touch
 export const revalidate = 0;

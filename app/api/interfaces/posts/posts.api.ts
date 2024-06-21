@@ -2,7 +2,8 @@
 import { sql } from "@vercel/postgres";
 import { Post } from "./types";
 import { PostsForm } from "./schema";
-import { auth } from "@/app/api/auth/[...nextauth]/route";
+// import { auth } from "@/app/api/auth/[...nextauth]/route";
+import { auth } from "../../auth/[...nextauth]/auth";
 import { getUserOnAuth } from "../users/users.api";
 import { Categories } from "../groups/types";
 

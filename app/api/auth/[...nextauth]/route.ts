@@ -2,12 +2,6 @@ import NextAuth from "next-auth";
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { loginUser } from "../../interfaces/users/users.api";
-import { getServerSession } from "next-auth";
-import type {
-  GetServerSidePropsContext,
-  NextApiRequest,
-  NextApiResponse,
-} from "next";
 
 const SECRET_KEY = "pMXEqOO3xX7Y2U3slnSqqIvdLwBczbHV3y3lqq12Btc=";
 
@@ -19,15 +13,6 @@ export const authConfig = {
   callbacks: {},
   providers: [],
 } satisfies NextAuthOptions;
-
-export function auth(
-  ...args:
-    | [GetServerSidePropsContext["req"], GetServerSidePropsContext["res"]]
-    | [NextApiRequest, NextApiResponse]
-    | []
-) {
-  return getServerSession(...args, authConfig);
-}
 
 const handler = NextAuth({
   ...authConfig,

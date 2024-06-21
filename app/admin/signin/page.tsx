@@ -1,6 +1,6 @@
 import Login from "../components/login";
 import { redirect } from "next/navigation";
-import { auth } from "@/app/api/auth/[...nextauth]/route";
+import { auth } from "@/app/api/auth/[...nextauth]/auth";
 import { isExistUsers } from "@/app/api/interfaces/users/users.api";
 
 // Very nextjs staff don't touch
