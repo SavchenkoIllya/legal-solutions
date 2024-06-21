@@ -5,7 +5,7 @@ import { UserForm, UserSchema } from "@/app/api/interfaces/users/schema";
 import { useRef } from "react";
 import { UserFormData } from "@/app/api/interfaces/users/types";
 import { registerUser } from "@/app/api/interfaces/users/users.api";
-import { Spinner } from "flowbite-react";
+import { SpinnerDiamond } from "spinners-react";
 
 interface RegisterProps {
   onSuccess?: (...args: any[]) => void;
@@ -170,7 +170,7 @@ export default function Register({
         >
           {isSubmitting && (
             <span className="mr-4">
-              <Spinner />
+              <SpinnerDiamond color="white" />
             </span>
           )}
           Create dashboard user
