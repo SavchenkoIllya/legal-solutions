@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { loginUser } from "../../interfaces/users/users.api";
-import { authConfig } from "./auth";
+import { authConfig } from "../auth";
 
 const handler = NextAuth({
   ...authConfig,
