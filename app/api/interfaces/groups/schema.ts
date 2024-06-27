@@ -10,7 +10,7 @@ export const GroupsSchema = z.object({
   description_pl: z.string().optional(),
   description_en: z.string().optional(),
   price_range: z.string().optional(),
-  posts_id: z.array(z.number()).min(1),
+  posts_id: z.array(z.number()),
   category: z.enum(['private', 'business']).default('private'),
 });
 

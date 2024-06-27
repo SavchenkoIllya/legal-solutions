@@ -12,7 +12,7 @@ import { createMail } from "@/app/api/interfaces/mails/mails.api";
 import { PhoneInput } from "react-international-phone";
 import { cn } from "@/app/utils/cn";
 import "react-international-phone/style.css";
-import "./form.css"
+import "./form.css";
 
 export default function Form() {
   const {
@@ -63,7 +63,7 @@ export default function Form() {
       await createMail(data).then((_) => {
         localStorage.setItem(
           "expirationTime",
-          JSON.stringify(Date.now() + 48 * 60 * 60 * 1000)
+          JSON.stringify(Date.now() + 3 * 60 * 1000)
         );
         reset();
       });
@@ -170,7 +170,7 @@ export default function Form() {
         >
           {isSubmitting ? (
             <>
-              <SpinnerDiamond color="white" />
+              <SpinnerDiamond className="w-6 h-6" color="white" />
               <span className="ml-2">Submitting</span>
             </>
           ) : (

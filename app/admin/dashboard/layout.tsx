@@ -12,11 +12,11 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section className="h-full flex">
+    <section className="flex h-full">
       <CustomSidebar />
 
-      <div className="sm:p-4 ml-16 bg-white h-full w-full overflow-hidden">
-        <div className="p-4 rounded-lg dark:border-gray-700 overflow-auto">
+      <div className="dashboard__layout-bg">
+        <div className="p-4 overflow-auto rounded-lg dark:border-gray-700">
           {children}
         </div>
       </div>

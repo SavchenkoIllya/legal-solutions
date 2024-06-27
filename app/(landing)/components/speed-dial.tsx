@@ -15,7 +15,7 @@ import { Contacts } from "@/app/api/interfaces/contacts/types";
 
 export default function SpeedDial(props: Partial<Contacts>) {
   return (
-    <Menu as="button" className="fixed bottom-0 right-0 m-8 z-50">
+    <Menu as="button" className="fixed bottom-0 right-0 m-8 z-50 focus:outline-none focus:border-none focus:ring-0">
       <MenuButton className="transition-transform data-[open]:rotate-45">
         <HiMiniPlusCircle className="fill-red" size={60} />
       </MenuButton>

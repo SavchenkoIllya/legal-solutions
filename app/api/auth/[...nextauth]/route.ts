@@ -27,7 +27,7 @@ const handler = NextAuth({
           email: credentials?.email,
           password: credentials?.password,
         });
-
+        
         if (user) {
           const { id, name, email } = user;
 

@@ -22,7 +22,7 @@ export default function Card({ title, description, price, link }: CardProps) {
     <a
       href={link || "#"}
       id="card"
-      className={`overflow-hidden relative min-h-[250px] card col-span-5 
+      className={`animate-reveal overflow-hidden relative min-h-[250px] card col-span-5 
                   md:first:col-span-3 md:col-span-2 md:last:col-span-3
                   hover:scale-105
                   transition-all
@@ -35,7 +35,7 @@ export default function Card({ title, description, price, link }: CardProps) {
                   `}
     >
       <article id="card-content" className="flex flex-col">
-        <h1 className="plain-bold-font transition-all duration-500 hover:text-red z-[99]">
+        <h1 className="plain-bold-font transition-all duration-500 z-[99]">
           {title}
         </h1>
         <p className="z-[99]">{description}</p>

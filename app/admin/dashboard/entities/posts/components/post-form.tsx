@@ -87,13 +87,10 @@ export default function PostsFormView({ postData }: PostsFormViewProps) {
     <form
       onSubmit={handleSubmit(onSubmit)}
       noValidate
-      className="sm:p-4 flex flex-col md:p-5"
+      className="flex flex-col sm:p-4 md:p-5"
     >
-      <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
-        <label
-          htmlFor="title_ru"
-          className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
-        >
+      <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
+        <label htmlFor="title_ru" className="dashboard__label">
           Title ru
         </label>
         <input
@@ -104,11 +101,8 @@ export default function PostsFormView({ postData }: PostsFormViewProps) {
           {...register("title_ru")}
         />
       </div>
-      <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
-        <label
-          htmlFor="title_ua"
-          className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
-        >
+      <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
+        <label htmlFor="title_ua" className="dashboard__label">
           Title ua
         </label>
         <input
@@ -119,11 +113,8 @@ export default function PostsFormView({ postData }: PostsFormViewProps) {
           {...register("title_ua")}
         />
       </div>
-      <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
-        <label
-          htmlFor="title_pl"
-          className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
-        >
+      <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
+        <label htmlFor="title_pl" className="dashboard__label">
           Title pl
         </label>
         <input
@@ -134,11 +125,8 @@ export default function PostsFormView({ postData }: PostsFormViewProps) {
           {...register("title_pl")}
         />
       </div>
-      <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
-        <label
-          htmlFor="title_en"
-          className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
-        >
+      <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
+        <label htmlFor="title_en" className="dashboard__label">
           Title en
         </label>
         <input
@@ -149,11 +137,8 @@ export default function PostsFormView({ postData }: PostsFormViewProps) {
           {...register("title_en")}
         />
       </div>
-      <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
-        <label
-          htmlFor="price_range"
-          className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
-        >
+      <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
+        <label htmlFor="price_range" className="dashboard__label">
           Price range
         </label>
         <input
@@ -164,12 +149,9 @@ export default function PostsFormView({ postData }: PostsFormViewProps) {
           {...register("price_range")}
         />
       </div>
-      <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4">
+      <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4">
         <div data-color-mode="light">
-          <label
-            className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
-            htmlFor="description_ru"
-          >
+          <label className="dashboard__label" htmlFor="description_ru">
             Description ru
           </label>
           <MDEditor
@@ -186,12 +168,9 @@ export default function PostsFormView({ postData }: PostsFormViewProps) {
         </div>
       </div>
 
-      <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4">
+      <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4">
         <div data-color-mode="light">
-          <label
-            className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
-            htmlFor="description_ua"
-          >
+          <label className="dashboard__label" htmlFor="description_ua">
             Description ua
           </label>
           <MDEditor
@@ -208,12 +187,9 @@ export default function PostsFormView({ postData }: PostsFormViewProps) {
         </div>
       </div>
 
-      <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4">
+      <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4">
         <div data-color-mode="light">
-          <label
-            className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
-            htmlFor="description_en"
-          >
+          <label className="dashboard__label" htmlFor="description_en">
             Description en
           </label>
           <MDEditor
@@ -230,12 +206,9 @@ export default function PostsFormView({ postData }: PostsFormViewProps) {
         </div>
       </div>
 
-      <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4">
+      <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4">
         <div data-color-mode="light">
-          <label
-            className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
-            htmlFor="description_pl"
-          >
+          <label className="dashboard__label" htmlFor="description_pl">
             Description pl
           </label>
           <MDEditor
@@ -252,12 +225,9 @@ export default function PostsFormView({ postData }: PostsFormViewProps) {
         </div>
       </div>
 
-      <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4">
+      <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4">
         <div data-color-mode="light">
-          <label
-            className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
-            htmlFor="seo_ru"
-          >
+          <label className="dashboard__label" htmlFor="seo_ru">
             SEO text ru
           </label>
           <MDEditor
@@ -274,12 +244,9 @@ export default function PostsFormView({ postData }: PostsFormViewProps) {
         </div>
       </div>
 
-      <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4">
+      <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4">
         <div data-color-mode="light">
-          <label
-            className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
-            htmlFor="seo_ua"
-          >
+          <label className="dashboard__label" htmlFor="seo_ua">
             SEO text ua
           </label>
           <MDEditor
@@ -296,12 +263,9 @@ export default function PostsFormView({ postData }: PostsFormViewProps) {
         </div>
       </div>
 
-      <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4">
+      <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4">
         <div data-color-mode="light">
-          <label
-            className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
-            htmlFor="seo-en"
-          >
+          <label className="dashboard__label" htmlFor="seo-en">
             SEO text en
           </label>
           <MDEditor
@@ -318,12 +282,9 @@ export default function PostsFormView({ postData }: PostsFormViewProps) {
         </div>
       </div>
 
-      <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4">
+      <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4">
         <div data-color-mode="light">
-          <label
-            className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
-            htmlFor="seo_pl"
-          >
+          <label className="dashboard__label" htmlFor="seo_pl">
             SEO text pl
           </label>
           <MDEditor
@@ -342,10 +303,7 @@ export default function PostsFormView({ postData }: PostsFormViewProps) {
 
       <div>
         <div data-color-mode="light" className="flex gap-2 mb-1">
-          <label
-            className="block mb-2 text-sm font-medium text-zinc-900 dark:text-white"
-            htmlFor="description_ru"
-          >
+          <label className="dashboard__label" htmlFor="description_ru">
             Is published
           </label>
           <Checkbox

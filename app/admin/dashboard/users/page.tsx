@@ -24,7 +24,14 @@ export default async function Users() {
           </tr>
         </thead>
         <tbody className="text-zinc-500">
-          <Suspense fallback={<SpinnerDiamond color="black" />}>
+          <Suspense
+            fallback={
+              <SpinnerDiamond
+                color="black"
+                className="absolute inset-0 top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]"
+              />
+            }
+          >
             <UserList users={users} />
           </Suspense>
         </tbody>

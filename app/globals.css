@@ -54,7 +54,7 @@ body {
   }
 
   .text-button {
-    @apply plain-font text-red transition-all cursor-pointer hover:text-red-hovered;
+    @apply transition-all cursor-pointer plain-font text-red hover:text-red-hovered;
   }
 
   .flex-center {
@@ -77,7 +77,7 @@ body {
   }
 
   .dial-icon {
-    @apply fill-red h-8 w-8 transition-transform hover:scale-105;
+    @apply w-8 h-8 transition-transform fill-red hover:scale-105;
   }
 
   .asterisk {
@@ -101,6 +101,18 @@ body {
   }
 
   .dashboard__input {
-    @apply bg-zinc-50 border border-zinc-300 text-zinc-900 text-sm rounded-lg block w-full p-2.5;
+    @apply bg-zinc-50 dark:bg-zinc-900 placeholder:text-zinc-400/70 dark:placeholder:text-zinc-500 dark:border-zinc-400 dark:text-zinc-300 border border-zinc-300 text-zinc-900 text-sm rounded-lg block w-full p-2.5;
+  }
+
+  .dashboard__label {
+    @apply block mb-2 text-sm font-medium text-zinc-900 dark:text-zinc-300;
+  }
+
+  .dashboard__layout-bg {
+    @apply w-full h-full ml-16 overflow-hidden bg-white sm:p-4 dark:bg-zinc-900;
+  }
+
+  .dashboard__main-bg {
+    @apply min-h-screen bg-white dark:bg-zinc-900;
   }
 }

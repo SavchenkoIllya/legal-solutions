@@ -25,11 +25,12 @@ export default function Carousel({ carousels }: { carousels: CarouselType[] }) {
       <div className="embla__viewport" ref={emblaRef}>
         <div className="embla__container">
           {carousels.map((item) => (
-            <div className="embla__slide h-[80dvh]">
+            <div 
+            key={item.id}
+            className="embla__slide mt-8 md:mt-0 h-[60dvh] md:h-[80dvh]">
               <div
-                key={item.id}
                 className="flex align-center justify-center flex-col p-16 bg-[#7D1F12] h-full bg-cover bg-no-repeat bg-center"
-                style={{ backgroundImage: `url(${item.image_src})` }}
+                style={{ backgroundImage: `linear-gradient(to right, #000000b8, transparent), url(${item.image_src})` }}
               >
                 <h1 className="max-w-2xl mb-2 accent-font text-light">
                   {item[`title_${language}` as keyof CarouselType]}

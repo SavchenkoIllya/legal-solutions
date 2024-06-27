@@ -68,20 +68,20 @@ export default function GroupsForm({ posts, groupData }: GroupsFormProps) {
 
   return (
     <>
-      <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+      <div className="flex items-center justify-between p-4 border-b rounded-t md:p-5 dark:border-zinc-200">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-zinc-200">
           Create New Group
         </h3>
       </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
         noValidate
-        className="sm:p-4 flex flex-col md:p-5"
+        className="flex flex-col sm:p-4 md:p-5"
       >
-        <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
+        <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
           <label
             htmlFor="title_ru"
-            className="block mb-2 text-sm font-medium text-zinc-900"
+            className="dashboard__label"
           >
             Title ru
           </label>
@@ -98,10 +98,10 @@ export default function GroupsForm({ posts, groupData }: GroupsFormProps) {
             <p className="text-rose-500">{errors.title_ru.message}</p>
           </div>
         )}
-        <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
+        <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
           <label
             htmlFor="title_ua"
-            className="block mb-2 text-sm font-medium text-zinc-900 "
+            className="dashboard__label"
           >
             Title ua
           </label>
@@ -114,10 +114,10 @@ export default function GroupsForm({ posts, groupData }: GroupsFormProps) {
           />
         </div>
 
-        <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
+        <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
           <label
             htmlFor="title_pl"
-            className="block mb-2 text-sm font-medium text-zinc-900 "
+            className="dashboard__label"
           >
             Title pl
           </label>
@@ -130,10 +130,10 @@ export default function GroupsForm({ posts, groupData }: GroupsFormProps) {
           />
         </div>
 
-        <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
+        <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
           <label
             htmlFor="title_en"
-            className="block mb-2 text-sm font-medium text-zinc-900"
+            className="dashboard__label"
           >
             Title en
           </label>
@@ -145,16 +145,16 @@ export default function GroupsForm({ posts, groupData }: GroupsFormProps) {
             {...register("title_en")}
           />
         </div>
-        <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
+        <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
           <label
             htmlFor="category"
-            className="block mb-2 text-sm font-medium text-zinc-900"
+            className="dashboard__label"
           >
             Choose category
           </label>
           <select
             id="category"
-            className="dashboard__input capitalize"
+            className="capitalize dashboard__input"
             {...register("category")}
           >
             <option>private</option>
@@ -162,10 +162,10 @@ export default function GroupsForm({ posts, groupData }: GroupsFormProps) {
           </select>
         </div>
 
-        <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
+        <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
           <label
             htmlFor="description_ru"
-            className="block mb-2 text-sm font-medium text-zinc-900"
+            className="dashboard__label"
           >
             Description ru
           </label>
@@ -177,10 +177,10 @@ export default function GroupsForm({ posts, groupData }: GroupsFormProps) {
           />
         </div>
 
-        <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
+        <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
           <label
             htmlFor="description_ua"
-            className="block mb-2 text-sm font-medium text-zinc-900 "
+            className="dashboard__label"
           >
             Description ua
           </label>
@@ -192,10 +192,10 @@ export default function GroupsForm({ posts, groupData }: GroupsFormProps) {
           />
         </div>
 
-        <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
+        <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
           <label
             htmlFor="description_pl"
-            className="block mb-2 text-sm font-medium text-zinc-900 "
+            className="dashboard__label"
           >
             Description pl
           </label>
@@ -207,10 +207,10 @@ export default function GroupsForm({ posts, groupData }: GroupsFormProps) {
           />
         </div>
 
-        <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
+        <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
           <label
             htmlFor="description_en"
-            className="block mb-2 text-sm font-medium text-zinc-900 "
+            className="dashboard__label"
           >
             Description en
           </label>
@@ -222,10 +222,10 @@ export default function GroupsForm({ posts, groupData }: GroupsFormProps) {
           />
         </div>
 
-        <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
+        <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
           <label
             htmlFor="price_range"
-            className="block mb-2 text-sm font-medium text-zinc-900 "
+            className="dashboard__label"
           >
             Price range
           </label>

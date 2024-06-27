@@ -55,10 +55,8 @@ export default function Register({
 
   return (
     <>
-      <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-          Create New User
-        </h3>
+      <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+        <h3 className="text-lg font-semibold text-zinc-900">Create New User</h3>
       </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -69,7 +67,7 @@ export default function Register({
           <div className="col-span-2">
             <label
               htmlFor="name"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="block mb-2 text-sm font-medium text-zinc-900"
             >
               Name
             </label>
@@ -89,7 +87,7 @@ export default function Register({
           <div className="col-span-2">
             <label
               htmlFor="name"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="block mb-2 text-sm font-medium text-zinc-900"
             >
               Email
             </label>
@@ -109,7 +107,7 @@ export default function Register({
           <div className="col-span-2">
             <label
               htmlFor="name"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="block mb-2 text-sm font-medium text-zinc-900"
             >
               Password
             </label>
@@ -129,7 +127,7 @@ export default function Register({
           <div className="col-span-2">
             <label
               htmlFor="name"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="block mb-2 text-sm font-medium text-zinc-900"
             >
               Confirm Password
             </label>

@@ -13,7 +13,7 @@ export default function AdminLayout({
   return (
     <html lang="en">
       <body>
-        <main className="bg-white dark:bg-gray-700 min-h-screen">{children}</main>
+        <main className="dashboard__main-bg">{children}</main>
       </body>
     </html>
   );

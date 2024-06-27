@@ -35,9 +35,7 @@ export default function Contacts({ contacts }: ContactsProps) {
     },
   });
 
-  const onSubmit: SubmitHandler<ContactsType> = async (
-    data: Partial<ContactsForm>
-  ) => {
+  const onSubmit: SubmitHandler<ContactsType> = async (data: ContactsForm) => {
     try {
       await updateContacts(data);
       reset();
@@ -54,16 +52,16 @@ export default function Contacts({ contacts }: ContactsProps) {
       <DisclosureButton className="px-2 py-4 text-white bg-blue-500 w-full text-left rounded-lg data-[open]:rounded-b-none">
         Contacts
       </DisclosureButton>
-      <DisclosurePanel className="px-2 py-4 text-zinc-500 border border-zinc-300 border-t-0 rounded-b-lg">
+      <DisclosurePanel className="px-2 py-4 border border-t-0 rounded-b-lg text-zinc-500 border-zinc-300">
         <form
           onSubmit={handleSubmit(onSubmit)}
           noValidate
-          className="sm:p-4 flex flex-col md:p-5"
+          className="flex flex-col sm:p-4 md:p-5"
         >
-          <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
+          <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
             <label
               htmlFor="email"
-              className="block mb-2 text-sm font-medium text-zinc-900 "
+              className="dashboard__label"
             >
               Email
             </label>
@@ -80,10 +78,10 @@ export default function Contacts({ contacts }: ContactsProps) {
               <p className="text-rose-500">{errors.email.message}</p>
             )}
           </div>
-          <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
+          <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
             <label
               htmlFor="telephone"
-              className="block mb-2 text-sm font-medium text-zinc-900 "
+              className="dashboard__label"
             >
               Telephone
             </label>
@@ -100,10 +98,10 @@ export default function Contacts({ contacts }: ContactsProps) {
               <p className="text-rose-500">{errors.telephone.message}</p>
             )}
           </div>
-          <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
+          <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
             <label
               htmlFor="work_hours"
-              className="block mb-2 text-sm font-medium text-zinc-900"
+              className="dashboard__label"
             >
               Work hours
             </label>
@@ -120,10 +118,10 @@ export default function Contacts({ contacts }: ContactsProps) {
               <p className="text-rose-500">{errors.work_hours.message}</p>
             )}
           </div>
-          <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
+          <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
             <label
               htmlFor="telegram"
-              className="block mb-2 text-sm font-medium text-zinc-900 "
+              className="dashboard__label"
             >
               Telegram
             </label>
@@ -140,10 +138,10 @@ export default function Contacts({ contacts }: ContactsProps) {
               <p className="text-rose-500">{errors.telegram.message}</p>
             )}
           </div>
-          <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
+          <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
             <label
               htmlFor="instagram"
-              className="block mb-2 text-sm font-medium text-zinc-900 "
+              className="dashboard__label"
             >
               Instagram
             </label>
@@ -161,10 +159,10 @@ export default function Contacts({ contacts }: ContactsProps) {
             )}
           </div>
 
-          <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
+          <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
             <label
               htmlFor="whatsapp"
-              className="block mb-2 text-sm font-medium text-zinc-900 "
+              className="dashboard__label"
             >
               Whatsapp
             </label>

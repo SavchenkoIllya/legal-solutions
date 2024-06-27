@@ -1,0 +1,65 @@
+:root {
+  --custom-red: #dc2f2f;
+  --custom-red-hovered: #dc2f2f70;
+  --custom-dark: #363636;
+  --custom-light: #f8f8f8;
+  --custom-gray: #dbdbdb;
+}
+
+.switch {
+  width: 200px;
+  height: 40px;
+  margin: 10px auto 0 auto;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50px;
+  background: var(--custom-red);
+}
+
+.switch > span {
+  width: 100px;
+  height: 40px;
+  display: table-cell;
+  position: relative;
+  z-index: 100;
+  text-align: center;
+  vertical-align: middle;
+  color: var(--custom-dark);
+  cursor: pointer;
+  transition: color ease-in 0.23s 0.09s;
+  -moz-transition: color ease-in 0.23s 0.09s;
+  -webkit-transition: color ease-in 0.23s 0.09s;
+}
+
+.switch > span.on {
+  color: var(--custom-light);
+  transition: color ease-in 0.23s 0.09s;
+  -moz-transition: color ease-in 0.23s 0.09s;
+  -webkit-transition: color ease-in 0.23s 0.09s;
+}
+
+.switch .switch_bg {
+  width: 110px;
+  height: 40px;
+  position: absolute;
+  top: 0px;
+  left: -11px;
+  transform: skew(-30deg);
+  -moz-transform: skew(-30deg);
+  -webkit-transform: skew(-30deg);
+  transition: all ease-in 0.23s;
+  -moz-transition: all ease-in 0.23s;
+  -webkit-transition: all ease-in 0.23s;
+  background: var(--custom-dark);
+}
+
+.switch .switch_bg.right {
+  left: 95px;
+  transition: all ease-in 0.23s;
+  -moz-transition: all ease-in 0.23s;
+  -webkit-transition: all ease-in 0.23s;
+}
+
+.switch .radio_btns {
+  display: none;
+}

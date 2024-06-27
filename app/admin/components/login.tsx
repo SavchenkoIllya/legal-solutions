@@ -55,14 +55,14 @@ export default function Login() {
             <div className="col-span-2">
               <label
                 htmlFor="name"
-                className="block mb-2 text-sm font-medium text-gray-900 "
+                className="block mb-2 text-sm font-medium text-zinc-900"
               >
                 Email
               </label>
               <input
                 type="email"
                 id="email"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400"
+                className="dashboard__input"
                 placeholder="Email"
                 {...register("email")}
               />
@@ -75,7 +75,7 @@ export default function Login() {
             <div className="col-span-2">
               <label
                 htmlFor="name"
-                className="block mb-2 text-sm font-medium text-gray-900"
+                className="block mb-2 text-sm font-medium text-zinc-900"
               >
                 Password
               </label>
@@ -84,13 +84,13 @@ export default function Login() {
                   id="password"
                   placeholder="********"
                   type={isVisible ? "text" : "password"}
-                  className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                  className="dashboard__input"
                   {...register("password")}
                 />
                 <button
                   type="button"
                   onClick={() => setIsVisible((prev) => !prev)}
-                  className="absolute top-0 end-0 p-3.5 rounded-e-md"
+                  className="absolute top-0 end-0 p-[0.6rem] rounded-e-md"
                 >
                   <svg
                     className="flex-shrink-0 size-3.5 text-gray-400"

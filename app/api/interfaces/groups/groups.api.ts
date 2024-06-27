@@ -81,9 +81,8 @@ export async function updateGroup(formData: GroupsForm, id: number) {
           description_en = COALESCE($8, description_en),
           price_range = COALESCE($9, price_range),
           posts_id = COALESCE($10, posts_id),
-          category = COALESCE($11, posts_id),
-        WHERE id = $12
-        RETURNING *
+          category = COALESCE($11, category)
+          WHERE id = $12
       `;
     await sql.query(queryText, formattedData);
   } catch (error) {

@@ -26,44 +26,21 @@ export async function createContacts(formData: ContactsForm) {
   }
 }
 
-export async function updateContacts(formData: Partial<ContactsForm>) {
+export async function updateContacts(formData: ContactsForm) {
   try {
-    const { work_hours, email, telephone, telegram, whatsapp } = formData;
-
-    let updateFields = [];
-    let values = [];
-
-    if (work_hours !== undefined) {
-      updateFields.push("work_hours = $1");
-      values.push(work_hours);
-    }
-    if (email !== undefined) {
-      updateFields.push("email = $2");
-      values.push(email);
-    }
-    if (telephone !== undefined) {
-      updateFields.push("telephone = $3");
-      values.push(telephone);
-    }
-    if (telegram !== undefined) {
-      updateFields.push("telegram = $4");
-      values.push(telegram);
-    }
-    if (whatsapp !== undefined) {
-      updateFields.push("whatsapp = $5");
-      values.push(whatsapp);
-    }
-
-    if (updateFields.length > 0) {
-      const setClause = updateFields.join(", ");
-      const query = `
-          UPDATE contacts
-          SET ${setClause}
-          WHERE id = 1
-      `;
-
-      await sql.query(query, values);
-    }
+    const formattedData: (string | number | number[])[] =
+      Object.values(formData);
+    const queryText = `
+      UPDATE contacts
+      SET
+        work_hours = COALESCE($1, work_hours),
+        telephone = COALESCE($2, telephone),
+        email = COALESCE($3, email),
+        telegram = COALESCE($4, telegram),
+        instagram = COALESCE($5, instagram),
+        whatsapp = COALESCE($6, whatsapp)
+    `;
+    await sql.query(queryText, formattedData);
   } catch (error) {
     console.error(error);
     throw new Error("Failed to update user");

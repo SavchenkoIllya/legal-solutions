@@ -48,7 +48,6 @@ export default function CarouselFormView({
     try {
       if (carouselData?.id) {
         await updateCarousel(data, carouselData.id);
-        console.log("updated");
       } else {
         await createCarousel(data);
       }
@@ -70,7 +69,7 @@ export default function CarouselFormView({
       <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
         <label
           htmlFor="dev_name"
-          className="block mb-2 text-sm font-medium text-zinc-900  asterisk"
+          className="dashboard__label asterisk"
         >
           Name for dashboard
         </label>
@@ -90,7 +89,7 @@ export default function CarouselFormView({
       <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
         <label
           htmlFor="image_src"
-          className="block mb-2 text-sm font-medium text-zinc-900 asterisk"
+          className="dashboard__label asterisk"
         >
           Image source
         </label>
@@ -110,7 +109,7 @@ export default function CarouselFormView({
       <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
         <label
           htmlFor="title_ru"
-          className="block mb-2 text-sm font-medium text-zinc-900"
+          className="dashboard__label"
         >
           Title ru
         </label>
@@ -125,7 +124,7 @@ export default function CarouselFormView({
       <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
         <label
           htmlFor="title_ua"
-          className="block mb-2 text-sm font-medium text-zinc-900"
+          className="dashboard__label"
         >
           Title ua
         </label>
@@ -140,7 +139,7 @@ export default function CarouselFormView({
       <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
         <label
           htmlFor="title_pl"
-          className="block mb-2 text-sm font-medium text-zinc-900"
+          className="dashboard__label"
         >
           Title pl
         </label>
@@ -155,7 +154,7 @@ export default function CarouselFormView({
       <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
         <label
           htmlFor="title_en"
-          className="block mb-2 text-sm font-medium text-zinc-900 "
+          className="dashboard__label"
         >
           Title en
         </label>
@@ -171,7 +170,7 @@ export default function CarouselFormView({
       <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
         <label
           htmlFor="description_ru"
-          className="block mb-2 text-sm font-medium text-zinc-900 "
+          className="dashboard__label"
         >
           Description ru
         </label>
@@ -186,7 +185,7 @@ export default function CarouselFormView({
       <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
         <label
           htmlFor="description_ua"
-          className="block mb-2 text-sm font-medium text-zinc-900 "
+          className="dashboard__label"
         >
           Description ua
         </label>
@@ -202,7 +201,7 @@ export default function CarouselFormView({
       <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
         <label
           htmlFor="description_pl"
-          className="block mb-2 text-sm font-medium text-zinc-900 "
+          className="dashboard__label"
         >
           Description pl
         </label>
@@ -218,7 +217,7 @@ export default function CarouselFormView({
       <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
         <label
           htmlFor="description_en"
-          className="block mb-2 text-sm font-medium text-zinc-900 "
+          className="dashboard__label"
         >
           Description en
         </label>

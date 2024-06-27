@@ -2,9 +2,9 @@
 import Search from "./search";
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function SearchWithDate() {
   const [startDate, setStartDate] = useState(new Date("2024-05-01T00:00:00"));

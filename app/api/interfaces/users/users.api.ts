@@ -69,6 +69,7 @@ export async function loginUser(credentials: Pick<User, "email" | "password">) {
     }
 
     const passwordsMatch = await bcrypt.compare(password, user.password);
+
     if (passwordsMatch) {
       return user;
     }
