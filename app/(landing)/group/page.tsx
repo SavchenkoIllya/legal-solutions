@@ -1,25 +1,43 @@
-import { getPostsByCategory } from "@/app/api/interfaces/posts/posts.api";
 import CategoryToggler from "../components/card/category-toggler";
 import { Categories } from "@/app/api/interfaces/groups/types";
 import Card from "../components/card/card";
 import { Post } from "@/app/api/interfaces/posts/types";
+import { getRequestedPosts } from "@/app/api/interfaces/posts/posts.api";
+import { getGroupById } from "@/app/api/interfaces/groups/groups.api";
+import { Groups as GroupsType } from "@/app/api/interfaces/groups/types";
+import { HiArrowNarrowLeft } from "react-icons/hi";
+import Link from "next/link";
 
 export default async function Groups({
   searchParams,
 }: {
   searchParams: {
     category: Categories;
+    id: number;
     lang: string;
   };
 }) {
-  const posts = await getPostsByCategory(searchParams.category || "private");
+  const group = await getGroupById(searchParams.id);
+  const posts = await getRequestedPosts(group.posts_id);
+
   return (
     <div className="pt-[80px] container m-auto">
+      <Link
+        className="text-button flex items-center gap-2 mt-4"
+        href={`/?lang=${searchParams.lang}&category=${searchParams.category}#cards`}
+      >
+        <HiArrowNarrowLeft /> Back
+      </Link>
       <CategoryToggler />
-      {!posts.length && (
+      {group.id && (
         <h1 className="accent-font text-center my-[40px] grid grid-cols-1 gap-6 w-[100%]">
-          No posts at this moment
+          {String(group[`title_${searchParams.lang}` as keyof GroupsType])}
         </h1>
+      )}
+      {!posts.length && (
+        <h2 className="accent-font text-center my-[40px] grid grid-cols-1 gap-6 w-[100%]">
+          No posts at this moment
+        </h2>
       )}
       <div
         id="cards"
@@ -32,7 +50,7 @@ export default async function Groups({
                 key={post.id}
                 title={String(post[`title_${searchParams.lang}` as keyof Post])}
                 price={post.price_range}
-                link={`/group/${post.id}`}
+                link={`/group/${post.id}?lang=${searchParams.lang}`}
               />
             )
         )}

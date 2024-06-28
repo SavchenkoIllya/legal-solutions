@@ -2,7 +2,6 @@
 import { sql } from "@vercel/postgres";
 import { Post } from "./types";
 import { PostsForm } from "./schema";
-// import { auth } from "@/app/api/auth/[...nextauth]/route";
 import { auth } from "../../auth/auth";
 import { getUserOnAuth } from "../users/users.api";
 import { Categories } from "../groups/types";
@@ -44,7 +43,7 @@ export async function getPostsByCategory(category: Categories) {
 
 export async function getRequestedPosts(ids: number[]) {
   try {
-    const queryText = `SELECT * FROM groups WHERE id = ANY($1::int[])`;
+    const queryText = `SELECT * FROM posts WHERE id = ANY($1::int[])`;
     const res = await sql.query(queryText, [ids]);
     return res.rows;
   } catch (error) {
@@ -139,7 +138,7 @@ export async function updatePost(formData: Partial<PostsForm>, id: number) {
                              seo_ua = ${seo_ua || ""},
                              is_published = ${is_published},
                              price_range = ${price_range},
-                             category = ${category}
+                             category = ${category},
                              updated_at = NOW()
                              WHERE id = ${id};
             `;

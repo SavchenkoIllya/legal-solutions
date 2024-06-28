@@ -31,7 +31,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="bg-white w-full flex-center border-b border-gray fixed z-[20]">
+      <header className="bg-white w-full flex-center border-b border-gray fixed z-[9999]">
         <div
           id="container"
           className="w-[1200px] my-[20px] mx-[10px] flex items-center justify-between"

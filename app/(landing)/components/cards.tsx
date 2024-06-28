@@ -10,8 +10,8 @@ export default async function Cards({
   lang?: string;
 }) {
   return (
-    <section className="my-16">
-      <div id="wrapper" className="flex-center container mx-auto">
+    <section id="cards" className="my-16">
+      <div id="wrapper" className="container mx-auto flex-center">
         <div id="content" className="w-[100%] px-8">
           <CategoryToggler />
           {!groups.length && (
@@ -19,7 +19,7 @@ export default async function Cards({
               No groups at this moment
             </h1>
           )}
-          <div id="cards" className="my-[40px] grid grid-cols-5 gap-6 w-[100%]">
+          <div className="my-[40px] grid grid-cols-5 gap-6 w-[100%]">
             {groups.map((group) => (
               <Card
                 key={group.id}
@@ -28,7 +28,7 @@ export default async function Cards({
                   group[`description_${lang}` as keyof Groups]
                 )}
                 price={group.price_range}
-                link={`/group?category=${group.category}`}
+                link={`/group?category=${group.category}&id=${group.id}&lang=${lang}`}
               />
             ))}
           </div>

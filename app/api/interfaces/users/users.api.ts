@@ -2,6 +2,7 @@
 import { sql } from "@vercel/postgres";
 import { User, UserFormData } from "./types";
 import bcrypt from "bcryptjs";
+import { dataFormatter } from "../utils";
 
 export async function getAllUsers() {
   try {
@@ -43,15 +44,32 @@ export async function getUserOnAuth(email: string): Promise<any | undefined> {
   }
 }
 
-export async function registerUser(formData: UserFormData) {
+async function isExist(email: string) {
+  const user = await getUserOnAuth(email);
   try {
-    const { name, email, password } = formData;
-    const hashedPassword = await bcrypt.hash(password, 10);
+    if (!user) {
+      return false;
+    }
+    return user !== undefined && user !== null;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to find is user exist.");
+  }
+}
 
+export async function registerUser(formData: UserFormData) {
+  const { name, email, password } = formData;
+  const hashedPassword = await bcrypt.hash(password, 10);
+  const isExistUser = await isExist(email);
+  if (isExistUser) {
+    throw new Error("This email is already taken");
+  }
+
+  try {
     await sql`
-                INSERT INTO users (name, email, password)
-                VALUES(${name}, ${email}, ${hashedPassword})
-              `;
+              INSERT INTO users (name, email, password)
+              VALUES(${name}, ${email}, ${hashedPassword})
+             `;
   } catch (error) {
     console.error(error);
     throw new Error("Failed to registrate new user");
@@ -84,13 +102,14 @@ export async function updateUser(
   formData: Pick<User, "email" | "name">
 ) {
   try {
-    const { name, email } = formData;
-    await sql`
+    const queryText = `
       UPDATE users
-      SET name = ${name},
-          email = ${email}
-      WHERE id=${id};
+      SET
+          name = COALESCE($1, name),
+          email = COALESCE($2, email)
+      WHERE id=$3;
       `;
+    await sql.query(queryText, dataFormatter(formData, id));
   } catch (error) {
     console.error(error);
     throw new Error("Cannot update this user");

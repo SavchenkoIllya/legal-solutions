@@ -55,115 +55,101 @@ export default function Register({
 
   return (
     <>
-      <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
-        <h3 className="text-lg font-semibold text-zinc-900">Create New User</h3>
+      <div className="flex items-center justify-between p-4 md:p-5 border-b dark:border-zinc-300 rounded-t">
+        <h3 className="dashboard__label text-lg font-semibold">
+          Create New User
+        </h3>
       </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
         noValidate
-        className="p-4 flex flex-col md:p-5"
+        className="flex flex-col sm:p-4 md:p-5"
       >
-        <div className="grid gap-4 mb-4 grid-cols-2">
-          <div className="col-span-2">
-            <label
-              htmlFor="name"
-              className="block mb-2 text-sm font-medium text-zinc-900"
-            >
-              Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              className="dashboard__input"
-              placeholder="Type product name"
-              {...register("name")}
-            />
-            {errors.name && (
-              <p role="alert" className="text-rose-500 text-center">
-                {errors.name?.message}
-              </p>
-            )}
-          </div>
-          <div className="col-span-2">
-            <label
-              htmlFor="name"
-              className="block mb-2 text-sm font-medium text-zinc-900"
-            >
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="dashboard__input"
-              placeholder="Type product name"
-              {...register("email")}
-            />
-            {errors.email && (
-              <p role="alert" className="text-rose-500 text-center">
-                {errors.email?.message}
-              </p>
-            )}
-          </div>
-          <div className="col-span-2">
-            <label
-              htmlFor="name"
-              className="block mb-2 text-sm font-medium text-zinc-900"
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              className="dashboard__input"
-              placeholder="Type product name"
-              {...register("password")}
-            />
-            {errors.password && (
-              <p role="alert" className="text-rose-500 text-center">
-                {errors.password?.message}
-              </p>
-            )}
-          </div>
-          <div className="col-span-2">
-            <label
-              htmlFor="name"
-              className="block mb-2 text-sm font-medium text-zinc-900"
-            >
-              Confirm Password
-            </label>
-            <input
-              ref={confirmPasswordRef}
-              onChange={checkPassword}
-              onSubmitCapture={checkPassword}
-              type="password"
-              name="confirm-password"
-              id="confirm-password"
-              className="dashboard__input"
-              placeholder="Type product name"
-              required
-            />
-          </div>
-          <div className="col-span-2">
-            {errors.root && (
-              <p role="alert" className="text-rose-500 text-center">
-                {errors.root.message}
-              </p>
-            )}
-            {isSubmitSuccessful && (
-              <>
-                <p role="success" className="text-green-500 text-center">
-                  User have been successfully created
-                </p>
-                <p role="success" className="text-green-500 text-center">
-                  {customSuccessText}
-                </p>
-              </>
-            )}
-          </div>
+        <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
+          <label htmlFor="name" className="dashboard__label">
+            Name
+          </label>
+          <input
+            type="text"
+            id="name"
+            className="dashboard__input"
+            placeholder="Type product name"
+            {...register("name")}
+          />
         </div>
+        {errors.name && (
+          <p role="alert" className="text-rose-500 text-center">
+            {errors.name?.message}
+          </p>
+        )}
+        <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
+          <label htmlFor="name" className="dashboard__label">
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            className="dashboard__input"
+            placeholder="Type product name"
+            {...register("email")}
+          />
+        </div>
+        {errors.email && (
+          <p role="alert" className="text-rose-500 text-center">
+            {errors.email?.message}
+          </p>
+        )}
+        <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
+          <label htmlFor="name" className="dashboard__label">
+            Password
+          </label>
+          <input
+            type="password"
+            id="password"
+            className="dashboard__input"
+            placeholder="Type product name"
+            {...register("password")}
+          />
+        </div>
+        {errors.password && (
+          <p role="alert" className="text-rose-500 text-center">
+            {errors.password?.message}
+          </p>
+        )}
+        <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
+          <label htmlFor="name" className="dashboard__label">
+            Confirm Password
+          </label>
+          <input
+            ref={confirmPasswordRef}
+            onChange={checkPassword}
+            onSubmitCapture={checkPassword}
+            type="password"
+            name="confirm-password"
+            id="confirm-password"
+            className="dashboard__input"
+            placeholder="Type product name"
+            required
+          />
+        </div>
+        {errors.root && (
+          <p role="alert" className="text-rose-500 text-center">
+            {errors.root.message}
+          </p>
+        )}
+        {isSubmitSuccessful && (
+          <>
+            <p role="success" className="text-green-500 text-center">
+              User have been successfully created
+            </p>
+            <p role="success" className="text-green-500 text-center">
+              {customSuccessText}
+            </p>
+          </>
+        )}
         <button
           type="submit"
-          disabled={isValid}
+          disabled={!isValid}
           className="self-center dashboard__button"
         >
           {isSubmitting && (

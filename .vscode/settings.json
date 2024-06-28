@@ -1,4 +1,6 @@
 {
+  "vercelVSCode.projectId": "prj_TsvrEuAGw1qJm1vgxR9FsMyc7hPx",
+  "vercelVSCode.teamId": "team_GUbsTVAQYtkcoxoiw0xbv1Cb"
   /**
    * Controls whether suggestions should be accepted on commit characters.
    * For example, in JavaScript, the semi-colon (;) can be a commit character that accepts a suggestion and types that character.

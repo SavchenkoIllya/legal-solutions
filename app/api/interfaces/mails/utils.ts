@@ -43,6 +43,9 @@ export const getChatsId: () => Promise<Set<unknown>> = async () => {
       next: { revalidate: 0 },
     });
     const data = await response.json();
+
+    console.log(data);
+    
     return new Set<string>(
       data.result.map((res: TelegramUpdate) => String(res.message.chat.id))
     );
