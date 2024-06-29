@@ -1,3 +1,4 @@
+import { mailStatus } from './../../../admin/dashboard/inbox/[page]/components/utils/mailStatus';
 "use server";
 import { sql } from "@vercel/postgres";
 import { IsReadStates, Mail } from "./types";
@@ -76,10 +77,41 @@ export async function deleteMail(id: number) {
   }
 }
 
+// TODO: rename
+const orderMapper = (relevance: string, mailStatus: string) => {
+  let orderClause = '';
+
+  if (mailStatus) {
+    orderClause += `
+    CASE 
+      WHEN is_read = '${mailStatus}' THEN 1
+      WHEN is_read = 'read' THEN 2
+      WHEN is_read = 'unread' THEN 3
+      WHEN is_read = 'in process' THEN 4
+      ELSE 5
+    END, `
+  }
+
+  switch (relevance) {
+    case "ASC":
+      orderClause += `created_at ASC`;
+      break;
+    case "DESC":
+      orderClause += `created_at DESC`;
+      break;
+    default:
+      orderClause += `created_at DESC`;
+  }
+
+  return orderClause;
+}
+
 export async function searchMail(
   searchParams: string,
   startDate: string,
-  endDate: string
+  endDate: string,
+  relevance: string,
+  mailStatus: string
 ) {
   try {
     const searchStartDate = new Date(startDate)
@@ -90,20 +122,24 @@ export async function searchMail(
       .toISOString()
       .replace("T", " ")
       .slice(0, 19);
-    const request = await sql<Mail>`SELECT *
-                                    FROM mails
-                                    WHERE
-                                        (name::TEXT ILIKE '%' || ${searchParams} || '%' OR
-                                        phone::TEXT ILIKE '%' || ${searchParams} || '%' OR
-                                        email::TEXT ILIKE '%' || ${searchParams} || '%' OR
-                                        comment::TEXT ILIKE '%' || ${searchParams} || '%' OR
-                                        region::TEXT ILIKE '%' || ${searchParams} || '%') AND
-                                        created_at BETWEEN ${searchStartDate} AND ${searchEndDate}
-                                    ORDER BY created_at DESC;
-                                    `;
+
+    const query = `
+    SELECT * FROM mails
+    WHERE
+        (name::TEXT ILIKE '%' || $1 || '%' OR
+        phone::TEXT ILIKE '%' || $1 || '%' OR
+        email::TEXT ILIKE '%' || $1 || '%' OR
+        comment::TEXT ILIKE '%' || $1 || '%' OR
+        region::TEXT ILIKE '%' || $1 || '%')
+        AND created_at BETWEEN $2 AND $3
+    ORDER BY ${orderMapper(relevance, mailStatus)};
+`;
+    const request = await sql.query(query, [searchParams, searchStartDate, searchEndDate])
+
     return request.rows;
   } catch (error) {
     console.error(error);
     throw new Error("Failed finding mail");
   }
 }
+

@@ -150,12 +150,19 @@ export async function updatePost(formData: Partial<PostsForm>, id: number) {
 
 export async function deletePost(id: number) {
   // FIXME: on delete post we have to find all groups that includes this posts and remove from them
-
   try {
     await sql`
               DELETE FROM posts
               WHERE id=${id}
-              `;
+              `.then(async () => {
+                                  await sql`
+                                          UPDATE groups
+                                          SET posts_id = ARRAY_REMOVE(posts_id, ${id})
+                                          WHERE ${id} = ANY(posts_id);
+                                          `;
+                    }).catch(console.log);
+
+
   } catch (error) {
     console.error(error);
     throw new Error("Failed deleting post");

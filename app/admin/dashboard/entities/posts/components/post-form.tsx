@@ -29,9 +29,7 @@ export default function PostsFormView({ postData }: PostsFormViewProps) {
   } = useForm<PostsForm>({
     resolver: zodResolver(PostsSchema),
     defaultValues: postData
-      ? {
-          ...postData,
-        }
+      ? { ...postData }
       : {},
   });
   const [state, dispatch] = useReducer(formReducer, initialFormState);

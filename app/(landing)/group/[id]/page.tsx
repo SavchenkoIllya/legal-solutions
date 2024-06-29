@@ -2,6 +2,8 @@ import { getPostById } from "@/app/api/interfaces/posts/posts.api";
 import { Post } from "@/app/api/interfaces/posts/types";
 import { MDXRemote } from "next-mdx-remote/rsc";
 
+export const revalidate = 0;
+
 export default async function PostPage({
   params: { id },
   searchParams: { lang },
@@ -14,7 +16,6 @@ export default async function PostPage({
     <>
       <head>
         <title>{String(post[`title_${lang}` as keyof Post])}</title>
-        {/* {post[`seo_${lang}` as keyof Post] as any} */}
       </head>
       <div className="pt-[80px] container m-auto">
         <div id="content" className="mt-8">

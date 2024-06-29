@@ -8,6 +8,9 @@ import { Groups as GroupsType } from "@/app/api/interfaces/groups/types";
 import { HiArrowNarrowLeft } from "react-icons/hi";
 import Link from "next/link";
 
+
+export const revalidate = 0;
+
 export default async function Groups({
   searchParams,
 }: {
