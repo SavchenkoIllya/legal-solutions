@@ -6,13 +6,13 @@ import {
   MailSchema,
   emailSchema,
 } from "@/app/api/interfaces/mails/schema";
-import { Regions } from "@/app/api/constants/Regions";
 import { SpinnerDiamond } from "spinners-react";
 import { createMail } from "@/app/api/interfaces/mails/mails.api";
 import { PhoneInput } from "react-international-phone";
 import { cn } from "@/app/utils/cn";
 import "react-international-phone/style.css";
 import "./form.css";
+import CustomSelect from "./select";
 
 export default function Form() {
   const {
@@ -29,6 +29,8 @@ export default function Form() {
 
   const handleTelephone = (phone: string) =>
     setValue("phone", phone, { shouldValidate: true });
+
+  const handleRegion = (value: string) => setValue("region", value)
 
   const onSubmit: SubmitHandler<MailForm> = async (data: MailForm) => {
     const expirationTimeStr = localStorage.getItem("expirationTime");
@@ -133,14 +135,7 @@ export default function Form() {
           )}
         </div>
         <div>
-          <label htmlFor="region" className="plain-font">
-            Region
-          </label>
-          <select id="region" className="input" {...register("region")}>
-            {Regions.map((region) => (
-              <option key={region}>{region}</option>
-            ))}
-          </select>
+          <CustomSelect callback={handleRegion} />
         </div>
         <div>
           <label htmlFor="comment" className="plain-font">

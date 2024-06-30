@@ -60,23 +60,27 @@ export default function SearchWithDate() {
   useEffect(() => handleEndSearch(String(endDate)), [endDate])
 
   return (
-    <div className="flex gap-2">
+    <div className="flex flex-wrap gap-2">
       <Search placeholder="Search me" />
       <DatePicker
+        className="dashboard__input max-w-[120px]"
         selected={startDate}
         onChange={(date) => !!date && setStartDate(date)}
       />
       <DatePicker
+        className="dashboard__input max-w-[120px]"
         selected={endDate}
         onChange={(date) => !!date && setEndDate(date)}
       />
       <select
+        className="dashboard__input max-w-[120px]"
         defaultValue={searchParams.get("relevance")?.toString()}
         name="relevance" onChange={handleSelect}>
         <option value={"ASC"}>Ascendent</option>
         <option value={"DESC"}>Descendent</option>
       </select>
       <select
+        className="dashboard__input max-w-[120px]"
         defaultValue={searchParams.get("mailStatus")?.toString()}
         name="mailStatus" onChange={handleSelect}>
         <option>read</option>
