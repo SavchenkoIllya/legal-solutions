@@ -1,11 +1,10 @@
-import { mailStatus } from './../../../admin/dashboard/inbox/[page]/components/utils/mailStatus';
 "use server";
 import { sql } from "@vercel/postgres";
 import { IsReadStates, Mail } from "./types";
 import { MailForm } from "./schema";
 import { Resend } from "resend";
 import { MailDuplicateEmailTemplate } from "@/app/emails/mailDuplicate";
-import { sendParsedDataToChats } from "./utils";
+import { convertChatIds, sendParsedDataToChats } from "./utils";
 
 export async function getMails() {
   try {
@@ -17,6 +16,7 @@ export async function getMails() {
     throw new Error("Something went wrong on getting users");
   }
 }
+
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -47,10 +47,22 @@ export async function createMail(formData: MailForm) {
       console.log(error);
     }
 
-    await sendParsedDataToChats(formData);
+    const tgIds = await getChatIds()
+
+    await sendParsedDataToChats(formData, convertChatIds(tgIds));
+    
   } catch (error) {
     console.error(error);
     throw new Error("Failed to create mail");
+  }
+}
+
+export async function getChatIds() {
+  try {
+    const response = await sql<{ chat_id: string }>`SELECT chat_id FROM telegram_admins`
+    return response.rows
+  } catch (error) {
+    throw new Error("Failed getting chat ids");
   }
 }
 

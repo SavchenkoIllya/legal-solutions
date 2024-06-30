@@ -1,11 +1,5 @@
-// const TOKEN = 'YOUR_TELEGRAM_BOT_TOKEN';
-// const TELEGRAM_API_URL = `https://api.telegram.org/bot${TOKEN}/sendMessage`;
-
 const TELEGRAM_API_KEY = process.env.TELEGRAM_API_KEY;
-const TG_CHATS_URL = `https://api.telegram.org/bot${TELEGRAM_API_KEY}/getUpdates`;
 const TG_SEND_URL = `https://api.telegram.org/bot${TELEGRAM_API_KEY}/sendMessage`;
-
-const ERROR_TEXT = "Cannot get chats from Telegram API";
 
 export interface TelegramUpdate {
   update_id: number;
@@ -36,23 +30,6 @@ interface From {
   username: string;
   language_code: string;
 }
-
-export const getChatsId: () => Promise<Set<unknown>> = async () => {
-  try {
-    const response = await fetch(TG_CHATS_URL, {
-      next: { revalidate: 0 },
-    });
-    const data = await response.json();
-
-    console.log(data);
-    
-    return new Set<string>(
-      data.result.map((res: TelegramUpdate) => String(res.message.chat.id))
-    );
-  } catch (error) {
-    throw new Error(ERROR_TEXT);
-  }
-};
 
 const parseDataIntoText = (dataObject: Record<string, any>) => {
   const keys = Object.keys(dataObject);
@@ -96,15 +73,17 @@ export const sendMessage = async (
   }
 };
 
+export const convertChatIds = (idsObjectArray: { chat_id: string }[]) => idsObjectArray.map((element) => element.chat_id)
+
 export const sendParsedDataToChats = async (
-  dataObject: Record<string, any>
+  dataObject: Record<string, any>,
+  chatIds: string[]
 ): Promise<void> => {
   try {
-    const chatIds = await getChatsId();
     const text = parseDataIntoText(dataObject);
 
     chatIds.forEach(async (chatId) => {
-      await sendMessage(chatId as string, text);
+      await sendMessage(chatId, text);
     });
   } catch (error) {
     console.error("Error in sendParsedDataToChats:", error);

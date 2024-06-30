@@ -153,3 +153,10 @@ async function seedMails(client) {
 //     "An error occurred while attempting to seed the databases:"
 //   );
 // });
+
+
+// CREATE TABLE telegram_admins (
+//   id SERIAL PRIMARY KEY,
+//   username VARCHAR(255) NOT NULL,
+//   chat_id BIGINT NOT NULL
+// );

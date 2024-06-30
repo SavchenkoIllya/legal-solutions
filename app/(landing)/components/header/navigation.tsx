@@ -1,6 +1,10 @@
 import Link from "next/link";
 import React from "react";
 
+const linksList = {
+  
+}
+
 export default function Navigation(
   props: React.ComponentPropsWithoutRef<"nav">
 ) {
