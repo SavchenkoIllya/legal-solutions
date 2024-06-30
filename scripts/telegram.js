@@ -9,7 +9,7 @@ const baseUrl = process.env.NODE_ENV === "development" ? "https://www.prolegalso
 
 bot.on("message", async (msg) => {
     try {
-        const response = await fetch(`${baseUrl}api/interfaces/telegram`, {
+        await fetch(`${baseUrl}api/interfaces/telegram`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -18,11 +18,11 @@ bot.on("message", async (msg) => {
                 chatId: msg.chat.id,
                 username: msg.chat.username
             })
+        }).then(() => {
+            bot.sendMessage(msg.chat.id, 'You have been successfully subscribed');
         });
-        const data = await response.json()
-        console.log(data);
     } catch (error) {
+        bot.sendMessage(msg.chat.id, "Unfortunately you haven't been subscribed");
         console.error('Error sending POST request:', error);
     }
-    // bot.sendMessage(msg.chat.id, 'Received your message');
 });
