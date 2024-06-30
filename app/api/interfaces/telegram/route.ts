@@ -1,5 +1,4 @@
 import { sql } from "@vercel/postgres";
-import { NextApiRequest, NextApiResponse } from 'next';
 
 const TELEGRAM_API_TOKEN = process.env.TELEGRAM_API_KEY || ""
 
@@ -18,38 +17,60 @@ const TELEGRAM_API_TOKEN = process.env.TELEGRAM_API_KEY || ""
 
 // }
 
+//  DATA EXAMPLE
+// {
+//     update_id: 103415295,
+//     message: {
+//       message_id: 69,
+//       from: {
+//         id: 678405920,
+//         is_bot: false,
+//         first_name: 'Illya',
+//         last_name: 'Savchenko',
+//         username: 'SavchenkoI',
+//         language_code: 'ru'
+//       },
+//       chat: {
+//         id: 678405920,
+//         first_name: 'Illya',
+//         last_name: 'Savchenko',
+//         username: 'SavchenkoI',
+//         type: 'private'
+//       },
+//       date: 1719789178,
+//       text: 'sfdfs'
+//     }
+//   }
+
 export async function POST(req: Request) {
     const body = await req.json();
-    console.log(body);
-    return Response.json({ success: true });
 
-    // // Обработка входящего сообщения от Telegram
-    // if (body.message) {
-    //     const { id, username } = body.message.chat
-    //     const chatId: number = body.message.chat.id;
-    //     const text: string = 'You have been successfully subscribed!';
-    //     try {
-    //         await sql`INSERT INTO telegram_admins (username, chat_id)
-    //                   VALUES (${username}, ${id})
-    //                   ON CONFLICT (username) DO NOTHING;`;
-    //     } catch (error) {
-    //         return res.status(400);
-    //     }
+    // Обработка входящего сообщения от Telegram
+    if (body.message) {
+        const { id, username } = body.message.chat
+        const text: string = 'You have been successfully subscribed!';
+        try {
+            await sql`INSERT INTO telegram_admins (username, chat_id)
+                      VALUES (${username}, ${id})
+                      ON CONFLICT (username) DO NOTHING;`;
+        } catch (error) {
+            return Response.json({ success: false });
+        }
 
-    //     // Отправка сообщения обратно через Telegram API
-    //     await fetch(`https://api.telegram.org/bot${TELEGRAM_API_TOKEN}/sendMessage`, {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify({
-    //             chat_id: chatId,
-    //             text: text,
-    //         }),
-    //     });
+        // Отправка сообщения обратно через Telegram API
+        await fetch(`https://api.telegram.org/bot${TELEGRAM_API_TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                chat_id: id,
+                text: text,
+            }),
+        });
 
-    //     return res.status(200).json({ status: 'ok' });
-    // } else {
-    //     return res.status(200).json({ status: 'no message' });
-    // }
+        return Response.json({ success: true });
+    } else {
+        return Response.json({ success: false });
+    }
 }
