@@ -18,7 +18,7 @@ const TELEGRAM_API_TOKEN = process.env.TELEGRAM_API_KEY || ""
 
 // }
 
-export default async function POST(req: NextApiRequest, res: NextApiResponse) {
+export async function POST(req: NextApiRequest, res: NextApiResponse) {
     const { body } = req;
 
     // Обработка входящего сообщения от Telegram
