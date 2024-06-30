@@ -3,12 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "concurrently \"npm run start:next\" \"npm run start:bot\"",
-    "start:next": "next start",
-    "start:bot": "node scripts/telegram.js",
-    "lint": "next lint"
+    "dev": "next dev && npm run start:bot",
+    "build": "next build && npm run start:bot",
+    "start": "next start",
+    "lint": "next lint",
+    "start:bot": "node scripts/telegram.js"
   },
   "dependencies": {
     "@headlessui/react": "^2.0.3",
