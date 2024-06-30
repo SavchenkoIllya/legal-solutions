@@ -19,7 +19,7 @@ const TELEGRAM_API_TOKEN = process.env.TELEGRAM_API_KEY || ""
 // }
 
 export async function POST(req: Request) {
-    const body = req.json();
+    const body = await req.json();
     console.log(body);
     return Response.json({ success: true });
 
