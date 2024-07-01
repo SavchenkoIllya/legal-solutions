@@ -1,13 +1,17 @@
+"use client"
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { HiChevronDown } from "react-icons/hi";
 import { Regions } from "@/app/api/constants/Regions";
+import { useState } from 'react';
 
 type CustomSelectProps = {
     callback?: (...args: any[]) => any | void
 }
 
 export default function CustomSelect({ callback }: CustomSelectProps) {
+    const [current, setCurrent] = useState("Choose region")
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        setCurrent(e.currentTarget.value)
         callback?.(e.currentTarget.value)
     }
 
@@ -15,7 +19,7 @@ export default function CustomSelect({ callback }: CustomSelectProps) {
         <Menu>
             <MenuButton
                 className="input text-left bg-white flex justify-between items-center">
-                <p>Region</p>
+                <p>{current}</p>
                 <HiChevronDown className='fill-zinc-400' size={25} />
             </MenuButton>
             <MenuItems
