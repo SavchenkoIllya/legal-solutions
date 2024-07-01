@@ -21,9 +21,6 @@ export default async function Home({
   const request = await getContacts();
   const contacts = request[0];
 
-  console.log(process.env.TELEGRAM_API_KEY);
-  
-
   return (
     <>
       <Carousel carousels={carouselData} />

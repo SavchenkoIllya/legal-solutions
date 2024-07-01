@@ -1,5 +1,7 @@
-const TELEGRAM_API_KEY = process.env.TELEGRAM_API_KEY;
-const TG_SEND_URL = `https://api.telegram.org/bot${TELEGRAM_API_KEY}/sendMessage`;
+import TelegramBot from 'node-telegram-bot-api';
+const TELEGRAM_API_KEY = process.env.TELEGRAM_API_KEY || "";
+
+const bot = new TelegramBot(TELEGRAM_API_KEY, { polling: true });
 
 export interface TelegramUpdate {
   update_id: number;
@@ -45,28 +47,8 @@ export const sendMessage = async (
   chatId: string,
   text: string
 ): Promise<void> => {
-  const body = {
-    chat_id: chatId,
-    text: text,
-  };
-
   try {
-    const response = await fetch(TG_SEND_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
-
-    if (!response.ok) {
-      throw new Error(`Ошибка отправки сообщения: ${response.statusText}`);
-    }
-
-    const data = await response.json();
-    if (!data.ok) {
-      throw new Error(`Ошибка API Telegram: ${data.description}`);
-    }
+    await bot.sendMessage(chatId, text);
   } catch (error) {
     console.error("Ошибка при отправке сообщения в Telegram:", error);
     throw error;

@@ -6,7 +6,7 @@ import type {
 } from "next";
 import type { NextAuthOptions } from "next-auth";
 
-const SECRET_KEY = "pMXEqOO3xX7Y2U3slnSqqIvdLwBczbHV3y3lqq12Btc=";
+const SECRET_KEY = process.env.NEXTAUTH_SECRET;
 
 export function auth(
   ...args:
@@ -18,10 +18,10 @@ export function auth(
 }
 
 export const authConfig = {
-    pages: {
-      signIn: "/admin/signin",
-    },
-    secret: SECRET_KEY,
-    callbacks: {},
-    providers: [],
-  } satisfies NextAuthOptions;
+  pages: {
+    signIn: "/admin/signin",
+  },
+  secret: SECRET_KEY,
+  callbacks: {},
+  providers: [],
+} satisfies NextAuthOptions;
