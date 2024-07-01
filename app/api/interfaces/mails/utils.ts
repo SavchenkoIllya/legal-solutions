@@ -1,5 +1,5 @@
-// const TELEGRAM_API_KEY = process.env.TELEGRAM_API_KEY;
-const TG_SEND_URL = `https://api.telegram.org/bot7444700265:AAF6gq_haBD2IPfU-iVuXIHJ2sbFZODusNg/sendMessage`;
+const TELEGRAM_API_KEY = process.env.TELEGRAM_API_KEY;
+const TG_SEND_URL = `https://api.telegram.org/bot${TELEGRAM_API_KEY}/sendMessage`;
 
 export interface TelegramUpdate {
   update_id: number;
