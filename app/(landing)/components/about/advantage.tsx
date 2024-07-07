@@ -1,11 +1,22 @@
-export default function Advantage() {
+import { ElementType, cloneElement } from "react";
+import { IconType } from "react-icons/lib";
+
+type AdvantageProps = {
+    icon?: any;
+    title: string;
+    description: string;
+};
+
+const Advantage: React.FC<AdvantageProps> = (props) => {
     return (
         <div id="advantage" className="flex flex-col px-4">
-            <div id="icon-text" className="flex gap-4 justify-center">
-                <svg className="fill-red h-[50px]" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title /><path d="M21,7V17H19V13.62l-6.55,3.27A1,1,0,0,1,12,17a1,1,0,0,1-.53-.15A1,1,0,0,1,11,16V13.62L4.45,16.89A1,1,0,0,1,4,17a1,1,0,0,1-.53-.15A1,1,0,0,1,3,16V8a1,1,0,0,1,1.45-.89L11,10.38V8a1,1,0,0,1,1.45-.89L19,10.38V7Z" /></svg>
-                <h2 className="accent-font text-red">Fast</h2>
+            <div id="icon-text" className="flex flex-col">
+                {props.icon && cloneElement(props.icon, { className: "w-20 h-20 mb-4 fill-red stroke-red" })}
+                <h2 className="plain-bold-font md:max-w-[300px] ">{props.title}</h2>
             </div>
-            <p className="plain-font md:max-w-[250px] text-justify">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quis laboriosam dolores labore illum veniam voluptate iure, perspiciatis impedit excepturi ducimus quae, numquam maxime provident inventore, adipisci similique possimus ea nemo?</p>
+            <p className="plain-font mt-2 md:max-w-[300px] text-justify">{props.description}</p>
         </div>
-    )
-}
+    );
+};
+
+export default Advantage;

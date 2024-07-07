@@ -8,7 +8,7 @@ export default async function Cards({
 }: {
   groups: Groups[];
   lang?: string;
-}) {
+}) {//
   return (
     <section id="cards" className="my-16">
       <div id="wrapper" className="container mx-auto flex-center">

@@ -13,7 +13,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { HiOutlineTrash } from "react-icons/hi";
-import { mailStatus } from "./utils/mailStatus";
+import { mailStatus } from "./search/utils/mailStatus";
 
 export default function MailCard({ mail }: { mail: Mail }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,7 +34,6 @@ export default function MailCard({ mail }: { mail: Mail }) {
                 mailStatus[mail.is_read].styles
               )}
             ></div>
-            {/* FIXME: Fix this fucking piece of shit */}
             {/* <button
               onClick={() => {
                 changeMailStatus(mail.id, "unread");
@@ -91,7 +90,7 @@ export default function MailCard({ mail }: { mail: Mail }) {
       <button
         onClick={() => setIsOpen(true)}
         key={mail.id}
-        className="relative group cursor mx-4 overflow-hidden rounded-2xl bg-white shadow-xl duration-200 hover:-translate-y-4 w-[300px]"
+        className="relative group cursor mx-2 overflow-hidden rounded-2xl bg-white shadow-xl duration-200 hover:-translate-y-4 w-[300px]"
       >
         <div
           className={cn(

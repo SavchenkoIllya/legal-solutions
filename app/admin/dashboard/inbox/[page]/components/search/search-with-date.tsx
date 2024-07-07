@@ -1,63 +1,113 @@
 "use client";
 import Search from "./search";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 import "react-datepicker/dist/react-datepicker.css";
+import CustomDropdown from "./dropdown";
+import { cn } from "@/app/utils/cn";
+import { mailStatus } from "./utils/mailStatus";
+
+
+const relevanceValues = [{
+  value: "ASC",
+  title: "Ascendent",
+  optionName: "relevance"
+},
+{
+  value: "DESC",
+  title: "Descendent",
+  optionName: "relevance"
+},
+]
+
+const mailStatuses = [
+  {
+    value: "read",
+    title: <div
+      className="flex items-center gap-2"
+    ><div
+      className={cn(
+        "w-3 h-3 rounded-full",
+        mailStatus["read"].styles
+      )}
+    ></div><p>read</p></div>,
+    optionName: "mailStatus"
+  }, {
+    value: "unread",
+    title: <div
+      className="flex items-center gap-2"
+    ><div
+      className={cn(
+        "w-3 h-3 rounded-full",
+        mailStatus["unread"].styles
+      )}
+    ></div><p>unread</p></div>,
+    optionName: "mailStatus"
+  }, {
+    value: "in progress",
+    title: <div
+      className="flex items-center gap-2"
+    ><div
+      className={cn(
+        "w-3 h-3 rounded-full",
+        mailStatus["progress"].styles
+      )}
+    ></div><p>in progress</p></div>,
+    optionName: "mailStatus"
+  }, {
+    value: "complete",
+    title: <div
+      className="flex items-center gap-2"
+    ><div
+      className={cn(
+        "w-3 h-3 rounded-full",
+        mailStatus["complete"].styles
+      )}
+    ></div><p>complete</p></div>,
+    optionName: "mailStatus"
+  }
+]
 
 export default function SearchWithDate() {
-  const [startDate, setStartDate] = useState(new Date("2024-04-01T00:00:00"));
-  const [endDate, setEndDate] = useState(new Date());
-
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
+  const [startDate, setStartDate] = useState(new Date("2024-04-01T00:00:00"));
+  const [endDate, setEndDate] = useState(new Date());
 
-  const handleStartSearch = useDebouncedCallback((term: string) => {
+  const updateSearchParams = useCallback((name: string, value: string | null) => {
     const params = new URLSearchParams(searchParams);
-    if (term) {
-      params.set("startDate", term);
-    } else {
-      params.delete("startDate");
-    }
-    replace(`${pathname}?${params.toString()}`);
-  }, 300);
-
-
-  const handleEndSearch = useDebouncedCallback((term: string) => {
-    const params = new URLSearchParams(searchParams);
-    if (term) {
-      params.set("endDate", term);
-    } else {
-      params.delete("endDate");
-    }
-    replace(`${pathname}?${params.toString()}`);
-  }, 300);
-
-
-  const handleOptionsChange = useDebouncedCallback((name: string, value: string) => {
-    const params = new URLSearchParams(searchParams);
-    params.set(name, value);
     if (value) {
       params.set(name, value);
     } else {
       params.delete(name);
     }
     replace(`${pathname}?${params.toString()}`);
-  }, 300)
+  }, [searchParams, pathname, replace]);
 
-  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => handleOptionsChange(e.target.name, e.target.value)
+  const handleStartSearch = useDebouncedCallback((date: Date) => {
+    updateSearchParams("startDate", date.toISOString());
+  }, 300);
+
+  const handleEndSearch = useDebouncedCallback((date: Date) => {
+    updateSearchParams("endDate", date.toISOString());
+  }, 300);
+
+  const handleOptionsChange = useDebouncedCallback((name: string, value: string) => {
+    updateSearchParams(name, value);
+  }, 300);
 
   useEffect(() => {
-    handleStartSearch("2024-04-01T00:00:00");
-    handleEndSearch(String(new Date()));
+    handleStartSearch(new Date("2024-04-01T00:00:00"));
+    handleEndSearch(new Date());
     handleOptionsChange("relevance", "DESC")
     handleOptionsChange("mailStatus", "unread")
   }, []);
 
-  useEffect(() => handleStartSearch(String(startDate)), [startDate])
-  useEffect(() => handleEndSearch(String(endDate)), [endDate])
+  useEffect(() => handleStartSearch(startDate), [startDate])
+  useEffect(() => handleEndSearch(endDate), [endDate])
 
   return (
     <div className="flex flex-wrap gap-2">
@@ -72,22 +122,16 @@ export default function SearchWithDate() {
         selected={endDate}
         onChange={(date) => !!date && setEndDate(date)}
       />
-      <select
-        className="dashboard__input max-w-[120px]"
-        defaultValue={searchParams.get("relevance")?.toString()}
-        name="relevance" onChange={handleSelect}>
-        <option value={"ASC"}>Ascendent</option>
-        <option value={"DESC"}>Descendent</option>
-      </select>
-      <select
-        className="dashboard__input max-w-[120px]"
-        defaultValue={searchParams.get("mailStatus")?.toString()}
-        name="mailStatus" onChange={handleSelect}>
-        <option>read</option>
-        <option>unread</option>
-        <option>in progress</option>
-        <option>complete</option>
-      </select>
+      <CustomDropdown
+        initialValue={searchParams.get("relevance")?.toString()}
+        values={relevanceValues}
+        callback={handleOptionsChange}
+      />
+      <CustomDropdown
+        initialValue={searchParams.get("mailStatus")?.toString()}
+        values={mailStatuses}
+        callback={handleOptionsChange}
+      />
     </div>
   );
 }

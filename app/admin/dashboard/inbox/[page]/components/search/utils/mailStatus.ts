@@ -8,7 +8,7 @@ type IsReadValues = {
     next?: IsReadStates;
   };
   
-  type MailModalStatus = Record<IsReadStates, IsReadValues>;
+  export type MailModalStatus = Record<IsReadStates, IsReadValues>;
   
   export const mailStatus: MailModalStatus = {
     read: {

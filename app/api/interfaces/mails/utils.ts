@@ -1,7 +1,7 @@
 import TelegramBot from 'node-telegram-bot-api';
 const TELEGRAM_API_KEY = process.env.TELEGRAM_API_KEY || "";
 
-const bot = new TelegramBot(TELEGRAM_API_KEY);
+const bot = new TelegramBot(TELEGRAM_API_KEY, { polling: false });
 
 export interface TelegramUpdate {
   update_id: number;
