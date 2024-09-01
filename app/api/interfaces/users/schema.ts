@@ -39,6 +39,17 @@ export const UserSchema = z.object({
 
 export type UserForm = z.infer<typeof UserSchema>;
 
+export const UserSchemaWithoutPassword = z.object({
+  email: z.coerce
+    .string()
+    .email({ message: "please enter email" })
+    .min(5, { message: "To short email" }),
+  id: z.number().optional(),
+  name: z.string().min(5, { message: "Your name cannot be so short" }),
+});
+
+export type UpdateUserForm = z.infer<typeof UserSchemaWithoutPassword>;
+
 // TODO:
 //      - optimize this functionality using destructuring
 // const createValidationSchema = (additionalFields: Record<string, z.ZodType<any>>) => {

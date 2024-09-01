@@ -1,56 +1,75 @@
 "use client";
-import {
-  HiMail,
-  HiOutlineLogout,
-  HiUser,
-  HiPresentationChartBar,
-  HiDatabase,
-} from "react-icons/hi";
-import { AiFillPicture } from "react-icons/ai";
 import { SyntheticEvent } from "react";
 import { signOut } from "next-auth/react";
-import SidebarElement from "./sidebar-element";
+import SVGLogo from "@/app/assets/Logo.svg";
+import PersonIcon from '@mui/icons-material/Person';
+import StorageIcon from '@mui/icons-material/Storage';
+import ImageSearchIcon from '@mui/icons-material/ImageSearch';
+import MailIcon from '@mui/icons-material/Mail';
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import Drawer from "@mui/material/Drawer";
+import Stack from "@mui/material/Stack";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import Divider from "@mui/material/Divider";
+
+export const drawerWidth = 100
 
 export default function CustomSidebar() {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
   const handleLogout = async (e: SyntheticEvent) => {
     e.preventDefault();
     await signOut();
   };
 
   return (
-    <div className="fixed left-0 w-16 min-h-screen select-none border bg-blue-800 shadow">
-      <SidebarElement
-        link="/admin/dashboard"
-        name="Dashboard"
-        icon={<HiPresentationChartBar size={24} />}
-      />
-      <SidebarElement
-        link="/admin/dashboard/users"
-        name="Users"
-        icon={<HiUser size={24} />}
-      />
-      <SidebarElement
-        link="/admin/dashboard/entities"
-        name="Entities"
-        icon={<HiDatabase size={24} />}
-      />
-      <SidebarElement
-        link="/admin/dashboard/data-storage"
-        name="Data Storage"
-        icon={<AiFillPicture size={24} />}
-      />
-      <SidebarElement
-        link="/admin/dashboard/inbox/1"
-        name="Inbox"
-        icon={<HiMail size={24} />}
-      />
-
-      {/* divider */}
-      <div className="mx-auto my-4 w-5 border-t border-solid border-blue-400"></div>
-
-      <button onClick={handleLogout}>
-        <SidebarElement name="Logout" icon={<HiOutlineLogout size={24} />} />
-      </button>
-    </div>
+    <Drawer
+      variant="permanent"
+      anchor={isSmallScreen ? "bottom" : "left"}
+      sx={{ width: isSmallScreen ? 0 : drawerWidth, "& .MuiDrawer-paper": { borderWidth: 0 } }}>
+      <Stack
+        p={1}
+        direction={isSmallScreen ? "row" : "column"}
+        justifyContent="center"
+        alignItems="center">
+        {!isSmallScreen && (<img src={SVGLogo.src} className="h-[40px] w-[40px]" />)}
+        <Divider sx={{ marginY: 2, backgroundColor: 'red', height: '1px' }} variant="fullWidth" />
+        <List sx={{
+          display: 'flex',
+          flexDirection: isSmallScreen ? "row" : "column",
+          padding: 0,
+        }}>
+          {/* <ListItem>
+            <ListItemButton LinkComponent="a" href="/admin/dashboard" sx={{ borderRadius: 5 }}>
+              <TableChartIcon />
+            </ListItemButton>
+          </ListItem> */}
+          <ListItem>
+            <ListItemButton LinkComponent="a" href="/admin/dashboard/users" sx={{ borderRadius: 5 }}>
+              <PersonIcon />
+            </ListItemButton>
+          </ListItem>
+          <ListItem>
+            <ListItemButton LinkComponent="a" href="/admin/dashboard/entities" sx={{ borderRadius: 5 }}>
+              <StorageIcon />
+            </ListItemButton>
+          </ListItem>
+          <ListItem>
+            <ListItemButton LinkComponent="a" href="/admin/dashboard/data-storage" sx={{ borderRadius: 5 }}>
+              <ImageSearchIcon />
+            </ListItemButton>
+          </ListItem>
+          <ListItem>
+            <ListItemButton LinkComponent="a" href="/admin/dashboard/inbox/1" sx={{ borderRadius: 5 }}>
+              <MailIcon />
+            </ListItemButton>
+          </ListItem>
+        </List>
+      </Stack>
+    </Drawer>
   );
 }

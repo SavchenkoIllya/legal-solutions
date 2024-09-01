@@ -26,9 +26,14 @@ const config: Config = {
           "0%": { opacity: "0", transform: "translateY(20px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
+        brightness: {
+          '0%, 100%': { filter: 'brightness(0.75)' },
+          '50%': { filter: 'brightness(1)' },
+        },
       },
       animation: {
         reveal: "reveal 0.5s ease-out forwards",
+        brightness: 'brightness 1s infinite',
       },
     },
   },

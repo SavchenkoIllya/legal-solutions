@@ -5,12 +5,24 @@ import { ListBlobResultBlob } from "@vercel/blob";
 import Image from "next/image";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Modal from "../../../components/modal/modal";
-import { IoMdClose } from "react-icons/io";
+import { CustomButton, CustomCard } from "@/app/admin/components/login";
+import { Box, Button, Dialog, Divider, IconButton, Typography } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
 
 type DataProps = {
   blob: ListBlobResultBlob;
 };
+
+function formatBytes(bytes: number) {
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+
+  if (bytes === 0) return '0 Bytes';
+
+  const i = Math.floor(Math.log(bytes) / Math.log(1024));
+  const value = parseFloat((bytes / Math.pow(1024, i)).toFixed(2));
+
+  return `${value} ${sizes[i]}`;
+}
 
 const DataCard = ({ blob }: DataProps) => {
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
@@ -47,52 +59,46 @@ const DataCard = ({ blob }: DataProps) => {
 
   return (
     <>
-      <div className="p-2 bg-light rounded-lg flex flex-col">
-        <button
-          className="text-right self-end mb-2"
-          onClick={() => setDeleteModal(true)}
-        >
-          <IoMdClose color="red" />
-        </button>
+      <CustomCard sx={{ position: "relative", padding: "2rem", width: "325px" }}>
+        <Box position='absolute' top={0} right={0} margin={0.5}>
+          <IconButton onClick={() => setDeleteModal(true)}>
+            <CloseIcon color="warning" fontSize="small" />
+          </IconButton>
+        </Box>
         <Image
           src={blob.url}
           alt={blob.pathname}
           width={300}
           height={300}
-          className="bg-cover"
+          className="object-cover w-[300px] h-[200px]"
         />
-        <div className="m-2">
-          <div className="flex justify-between items-center font-bold text-center mb-2">
-            <span className="truncate">{blob.pathname}</span>
-          </div>
-          <div className="flex justify-between items-center descriptor-font">
-            <span>Size</span>
-            <span>{blob.size}</span>
-          </div>
-          <div className="flex justify-between items-center descriptor-font">
-            <span>Uploaded at</span>
-            <span>{formattedTime()}</span>
-          </div>
-          <div className="text-center">
-            <button
-              className="descriptor-font underline text-blue-500"
-              onClick={handleClipboard}
-            >
-              Click to copy link
-            </button>
-          </div>
-        </div>
-        <ToastContainer position="bottom-center" />
-      </div>
-      <Modal
-        title="You are trying to delete data!"
-        description="You cannot cancel this event so be careful deleting data. Once you
-        deleted one of them you cannot restore it and have to upload one
-        more time."
-        isOpened={deleteModal}
-        setToggle={setDeleteModal}
-        callback={handleDeleteData}
-      />
+        <Typography className="truncate">{blob.pathname}</Typography>
+        <Typography>{formatBytes(blob.size)}</Typography>
+        <Typography>{formattedTime()}</Typography>
+        <Box display="flex" justifyContent="center" alignItems="center">
+          <CustomButton onClick={handleClipboard}>Click to copy link</CustomButton>
+        </Box>
+      </CustomCard>
+      <ToastContainer position="bottom-center" />
+      <Dialog open={deleteModal} onClose={() => setDeleteModal(false)} sx={{ "& .MuiDialog-paper": { borderRadius: "25px" } }}>
+        <Box margin="2rem">
+          <Typography fontWeight="bold">You are trying to delete data!</Typography>
+          <Divider sx={{ marginY: "1rem" }} />
+          <Typography>
+            You cannot cancel this event so be careful deleting data. Once you
+            deleted one of them you cannot restore it and have to upload one
+            more time.
+          </Typography>
+          <Box display="flex" justifyContent="center" alignItems="center" gap={2}>
+            <Button variant="text" color="primary" onClick={() => setDeleteModal(false)}>
+              Close
+            </Button>
+            <Button variant="outlined" color="warning" onClick={handleDeleteData}>
+              Delete
+            </Button>
+          </Box>
+        </Box>
+      </Dialog>
     </>
   );
 };

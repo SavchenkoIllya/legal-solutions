@@ -1,7 +1,5 @@
 "use client";
-import { SpinnerDiamond } from "spinners-react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import PostsSelect from "./posts-selector";
 import {
   GroupsForm as GroupsFormType,
   GroupsSchema,
@@ -14,6 +12,51 @@ import {
 } from "@/app/api/interfaces/groups/groups.api";
 import { Groups } from "@/app/api/interfaces/groups/types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { CircularProgress, Divider, MenuItem, Select, Stack, TextField, Typography, SelectChangeEvent } from "@mui/material";
+import { CustomButton } from "@/app/admin/components/login";
+import { Theme, useTheme } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import Chip from '@mui/material/Chip';
+import { green, red } from "@mui/material/colors";
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+const names = [
+  'Oliver Hansen',
+  'Van Henry',
+  'April Tucker',
+  'Ralph Hubbard',
+  'Omar Alexander',
+  'Carlos Abbott',
+  'Miriam Wagner',
+  'Bradley Wilkerson',
+  'Virginia Andrews',
+  'Kelly Snyder',
+];
+
+
+function getStyles(name: string, personName: readonly string[], theme: Theme) {
+  return {
+    fontWeight:
+      personName.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
+
+
 
 type GroupsFormProps = { posts: Post[]; groupData?: Groups | undefined };
 
@@ -66,209 +109,198 @@ export default function GroupsForm({ posts, groupData }: GroupsFormProps) {
     }
   };
 
+
+  const theme = useTheme();
+  const [personName, setPersonName] = useState<string[]>([]);
+
+  const handleChange = (event: SelectChangeEvent<typeof personName>) => {
+    const {
+      target: { value },
+    } = event;
+    setPersonName(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value,
+    );
+  };
+
   return (
-    <>
-      <div className="flex items-center justify-between p-4 border-b rounded-t md:p-5 dark:border-zinc-200">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-zinc-200">
-          Create New Group
-        </h3>
-      </div>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        noValidate
-        className="flex flex-col sm:p-4 md:p-5"
-      >
-        <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
-          <label
-            htmlFor="title_ru"
-            className="dashboard__label"
-          >
-            Title ru
-          </label>
-          <input
-            type="text"
-            id="title_ru"
-            className="dashboard__input"
-            placeholder="Type title here"
-            {...register("title_ru")}
-          />
-        </div>
-        {errors.title_ru && (
-          <div className="flex justify-center mb-4">
-            <p className="text-rose-500">{errors.title_ru.message}</p>
-          </div>
-        )}
-        <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
-          <label
-            htmlFor="title_ua"
-            className="dashboard__label"
-          >
-            Title ua
-          </label>
-          <input
-            type="text"
-            id="title_ua"
-            className="dashboard__input"
-            placeholder="Type title here"
-            {...register("title_ua")}
-          />
-        </div>
-
-        <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
-          <label
-            htmlFor="title_pl"
-            className="dashboard__label"
-          >
-            Title pl
-          </label>
-          <input
-            type="text"
-            id="title_pl"
-            className="dashboard__input"
-            placeholder="Type title here"
-            {...register("title_pl")}
-          />
-        </div>
-
-        <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
-          <label
-            htmlFor="title_en"
-            className="dashboard__label"
-          >
-            Title en
-          </label>
-          <input
-            type="text"
-            id="title_en"
-            className="dashboard__input"
-            placeholder="Type title here"
-            {...register("title_en")}
-          />
-        </div>
-        <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
-          <label
-            htmlFor="category"
-            className="dashboard__label"
-          >
-            Choose category
-          </label>
-          <select
-            id="category"
-            className="capitalize dashboard__input"
-            {...register("category")}
-          >
-            <option>private</option>
-            <option>business</option>
-          </select>
-        </div>
-
-        <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
-          <label
-            htmlFor="description_ru"
-            className="dashboard__label"
-          >
-            Description ru
-          </label>
-          <textarea
-            id="description_ru"
-            className="dashboard__input"
-            placeholder="Type title here"
-            {...register("description_ru")}
-          />
-        </div>
-
-        <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
-          <label
-            htmlFor="description_ua"
-            className="dashboard__label"
-          >
-            Description ua
-          </label>
-          <textarea
-            id="description_ua"
-            className="dashboard__input"
-            placeholder="Type title here"
-            {...register("description_ua")}
-          />
-        </div>
-
-        <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
-          <label
-            htmlFor="description_pl"
-            className="dashboard__label"
-          >
-            Description pl
-          </label>
-          <textarea
-            id="description_pl"
-            className="dashboard__input"
-            placeholder="Type title here"
-            {...register("description_pl")}
-          />
-        </div>
-
-        <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
-          <label
-            htmlFor="description_en"
-            className="dashboard__label"
-          >
-            Description en
-          </label>
-          <textarea
-            id="description_en"
-            className="dashboard__input"
-            placeholder="Type title here"
-            {...register("description_en")}
-          />
-        </div>
-
-        <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
-          <label
-            htmlFor="price_range"
-            className="dashboard__label"
-          >
-            Price range
-          </label>
-          <input
-            type="text"
-            id="price_range"
-            className="dashboard__input"
-            placeholder="Type title here"
-            pattern="[0-9+\-*/.]*"
-            {...register("price_range")}
-          />
-        </div>
-
-        <PostsSelect
-          selected={selected}
-          setIsSelected={setIsSelected}
-          posts={posts}
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      noValidate
+    >
+      <Stack spacing={2}>
+        <Typography variant="h5" fontWeight="bold">{groupData?.id ? `Update group: ${groupData.id} ${groupData.title_ru}` : "Create group"}</Typography>
+        <Divider />
+        <TextField
+          label="Title in russian"
+          required
+          type="text"
+          size="small"
+          sx={{ width: "100%" }}
+          placeholder="Title in russian"
+          error={!!errors.title_ru}
+          helperText={errors.title_ru?.message}
+          id="title_ru"
+          {...register("title_ru")}
+        />
+        <TextField
+          label="Title in ukrainian"
+          type="text"
+          size="small"
+          sx={{ width: "100%" }}
+          placeholder="Title in ukrainian"
+          error={!!errors.title_ua}
+          helperText={errors.title_ua?.message}
+          id="title_ua"
+          {...register("title_ua")}
+        />
+        <TextField
+          label="Title in polish"
+          type="text"
+          size="small"
+          sx={{ width: "100%" }}
+          placeholder="Title in polish"
+          error={!!errors.title_pl}
+          helperText={errors.title_pl?.message}
+          id="title_pl"
+          {...register("title_pl")}
+        />
+        <TextField
+          label="Title in english"
+          type="text"
+          size="small"
+          sx={{ width: "100%" }}
+          placeholder="Title in english"
+          error={!!errors.title_en}
+          helperText={errors.title_en?.message}
+          id="title_en"
+          {...register("title_en")}
         />
 
-        <div className="flex justify-center mb-4">
-          {isSubmitSuccessful && (
-            <p className="text-green-500">Created successfully</p>
-          )}
-          {errors.title_ru && (
-            <p className="text-rose-500">{errors.title_ru.message}</p>
-          )}
-          {errors.root && (
-            <p className="text-rose-500">{errors.root.message}</p>
-          )}
-        </div>
-        <button
-          type="submit"
-          className="self-center dashboard__button"
-          disabled={!isValid}
+        <Select
+          labelId="demo-simple-select-label"
+          id="category"
+          defaultValue={"private"}
+          label="Category"
+          {...register("category")}
         >
+          <MenuItem value={"private"}>Private</MenuItem>
+          <MenuItem value={"business"}>Business</MenuItem>
+        </Select>
+
+        <TextField
+          label="Description in russian"
+          type="text"
+          size="small"
+          sx={{ width: "100%" }}
+          placeholder="Description in russian"
+          error={!!errors.description_ru}
+          helperText={errors.description_ru?.message}
+          id="description_ru"
+          {...register("description_ru")}
+        />
+
+        <TextField
+          label="Description in ukrainian"
+          type="text"
+          size="small"
+          sx={{ width: "100%" }}
+          placeholder="Description in ukrainian"
+          error={!!errors.description_ua}
+          helperText={errors.description_ua?.message}
+          id="description_ua"
+          {...register("description_ua")}
+        />
+
+        <TextField
+          label="Description in polish"
+          type="text"
+          size="small"
+          sx={{ width: "100%" }}
+          placeholder="Description in polish"
+          error={!!errors.description_pl}
+          helperText={errors.description_pl?.message}
+          id="description_pl"
+          {...register("description_pl")}
+        />
+
+        <TextField
+          label="Description in english"
+          type="text"
+          size="small"
+          sx={{ width: "100%" }}
+          placeholder="Description in english"
+          error={!!errors.description_en}
+          helperText={errors.description_en?.message}
+          id="description_en"
+          {...register("description_en")}
+        />
+
+        <TextField
+          label="Price range"
+          type="text"
+          size="small"
+          sx={{ width: "100%" }}
+          error={!!errors.price_range}
+          helperText={errors.price_range?.message}
+          id="price_range"
+          placeholder="Type Price range here"
+          {...register("price_range")}
+        />
+
+        <FormControl sx={{ m: 1, width: 300 }}>
+          <InputLabel id="demo-multiple-chip-label">Posts</InputLabel>
+          <Select
+            labelId="demo-multiple-chip-label"
+            id="demo-multiple-chip"
+            multiple
+            value={personName}
+            onChange={handleChange}
+            input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+            renderValue={(selected) => (
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                {selected.map((value) => (
+                  <Chip key={value} label={value} />
+                ))}
+              </Box>
+            )}
+            MenuProps={MenuProps}
+          >
+            {posts.length && posts.map((post) => (
+              <MenuItem
+                key={post.title_ru}
+                value={post.title_ru}
+                style={getStyles(post.title_ru, personName, theme)}
+              >
+                {post.title_ru}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+
+        {isSubmitSuccessful && (
+          <Typography color={green[500]}>
+            {groupData?.id ? "Updated" : "Created"} successfully
+          </Typography>
+        )}
+        {errors.root && <Typography color={red[500]}>{errors.root.message}</Typography>}
+        <CustomButton
+          type="submit"
+          disabled={!isValid}
+          variant="contained"
+          color="primary"
+          sx={{ width: "-webkit-fit-content" }}
+        >
+          {groupData?.id ? "Update" : "Create"}
           {isSubmitting && (
             <span className="mr-4">
-              <SpinnerDiamond color="white" />
+              <CircularProgress size="20px" />
             </span>
           )}
-          {groupData?.id ? "Update" : "Create"} group
-        </button>
-      </form>
-    </>
+        </CustomButton>
+      </Stack>
+    </form>
   );
 }
+

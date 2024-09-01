@@ -12,6 +12,9 @@ import {
   createCarousel,
   updateCarousel,
 } from "@/app/api/interfaces/carousel/carousel.api";
+import { CircularProgress, Divider, Stack, TextField, Typography } from "@mui/material";
+import { green, red } from "@mui/material/colors";
+import { CustomButton } from "@/app/admin/components/login";
 
 type CarouselFormViewProps = {
   carouselData?: Carousel | undefined;
@@ -64,192 +67,150 @@ export default function CarouselFormView({
     <form
       onSubmit={handleSubmit(onSubmit)}
       noValidate
-      className="sm:p-4 flex flex-col md:p-5"
     >
-      <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
-        <label
-          htmlFor="dev_name"
-          className="dashboard__label asterisk"
-        >
-          Name for dashboard
-        </label>
-        <input
+      <Stack spacing={2}>
+        <Typography variant="h5" fontWeight="bold">{carouselData?.id ? `Update carousel: ${carouselData.id} ${carouselData.title_ru}` : "Create carousel"}</Typography>
+        <Divider />
+
+        <TextField
+          label="Name for dashboard"
           type="text"
+          size="small"
+          sx={{ width: "100%" }}
+          placeholder="Name for dashboard"
+          error={!!errors.dev_name}
+          helperText={errors.dev_name?.message}
           id="dev_name"
-          className="dashboard__input"
-          placeholder="Example name"
+          required
           {...register("dev_name")}
         />
-      </div>
-      <div className="flex justify-center mb-4">
-        {errors.dev_name && (
-          <p className="text-rose-500">{errors.dev_name.message}</p>
-        )}
-      </div>
-      <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
-        <label
-          htmlFor="image_src"
-          className="dashboard__label asterisk"
-        >
-          Image source
-        </label>
-        <input
+
+        <TextField
+          label="Image source"
           type="text"
+          size="small"
+          sx={{ width: "100%" }}
+          placeholder="Image source"
+          error={!!errors.image_src}
+          helperText={errors.image_src?.message}
           id="image_src"
-          className="dashboard__input"
-          placeholder="Past path here"
+          required
           {...register("image_src")}
         />
-      </div>
-      <div className="flex justify-center mb-4">
-        {errors.image_src && (
-          <p className="text-rose-500">{errors.image_src.message}</p>
-        )}
-      </div>
-      <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
-        <label
-          htmlFor="title_ru"
-          className="dashboard__label"
-        >
-          Title ru
-        </label>
-        <input
+
+        <TextField
+          label="Title in russian"
           type="text"
+          size="small"
+          sx={{ width: "100%" }}
+          placeholder="Title in russian"
+          error={!!errors.title_ru}
+          helperText={errors.title_ru?.message}
           id="title_ru"
-          className="dashboard__input"
-          placeholder="Type title here"
+          required
           {...register("title_ru")}
         />
-      </div>
-      <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
-        <label
-          htmlFor="title_ua"
-          className="dashboard__label"
-        >
-          Title ua
-        </label>
-        <input
+        <TextField
+          label="Title in ukrainian"
           type="text"
+          size="small"
+          sx={{ width: "100%" }}
+          placeholder="Title in ukrainian"
+          error={!!errors.title_ua}
+          helperText={errors.title_ua?.message}
           id="title_ua"
-          className="dashboard__input"
-          placeholder="Type title here"
           {...register("title_ua")}
         />
-      </div>
-      <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
-        <label
-          htmlFor="title_pl"
-          className="dashboard__label"
-        >
-          Title pl
-        </label>
-        <input
+        <TextField
+          label="Title in polish"
           type="text"
+          size="small"
+          sx={{ width: "100%" }}
+          placeholder="Title in polish"
+          error={!!errors.title_pl}
+          helperText={errors.title_pl?.message}
           id="title_pl"
-          className="dashboard__input"
-          placeholder="Type title here"
+          required
           {...register("title_pl")}
         />
-      </div>
-      <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
-        <label
-          htmlFor="title_en"
-          className="dashboard__label"
-        >
-          Title en
-        </label>
-        <input
+        <TextField
+          label="Title in english"
           type="text"
+          size="small"
+          sx={{ width: "100%" }}
+          placeholder="Title in english"
+          error={!!errors.title_en}
+          helperText={errors.title_en?.message}
           id="title_en"
-          className="dashboard__input"
-          placeholder="Type title here"
           {...register("title_en")}
         />
-      </div>
-
-      <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
-        <label
-          htmlFor="description_ru"
-          className="dashboard__label"
-        >
-          Description ru
-        </label>
-        <input
+        <TextField
+          label="Description in russian"
           type="text"
+          size="small"
+          sx={{ width: "100%" }}
+          placeholder="Description in russian"
+          error={!!errors.description_ru}
+          helperText={errors.description_ru?.message}
           id="description_ru"
-          className="dashboard__input"
-          placeholder="Type description here"
           {...register("description_ru")}
         />
-      </div>
-      <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
-        <label
-          htmlFor="description_ua"
-          className="dashboard__label"
-        >
-          Description ua
-        </label>
-        <input
+        <TextField
+          label="Description in ukrainian"
           type="text"
+          size="small"
+          sx={{ width: "100%" }}
+          placeholder="Description in ukrainian"
+          error={!!errors.description_ua}
+          helperText={errors.description_ua?.message}
           id="description_ua"
-          className="dashboard__input"
-          placeholder="Type description here"
           {...register("description_ua")}
         />
-      </div>
-
-      <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
-        <label
-          htmlFor="description_pl"
-          className="dashboard__label"
-        >
-          Description pl
-        </label>
-        <input
+        <TextField
+          label="Description in polish"
           type="text"
+          size="small"
+          sx={{ width: "100%" }}
+          placeholder="Description in polish"
+          error={!!errors.description_pl}
+          helperText={errors.description_pl?.message}
           id="description_pl"
-          className="dashboard__input"
-          placeholder="Type description here"
           {...register("description_pl")}
         />
-      </div>
-
-      <div className="grid gap-1 sm:gap-4 mb-1 sm:mb-4 sm:grid-cols-2">
-        <label
-          htmlFor="description_en"
-          className="dashboard__label"
-        >
-          Description en
-        </label>
-        <input
+        <TextField
+          label="Description in english"
           type="text"
+          size="small"
+          sx={{ width: "100%" }}
+          placeholder="Description in english"
+          error={!!errors.description_en}
+          helperText={errors.description_en?.message}
           id="description_en"
-          className="dashboard__input"
-          placeholder="Type description here"
           {...register("description_en")}
         />
-      </div>
-
-      <div className="flex justify-center mb-4">
+        
         {isSubmitSuccessful && (
-          <p className="text-green-500">
+          <Typography color={green[500]}>
             {carouselData?.id ? "Updated" : "Created"} successfully
-          </p>
+          </Typography>
         )}
-        {errors.root && <p className="text-rose-500">{errors.root.message}</p>}
-      </div>
-      <button
-        type="submit"
-        className="self-center dashboard__button"
-        disabled={!isValid}
-      >
-        {isSubmitting && (
-          <span className="mr-4">
-            <SpinnerDiamond color="white" />
-          </span>
-        )}
-        {carouselData?.id ? "Update" : "Create"}
-      </button>
+        {errors.root && <Typography color={red[500]}>{errors.root.message}</Typography>}
+
+        <CustomButton
+          type="submit"
+          disabled={!isValid}
+          variant="contained"
+          color="primary"
+          sx={{ width: "-webkit-fit-content" }}
+        >
+          {carouselData?.id ? "Update" : "Create"}
+          {isSubmitting && (
+            <span className="mr-4">
+              <CircularProgress size="20px" />
+            </span>
+          )}
+        </CustomButton>
+      </Stack>
     </form>
   );
 }

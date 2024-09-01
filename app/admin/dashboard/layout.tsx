@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import CustomSidebar from "./components/sidebar/sidebar";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
 
 export const metadata: Metadata = {
   title: "Legal solutions – admin dashboard",
@@ -12,14 +14,11 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section className="flex h-full">
+    <Box component="div" sx={{ display: 'flex', minHeight: "100dvh", bgcolor: "#F7F8FA" }}>
       <CustomSidebar />
-
-      <div className="dashboard__layout-bg">
-        <div className="p-4 overflow-auto rounded-lg dark:border-gray-700">
-          {children}
-        </div>
-      </div>
-    </section>
+      <Container sx={{marginY: 4}}>
+        {children}
+      </Container>
+    </Box >
   );
 }

@@ -13,6 +13,7 @@ import { cn } from "@/app/utils/cn";
 import "react-international-phone/style.css";
 import "./form.css";
 import CustomSelect from "./select";
+import { useState } from "react";
 
 export default function Form() {
   const {
@@ -20,16 +21,18 @@ export default function Form() {
     setError,
     handleSubmit,
     reset,
-    getValues,
     setValue,
     formState: { errors, isSubmitting, isSubmitSuccessful, isValid },
   } = useForm<MailForm>({
     resolver: zodResolver(MailSchema),
   });
+  const [isTouched, setIsTouched] = useState<boolean>(false)
 
-  const handleTelephone = (phone: string) =>
-    setValue("phone", phone, { shouldValidate: true });
-
+  const handleTelephone = (phone: string) => {
+    if (phone && phone !== "+48") {
+      setValue("phone", phone, { shouldValidate: true });
+    }
+  }
   const handleRegion = (value: string) => setValue("region", value)
 
   const onSubmit: SubmitHandler<MailForm> = async (data: MailForm) => {
@@ -103,7 +106,6 @@ export default function Form() {
           </label>
           <PhoneInput
             defaultCountry="pl"
-            value={getValues("phone")}
             onChange={handleTelephone}
             inputClassName={
               errors.phone

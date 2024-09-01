@@ -1,7 +1,6 @@
 "use client";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SpinnerDiamond } from "spinners-react";
 import MDEditor from "@uiw/react-md-editor";
 import { useReducer, useEffect } from "react";
 import {
@@ -9,16 +8,19 @@ import {
   formReducer,
   FormActionsTypes,
 } from "./utils/formReducer";
-import { Checkbox } from "@headlessui/react";
 import { PostsForm, PostsSchema } from "@/app/api/interfaces/posts/schema";
 import { createPost, updatePost } from "@/app/api/interfaces/posts/posts.api";
 import { Post } from "@/app/api/interfaces/posts/types";
+import { Checkbox, CircularProgress, Divider, FormControl, FormControlLabel, InputLabel, MenuItem, Select, Stack, TextField, Typography } from "@mui/material";
+import { CustomButton } from "@/app/admin/components/login";
+import { green, red } from "@mui/material/colors";
 
 type PostsFormViewProps = {
   postData?: Post | undefined;
+  onSuccess?: (...args: any[]) => void;
 };
 
-export default function PostsFormView({ postData }: PostsFormViewProps) {
+export default function PostsFormView({ postData, onSuccess }: PostsFormViewProps) {
   const {
     register,
     setError,
@@ -40,6 +42,7 @@ export default function PostsFormView({ postData }: PostsFormViewProps) {
       } else {
         await createPost(formData);
       }
+      onSuccess?.();
       reset();
     } catch (error) {
       setError("root", {
@@ -85,73 +88,84 @@ export default function PostsFormView({ postData }: PostsFormViewProps) {
     <form
       onSubmit={handleSubmit(onSubmit)}
       noValidate
-      className="flex flex-col sm:p-4 md:p-5"
     >
-      <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
-        <label htmlFor="title_ru" className="dashboard__label">
-          Title ru
-        </label>
-        <input
+      <Stack spacing={2}>
+        <Typography variant="h5" fontWeight="bold">{postData?.id ? `Update post: ${postData.id} ${postData.title_ru}` : "Create post"}</Typography>
+        <Divider />
+        <TextField
+          label="Title in russian"
           type="text"
+          size="small"
+          sx={{ width: "100%" }}
+          placeholder="Title in russian"
+          error={!!errors.title_ru}
+          helperText={errors.title_ru?.message}
           id="title_ru"
-          className="dashboard__input"
-          placeholder="Type title here"
           {...register("title_ru")}
         />
-      </div>
-      <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
-        <label htmlFor="title_ua" className="dashboard__label">
-          Title ua
-        </label>
-        <input
+        <TextField
+          label="Title in ukrainian"
           type="text"
+          size="small"
+          sx={{ width: "100%" }}
+          placeholder="Title in ukrainian"
+          error={!!errors.title_ua}
+          helperText={errors.title_ua?.message}
           id="title_ua"
-          className="dashboard__input"
-          placeholder="Type title here"
           {...register("title_ua")}
         />
-      </div>
-      <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
-        <label htmlFor="title_pl" className="dashboard__label">
-          Title pl
-        </label>
-        <input
+        <TextField
+          label="Title in polish"
           type="text"
+          size="small"
+          sx={{ width: "100%" }}
+          placeholder="Title in polish"
+          error={!!errors.title_pl}
+          helperText={errors.title_pl?.message}
           id="title_pl"
-          className="dashboard__input"
-          placeholder="Type title here"
           {...register("title_pl")}
         />
-      </div>
-      <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
-        <label htmlFor="title_en" className="dashboard__label">
-          Title en
-        </label>
-        <input
+        <TextField
+          label="Title in english"
           type="text"
+          size="small"
+          sx={{ width: "100%" }}
+          placeholder="Title in english"
+          error={!!errors.title_en}
+          helperText={errors.title_en?.message}
           id="title_en"
-          className="dashboard__input"
-          placeholder="Type title here"
           {...register("title_en")}
         />
-      </div>
-      <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
-        <label htmlFor="price_range" className="dashboard__label">
-          Price range
-        </label>
-        <input
+
+        <FormControl fullWidth>
+          <InputLabel id="category_select">Category</InputLabel>
+          <Select
+            labelId="category_select"
+            id="category_select"
+            defaultValue={"private"}
+            label="Age"
+            {...register("category")}
+          >
+            <MenuItem value={"private"}>Private</MenuItem>
+            <MenuItem value={"business"}>Business</MenuItem>
+          </Select>
+        </FormControl>
+
+        <TextField
+          label="Price range"
           type="text"
+          size="small"
+          sx={{ width: "100%" }}
+          error={!!errors.price_range}
+          helperText={errors.price_range?.message}
           id="price_range"
-          className="dashboard__input"
           placeholder="Type Price range here"
           {...register("price_range")}
         />
-      </div>
-      <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4">
+
+
         <div data-color-mode="light">
-          <label className="dashboard__label" htmlFor="description_ru">
-            Description ru
-          </label>
+          <Typography>Description ru</Typography>
           <MDEditor
             id="description_ru"
             value={state.description_ru}
@@ -164,13 +178,9 @@ export default function PostsFormView({ postData }: PostsFormViewProps) {
             }}
           />
         </div>
-      </div>
 
-      <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4">
         <div data-color-mode="light">
-          <label className="dashboard__label" htmlFor="description_ua">
-            Description ua
-          </label>
+          <Typography>Description ua</Typography>
           <MDEditor
             id="description_ua"
             value={state.description_ua}
@@ -183,15 +193,11 @@ export default function PostsFormView({ postData }: PostsFormViewProps) {
             }}
           />
         </div>
-      </div>
 
-      <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4">
         <div data-color-mode="light">
-          <label className="dashboard__label" htmlFor="description_en">
-            Description en
-          </label>
+          <Typography>Description en</Typography>
           <MDEditor
-            id="description_ru"
+            id="description_en"
             value={state.description_en}
             visibleDragbar={false}
             onChange={(value) => {
@@ -202,13 +208,9 @@ export default function PostsFormView({ postData }: PostsFormViewProps) {
             }}
           />
         </div>
-      </div>
 
-      <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4">
         <div data-color-mode="light">
-          <label className="dashboard__label" htmlFor="description_pl">
-            Description pl
-          </label>
+          <Typography>Description pl</Typography>
           <MDEditor
             id="description_pl"
             value={state.description_pl}
@@ -221,13 +223,9 @@ export default function PostsFormView({ postData }: PostsFormViewProps) {
             }}
           />
         </div>
-      </div>
 
-      <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4">
         <div data-color-mode="light">
-          <label className="dashboard__label" htmlFor="seo_ru">
-            SEO text ru
-          </label>
+          <Typography>SEO ru</Typography>
           <MDEditor
             id="seo_ru"
             value={state.seo_ru}
@@ -240,13 +238,10 @@ export default function PostsFormView({ postData }: PostsFormViewProps) {
             }}
           />
         </div>
-      </div>
 
-      <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4">
+
         <div data-color-mode="light">
-          <label className="dashboard__label" htmlFor="seo_ua">
-            SEO text ua
-          </label>
+          <Typography>SEO ua</Typography>
           <MDEditor
             id="seo_ua"
             value={state.seo_ua}
@@ -259,13 +254,9 @@ export default function PostsFormView({ postData }: PostsFormViewProps) {
             }}
           />
         </div>
-      </div>
 
-      <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4">
         <div data-color-mode="light">
-          <label className="dashboard__label" htmlFor="seo-en">
-            SEO text en
-          </label>
+          <Typography>SEO en</Typography>
           <MDEditor
             id="seo_en"
             value={state.seo_en}
@@ -278,13 +269,9 @@ export default function PostsFormView({ postData }: PostsFormViewProps) {
             }}
           />
         </div>
-      </div>
 
-      <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4">
         <div data-color-mode="light">
-          <label className="dashboard__label" htmlFor="seo_pl">
-            SEO text pl
-          </label>
+          <Typography>SEO pl</Typography>
           <MDEditor
             id="description_pl"
             value={state.seo_pl}
@@ -297,58 +284,42 @@ export default function PostsFormView({ postData }: PostsFormViewProps) {
             }}
           />
         </div>
-      </div>
 
-      <div>
-        <div data-color-mode="light" className="flex gap-2 mb-1">
-          <label className="dashboard__label" htmlFor="description_ru">
-            Is published
-          </label>
-          <Checkbox
-            checked={state.is_published}
-            onChange={() =>
-              dispatch({
-                type: FormActionsTypes.SET_IS_PUBLISHED,
-              })
-            }
-            className="group block w-4 h-4 rounded border bg-white data-[checked]:bg-blue-500"
-          >
-            <svg
-              className="stroke-white opacity-0 group-data-[checked]:opacity-100"
-              viewBox="0 0 14 14"
-              fill="none"
-            >
-              <path
-                d="M3 8L6 11L11 3.5"
-                strokeWidth={2}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </Checkbox>
-        </div>
-      </div>
-
-      <div className="flex justify-center mb-4">
+        <FormControlLabel
+          label="Is published"
+          control={
+            <Checkbox
+              checked={state.is_published}
+              onChange={() =>
+                dispatch({
+                  type: FormActionsTypes.SET_IS_PUBLISHED,
+                })
+              }
+            />
+          }
+        />
         {isSubmitSuccessful && (
-          <p className="text-green-500">
+          <Typography color={green[500]}>
             {postData?.id ? "Updated" : "Created"} successfully
-          </p>
+          </Typography>
         )}
-        {errors.root && <p className="text-rose-500">{errors.root.message}</p>}
-      </div>
-      <button
-        type="submit"
-        className="self-center dashboard__button"
-        disabled={!isValid}
-      >
-        {isSubmitting && (
-          <span className="mr-4">
-            <SpinnerDiamond color="white" />
-          </span>
-        )}
-        {postData?.id ? "Update" : "Create"}
-      </button>
+        {errors.root && <Typography color={red[500]}>{errors.root.message}</Typography>}
+
+        <CustomButton
+          type="submit"
+          disabled={!isValid}
+          variant="contained"
+          color="primary"
+          sx={{ width: "-webkit-fit-content" }}
+        >
+          {postData?.id ? "Update" : "Create"}
+          {isSubmitting && (
+            <span className="mr-4">
+              <CircularProgress size="20px" />
+            </span>
+          )}
+        </CustomButton>
+      </Stack>
     </form>
   );
 }

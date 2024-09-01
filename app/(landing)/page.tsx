@@ -8,6 +8,7 @@ import { getCarousels } from "../api/interfaces/carousel/carousel.api";
 import { getCategorizedGroups } from "../api/interfaces/groups/groups.api";
 import { getContacts } from "@/app/api/interfaces/contacts/contacts.api";
 import { Categories } from "../api/interfaces/groups/types";
+// import Preloader from "./components/preloader";
 
 export const revalidate = 0;
 
@@ -23,6 +24,7 @@ export default async function Home({
 
   return (
     <>
+      {/* <Preloader /> */}
       <Carousel carousels={carouselData} />
       <Cards groups={groupsData} lang={searchParams.lang} />
       <About />

@@ -118,10 +118,9 @@ export async function updateUser(
 
 export async function deleteUser(id: number) {
   try {
-    await sql`
-      DELETE FROM users
-      WHERE id=${id};
-      `;
+    await sql`DELETE FROM users
+              WHERE id=${id};
+              `;
   } catch (error) {
     console.error(error);
     throw new Error("Cannot delete this user");

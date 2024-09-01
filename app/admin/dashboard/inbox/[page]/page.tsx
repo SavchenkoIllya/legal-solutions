@@ -17,8 +17,7 @@ export default async function InboxPage({
   };
 }) {
   const query = searchParams?.query || "";
-  const startDate =
-    searchParams?.startDate || String(new Date("2024-05-01T00:00:00"));
+  const startDate = searchParams?.startDate || String(new Date("2024-05-01T00:00:00"));
   const endDate = searchParams?.endDate || String(new Date());
   const relevance = searchParams?.relevance || "DESC"
   const mailStatus = searchParams?.mailStatus || "unread"

@@ -5,7 +5,8 @@ import { UserForm, UserSchema } from "@/app/api/interfaces/users/schema";
 import { useRef } from "react";
 import { UserFormData } from "@/app/api/interfaces/users/types";
 import { registerUser } from "@/app/api/interfaces/users/users.api";
-import { SpinnerDiamond } from "spinners-react";
+import { CircularProgress, Divider, Stack, TextField, Typography } from "@mui/material";
+import { CustomButton } from "../login";
 
 interface RegisterProps {
   onSuccess?: (...args: any[]) => void;
@@ -55,110 +56,96 @@ export default function Register({
 
   return (
     <>
-      <div className="flex items-center justify-between p-4 md:p-5 border-b dark:border-zinc-300 rounded-t">
-        <h3 className="dashboard__label text-lg font-semibold">
-          Create New User
-        </h3>
-      </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
         noValidate
         className="flex flex-col sm:p-4 md:p-5"
       >
-        <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
-          <label htmlFor="name" className="dashboard__label">
-            Name
-          </label>
-          <input
+        <Stack spacing={2}>
+          <Typography variant="h5" fontWeight="bold">Create New User</Typography>
+          <Divider />
+          <TextField
+            label="Name"
             type="text"
             id="name"
-            className="dashboard__input"
-            placeholder="Type product name"
+            size="small"
+            sx={{ width: "100%" }}
+            placeholder="Johnny Cash"
             {...register("name")}
+            error={!!errors.name}
+            helperText={errors.name?.message}
+            required
           />
-        </div>
-        {errors.name && (
-          <p role="alert" className="text-rose-500 text-center">
-            {errors.name?.message}
-          </p>
-        )}
-        <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
-          <label htmlFor="name" className="dashboard__label">
-            Email
-          </label>
-          <input
+          <TextField
+            label="Email"
+            size="small"
+            sx={{ width: "100%" }}
+            error={!!errors.email}
+            helperText={errors.email?.message}
             type="email"
             id="email"
-            className="dashboard__input"
-            placeholder="Type product name"
+            placeholder="jonnycash@mail.com"
             {...register("email")}
+            required
           />
-        </div>
-        {errors.email && (
-          <p role="alert" className="text-rose-500 text-center">
-            {errors.email?.message}
-          </p>
-        )}
-        <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
-          <label htmlFor="name" className="dashboard__label">
-            Password
-          </label>
-          <input
+          <TextField
+            label="Password"
+            size="small"
+            sx={{ width: "100%" }}
+            error={!!errors.password}
+            helperText={errors.password?.message}
+            placeholder="********"
             type="password"
             id="password"
-            className="dashboard__input"
-            placeholder="Type product name"
             {...register("password")}
+            required
           />
-        </div>
-        {errors.password && (
-          <p role="alert" className="text-rose-500 text-center">
-            {errors.password?.message}
-          </p>
-        )}
-        <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
-          <label htmlFor="name" className="dashboard__label">
-            Confirm Password
-          </label>
-          <input
-            ref={confirmPasswordRef}
+          <TextField
+            inputRef={confirmPasswordRef}
+            label="Confirm Password"
+            size="small"
+            sx={{ width: "100%" }}
+            placeholder="********"
             onChange={checkPassword}
             onSubmitCapture={checkPassword}
             type="password"
             name="confirm-password"
             id="confirm-password"
-            className="dashboard__input"
-            placeholder="Type product name"
             required
           />
-        </div>
-        {errors.root && (
-          <p role="alert" className="text-rose-500 text-center">
-            {errors.root.message}
-          </p>
-        )}
-        {isSubmitSuccessful && (
-          <>
-            <p role="success" className="text-green-500 text-center">
-              User have been successfully created
-            </p>
-            <p role="success" className="text-green-500 text-center">
-              {customSuccessText}
-            </p>
-          </>
-        )}
-        <button
-          type="submit"
-          disabled={!isValid}
-          className="self-center dashboard__button"
-        >
-          {isSubmitting && (
-            <span className="mr-4">
-              <SpinnerDiamond color="white" />
-            </span>
+
+          {errors.root && (
+            <Typography color="error" role="alert">
+              {errors.root.message}
+            </Typography>
           )}
-          Create dashboard user
-        </button>
+
+          {isSubmitSuccessful && (
+            <>
+              <Typography color="green" role="success">
+                User have been successfully updated
+              </Typography>
+              <Typography color="green" role="success">
+                {customSuccessText}
+              </Typography>
+            </>
+          )}
+
+          <CustomButton
+            type="submit"
+            disabled={!isValid}
+            variant="contained"
+            color="primary"
+            sx={{ width: "-webkit-fit-content" }}
+          >
+            Update dashboard user
+            {isSubmitting && (
+              <span className="mr-4">
+                <CircularProgress size="20px" />
+              </span>
+            )}
+          </CustomButton>
+        </Stack>
       </form>
     </>
   );

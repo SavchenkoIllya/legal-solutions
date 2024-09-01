@@ -1,18 +1,14 @@
 "use client";
 import { Contacts as ContactsType } from "@/app/api/interfaces/contacts/types";
-import { SpinnerDiamond } from "spinners-react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   ContactsForm,
   ContactsSchema,
 } from "@/app/api/interfaces/contacts/schema";
-import {
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
-} from "@headlessui/react";
 import { updateContacts } from "@/app/api/interfaces/contacts/contacts.api";
+import { CircularProgress, Stack, TextField, Typography } from "@mui/material";
+import { CustomButton } from "@/app/admin/components/login";
 
 type ContactsProps = { contacts: ContactsType[] };
 
@@ -48,159 +44,109 @@ export default function Contacts({ contacts }: ContactsProps) {
   };
 
   return (
-    <Disclosure as="div" className="space-y-0">
-      <DisclosureButton className="px-2 py-4 text-white bg-blue-500 w-full text-left rounded-lg data-[open]:rounded-b-none">
-        Contacts
-      </DisclosureButton>
-      <DisclosurePanel className="px-2 py-4 border border-t-0 rounded-b-lg text-zinc-500 border-zinc-300">
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          noValidate
-          className="flex flex-col sm:p-4 md:p-5"
-        >
-          <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
-            <label
-              htmlFor="email"
-              className="dashboard__label"
-            >
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="dashboard__input"
-              placeholder="Type product name"
-              {...register("email")}
-            />
-          </div>
-          <div className="flex justify-center mb-4">
-            {errors.email && (
-              <p className="text-rose-500">{errors.email.message}</p>
-            )}
-          </div>
-          <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
-            <label
-              htmlFor="telephone"
-              className="dashboard__label"
-            >
-              Telephone
-            </label>
-            <input
-              type="text"
-              id="telephone"
-              className="dashboard__input"
-              placeholder="Type product name"
-              {...register("telephone")}
-            />
-          </div>
-          <div className="flex justify-center mb-4">
-            {errors.telephone && (
-              <p className="text-rose-500">{errors.telephone.message}</p>
-            )}
-          </div>
-          <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
-            <label
-              htmlFor="work_hours"
-              className="dashboard__label"
-            >
-              Work hours
-            </label>
-            <input
-              type="text"
-              id="work_hours"
-              className="dashboard__input"
-              placeholder="Type product name"
-              {...register("work_hours")}
-            />
-          </div>
-          <div className="flex justify-center mb-4">
-            {errors.work_hours && (
-              <p className="text-rose-500">{errors.work_hours.message}</p>
-            )}
-          </div>
-          <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
-            <label
-              htmlFor="telegram"
-              className="dashboard__label"
-            >
-              Telegram
-            </label>
-            <input
-              type="text"
-              id="telegram"
-              className="dashboard__input"
-              placeholder="Type product name"
-              {...register("telegram")}
-            />
-          </div>
-          <div className="flex justify-center mb-4">
-            {errors.telegram && (
-              <p className="text-rose-500">{errors.telegram.message}</p>
-            )}
-          </div>
-          <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
-            <label
-              htmlFor="instagram"
-              className="dashboard__label"
-            >
-              Instagram
-            </label>
-            <input
-              type="text"
-              id="telegram"
-              className="dashboard__input"
-              placeholder="Type product name"
-              {...register("instagram")}
-            />
-          </div>
-          <div className="flex justify-center mb-4">
-            {errors.instagram && (
-              <p className="text-rose-500">{errors.instagram.message}</p>
-            )}
-          </div>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      noValidate
+    >
+      <Stack spacing={2}>
+        <TextField
+          label="Email"
+          size="small"
+          sx={{ width: "100%" }}
+          error={!!errors.email}
+          helperText={errors.email?.message}
+          type="email"
+          id="email"
+          placeholder="jonnycash@mail.com"
+          {...register("email")}
+        />
 
-          <div className="grid gap-1 mb-1 sm:gap-4 sm:mb-4 sm:grid-cols-2">
-            <label
-              htmlFor="whatsapp"
-              className="dashboard__label"
-            >
-              Whatsapp
-            </label>
-            <input
-              type="text"
-              id="whatsapp"
-              className="dashboard__input"
-              placeholder="Type product name"
-              {...register("whatsapp")}
-            />
-          </div>
-          <div className="flex justify-center mb-4">
-            {errors.whatsapp && (
-              <p className="text-rose-500">{errors.whatsapp.message}</p>
-            )}
-          </div>
-          <div className="flex justify-center mb-4">
-            {isSubmitSuccessful && (
-              <p className="text-green-500">Updated successfully</p>
-            )}
-            {errors.root && (
-              <p className="text-rose-500">{errors.root.message}</p>
-            )}
-          </div>
-          <button
-            type="submit"
-            className="self-center dashboard__button"
-            disabled={!isValid}
-          >
-            {isSubmitting && (
-              <span className="mr-4">
-                <SpinnerDiamond color="white" />
-              </span>
-            )}
-            Update contacts
-          </button>
-        </form>
-      </DisclosurePanel>
-    </Disclosure>
+        <TextField
+          label="Telephone"
+          size="small"
+          sx={{ width: "100%" }}
+          error={!!errors.telephone}
+          helperText={errors.telephone?.message}
+          type="text"
+          id="telephone"
+          placeholder="+491234567890"
+          {...register("telephone")}
+        />
+
+        <TextField
+          label="Work hours"
+          size="small"
+          sx={{ width: "100%" }}
+          error={!!errors.work_hours}
+          helperText={errors.work_hours?.message}
+          type="text"
+          placeholder="8:00 — 16:00"
+          id="work_hours"
+          {...register("work_hours")}
+        />
+
+        <TextField
+          label="Telegram"
+          size="small"
+          sx={{ width: "100%" }}
+          error={!!errors.telegram}
+          helperText={errors.telegram?.message}
+          type="text"
+          placeholder="https://t.me/userName"
+          id="telegram"
+          {...register("telegram")}
+        />
+
+        <TextField
+          label="Instagram"
+          size="small"
+          sx={{ width: "100%" }}
+          error={!!errors.instagram}
+          helperText={errors.instagram?.message}
+          type="text"
+          placeholder="https://www.instagram.com/Google"
+          id="instagram"
+          {...register("instagram")}
+        />
+        <TextField
+          label="Instagram"
+          size="small"
+          sx={{ width: "100%" }}
+          error={!!errors.whatsapp}
+          helperText={errors.whatsapp?.message}
+          type="text"
+          placeholder="https://wa.me/<number>"
+          id="whatsapp"
+          {...register("whatsapp")}
+        />
+
+        {errors.root && (
+          <Typography color="error" role="alert">
+            {errors.root.message}
+          </Typography>
+        )}
+
+        {isSubmitSuccessful && (
+          <Typography color="green" role="success">
+            User have been successfully updated
+          </Typography>
+        )}
+
+        <CustomButton
+          type="submit"
+          disabled={!isValid}
+          variant="contained"
+          color="primary"
+          sx={{ width: "-webkit-fit-content" }}
+        >
+          Update contacts
+          {isSubmitting && (
+            <span className="mr-4">
+              <CircularProgress size="20px" />
+            </span>
+          )}
+        </CustomButton>
+      </Stack>
+    </form>
   );
 }

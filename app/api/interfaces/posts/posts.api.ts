@@ -8,7 +8,7 @@ import { Categories } from "../groups/types";
 
 export async function getPosts() {
   try {
-    const request = await sql<Post>`SELECT * FROM posts`;
+    const request = await sql<Post>`SELECT * FROM posts`
     return request.rows;
   } catch (error) {
     console.error(error);
@@ -73,13 +73,14 @@ export async function createPost(formData: PostsForm) {
     } = formData;
     const session = await auth();
 
+
     if (!session?.user?.email) {
       throw new Error("You are not authorized");
     }
     const user = await getUserOnAuth(session?.user?.email);
 
     await sql`
-            INSERT INTO posts (title_ru, title_en, title_pl, title_ua, description_en, description_pl, description_ru, description_ua, seo_ru, seo_en, seo_pl, seo_ua, is_published, price-range, category, author_id, created_at)
+            INSERT INTO posts (title_ru, title_en, title_pl, title_ua, description_en, description_pl, description_ru, description_ua, seo_ru, seo_en, seo_pl, seo_ua, is_published, price_range, category, author_id, created_at)
             VALUES(${title_ru},
                    ${title_en || ""},
                    ${title_pl || ""},
@@ -93,58 +94,62 @@ export async function createPost(formData: PostsForm) {
                    ${seo_pl || ""},
                    ${seo_ua || ""},
                    ${is_published},
-                   ${price_range}
-                   ${category}
+                   ${price_range},
+                   ${category},
                    ${user.id},
                    NOW())
             `;
   } catch (error) {
     console.error(error);
-    throw new Error("Failed to create new carousel");
+    throw new Error("Failed to create new post");
   }
 }
 
-export async function updatePost(formData: Partial<PostsForm>, id: number) {
+export async function updatePost(formData: PostsForm, id: number) {
   try {
-    const {
-      title_ru,
-      title_en,
-      title_pl,
-      title_ua,
-      description_ru,
-      description_en,
-      description_pl,
-      description_ua,
-      is_published,
-      price_range,
-      seo_ru,
-      seo_en,
-      seo_pl,
-      seo_ua,
-      category,
-    } = formData;
-    await sql`
-            UPDATE posts SET title_ru = ${title_ru},
-                             title_en = ${title_en || ""},
-                             title_pl = ${title_pl || ""},
-                             title_ua = ${title_ua || ""},
-                             description_en = ${description_en || ""},
-                             description_pl = ${description_pl || ""},
-                             description_ru = ${description_ru || ""},
-                             description_ua = ${description_ua || ""},
-                             seo_ru = ${seo_ru || ""},
-                             seo_en = ${seo_en || ""},
-                             seo_pl = ${seo_pl || ""},
-                             seo_ua = ${seo_ua || ""},
-                             is_published = ${is_published},
-                             price_range = ${price_range},
-                             category = ${category},
-                             updated_at = NOW()
-                             WHERE id = ${id};
-            `;
+    const formattedData: (string | boolean | number)[] =
+      [...Object.values(formData), id];
+
+      
+
+    const queryText = `
+            UPDATE posts
+            SET
+              title_ru = COALESCE($1, title_ru),
+              title_ua = COALESCE($2, title_ua),
+              title_pl = COALESCE($3, title_pl),
+              title_en = COALESCE($4, title_en),
+              description_ru = COALESCE($5, description_ru),
+              description_ua = COALESCE($6, description_ua),
+              description_pl = COALESCE($7, description_pl),
+              description_en = COALESCE($8, description_en),
+              created_at = COALESCE($9, created_at),
+              updated_at = NOW(),
+              seo_ru = COALESCE($10, seo_ru),
+              seo_en = COALESCE($11, seo_en),
+              seo_pl = COALESCE($12, seo_pl),
+              seo_ua = COALESCE($13, seo_ua),
+              price_range = COALESCE($14, price_range),
+              category = COALESCE($15, category),
+              is_published = COALESCE($16, is_published)
+            WHERE id = ($17);
+          `;
+    await sql.query(queryText, formattedData);
   } catch (error) {
     console.error(error);
-    throw new Error("Failed to update carousel");
+    throw new Error("Failed to update posts");
+  }
+}
+
+export async function changeIsPublished(id: number) {
+  try {
+    await sql`UPDATE posts
+              SET is_published = NOT is_published
+              WHERE id = ${id}
+              RETURNING is_published;`.then((res) => console.log(res));
+  } catch (error) {
+    console.error(error)
+    throw new Error("Failed to change is_published value")
   }
 }
 
@@ -155,14 +160,12 @@ export async function deletePost(id: number) {
               DELETE FROM posts
               WHERE id=${id}
               `.then(async () => {
-                                  await sql`
-                                          UPDATE groups
-                                          SET posts_id = ARRAY_REMOVE(posts_id, ${id})
-                                          WHERE ${id} = ANY(posts_id);
-                                          `;
-                    }).catch(console.log);
-
-
+      await sql`
+                                        UPDATE groups
+                                        SET posts_id = ARRAY_REMOVE(posts_id, ${id})
+                                        WHERE ${id} = ANY(posts_id);
+                                        `;
+    }).catch(console.log);
   } catch (error) {
     console.error(error);
     throw new Error("Failed deleting post");

@@ -1,120 +1,123 @@
 "use client";
 import { User } from "@/app/api/interfaces/users/types";
-import EditIcon from "../../components/icons/edit-icon";
-import DeleteIcon from "../../components/icons/delete-icon";
-import { useState, useRef } from "react";
-import { HiCheck } from "react-icons/hi";
-import { deleteUser, updateUser } from "@/app/api/interfaces/users/users.api";
-import { useRouter } from "next/navigation";
-import { signOut } from "next-auth/react";
-import Modal from "../../components/modal/modal";
-import { SpinnerDiamond } from "spinners-react";
-
-type DefaultFormStates = "untouched" | "loading" | "editing";
+import { useState, Fragment, forwardRef } from "react";
+import { deleteUser } from "@/app/api/interfaces/users/users.api";
+import { Button, Container, Dialog, DialogActions, DialogContent, DialogTitle, Divider, IconButton, Slide, TableCell, TableRow } from "@mui/material";
+import EditUser from "@/app/admin/components/register/edit-user";
+import { TransitionProps } from "@mui/material/transitions";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import CloseIcon from '@mui/icons-material/Close';
 
 export function UserRow({ user }: { user: User }) {
-  const [formState, setFormState] = useState<DefaultFormStates>("untouched");
-  const [error, setError] = useState<string | null>(null);
-  const [deleteModal, setDeleteModal] = useState(false);
-  const editNameRef = useRef<HTMLParagraphElement | null>(null);
-  const editEmailRef = useRef<HTMLParagraphElement | null>(null);
-  const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
-  const handleEdit = () => {
-    setFormState("editing");
+  const handleClickOpen = () => {
+    setOpen(true);
   };
 
-  const handleSubmitChanges = async (id: number) => {
-    setFormState("loading");
-    const email = editEmailRef.current?.textContent;
-    const name = editNameRef.current?.textContent;
-
-    if (email && name) {
-      try {
-        await updateUser(id, { name, email }).then(() => {
-          setFormState("untouched");
-        });
-      } catch (error) {
-        setError(String(error));
-      }
-    }
+  const handleClose = () => {
+    setOpen(false);
   };
 
-  const triggerModal = () => {
-    setDeleteModal(true);
+  const handleCloseAndRefresh = () => {
+    handleClose();
+    window.location.reload();
+  }
+
+  const handleClickOpenDelete = () => {
+    setOpenDeleteModal(true);
   };
+
+  const handleCloseDelete = () => {
+    setOpenDeleteModal(false);
+  };
+
   const handleDeleteUser = async (id: number) => {
-    try {
-      await deleteUser(id).then(() => {
-        signOut();
-        router.refresh();
-      });
-    } catch (error) {
-      setError(String(error));
-    }
-  };
+    await deleteUser(id).then(() => {
+      window.location.reload();
+    });
 
-  return (
-    <>
-      <Modal
-        callback={() => handleDeleteUser(user.id)}
-        isOpened={deleteModal}
-        setToggle={setDeleteModal}
-        title="You are trying to delete user!"
-        description={`You cannot cancel this event so be careful deleting users. Once
-      you deleted one of them you cannot restore it and have to create
-      new user account.`}
-      />
-      <tr key={user.id} className="border-x border-zinc-200">
-        <td className="px-5 py-5 text-sm bg-white border-b border-zinc-200">
-          <p className="whitespace-no-wrap">{user.id}</p>
-        </td>
-        <td className="px-5 py-5 text-sm bg-white border-b border-zinc-200">
-          <div className="flex items-center">
-            <div className="">
-              <p
-                ref={editNameRef}
-                contentEditable={formState !== "editing" ? false : true}
-              >
-                {user.name}
-              </p>
-            </div>
-          </div>
-        </td>
-        <td className="px-5 py-5 text-sm bg-white border-b border-zinc-200">
-          <p className="whitespace-no-wrap">
-            <p
-              ref={editEmailRef}
-              contentEditable={formState !== "editing" ? false : true}
-            >
-              {user.email}
-            </p>
-          </p>
-        </td>
-        <td className="px-5 py-5 text-sm bg-white border-b border-zinc-200">
-          <p className="whitespace-no-wrap">
-            <div className="flex items-center space-x-4">
-              {formState === "untouched" && (
-                <EditIcon onClick={handleEdit} className="hover:scale-110" />
-              )}
-              {formState === "editing" && (
-                <HiCheck
-                  size={20}
-                  className="fill-blue-500"
-                  onClick={() => handleSubmitChanges(user.id)}
-                />
-              )}
-              {formState === "loading" && <SpinnerDiamond color="black" />}
-              <DeleteIcon onClick={triggerModal} className="hover:scale-110" />
-            </div>
-          </p>
-        </td>
-      </tr>
-      {error && (
-        <tr>
-          <p className="text-rose-500">{error}</p>
-        </tr>
-      )}
-    </>
+  }
+
+
+  return (<Fragment key={user.name}>
+    <TableRow
+      sx={{ "&:hover": { bgcolor: "#ebebeb" }, '&:last-child td, &:last-child th': { border: 0 } }}
+    >
+      <TableCell component="th" scope="row">
+        {user.id + 1}
+      </TableCell>
+      <TableCell align="right">{user.name}</TableCell>
+      <TableCell align="right">{user.email}</TableCell>
+      <TableCell align="right">
+        <IconButton color="primary" onClick={handleClickOpen}>
+          <EditIcon />
+        </IconButton>
+        <IconButton color="warning" onClick={handleClickOpenDelete}>
+          <DeleteIcon />
+        </IconButton>
+      </TableCell>
+    </TableRow>
+    <Dialog
+      key={user.id + 2}
+      open={open}
+      onClose={handleClose}
+      TransitionComponent={Transition}
+      fullScreen
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogActions disableSpacing sx={{ display: "flex", justifyContent: "flex-start" }}>
+        <IconButton onClick={handleClose} color="primary">
+          <ArrowBackIosIcon />
+        </IconButton>
+      </DialogActions>
+      <DialogContent>
+        <Container>
+          <EditUser user={user} onSuccess={handleCloseAndRefresh} />
+        </Container>
+      </DialogContent>
+    </Dialog>
+    <Dialog
+      key={user.id + 3}
+      open={openDeleteModal}
+      onClose={handleCloseDelete}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogActions>
+        <IconButton onClick={handleCloseDelete} color="warning">
+          <CloseIcon />
+        </IconButton>
+      </DialogActions>
+      <DialogTitle>
+        Are you sure that you want to delete user {user.name}
+      </DialogTitle>
+      <Divider variant="middle" />
+      <DialogContent>
+        This action is irreversible and once your are trying to delete user you won't be able to restore it
+      </DialogContent>
+      <DialogActions >
+        <Button onClick={handleCloseDelete} variant="text">
+          Close
+        </Button>
+        <Button variant="outlined" color="warning" onClick={() => handleDeleteUser(user.id)}>
+          Delete user: {user.name}
+        </Button>
+      </DialogActions>
+    </Dialog>
+  </Fragment>
   );
 }
+
+const Transition = forwardRef(function Transition(
+  props: TransitionProps & {
+    children: React.ReactElement;
+  },
+  ref: React.Ref<unknown>,
+) {
+  return <Slide direction="left" ref={ref} {...props} />;
+});

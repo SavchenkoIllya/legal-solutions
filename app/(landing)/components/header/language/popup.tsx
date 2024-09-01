@@ -1,8 +1,10 @@
+"use client"
 import { cn } from "@/app/utils/cn";
-import { forwardRef } from "react";
-import { Transition } from "@headlessui/react";
+import { forwardRef, useEffect } from "react";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
-import LandingLocales from "@/app/locales/landing/locales";
+import { Transition } from "@headlessui/react";
+import LanguageList from "./language-list";
+
 
 type PopupProps = React.ComponentPropsWithRef<"div"> & { isOpened: boolean };
 
@@ -13,15 +15,12 @@ const LanguagePopup = forwardRef<HTMLDivElement, PopupProps>((props, ref) => {
   const { replace } = useRouter();
   const params = new URLSearchParams(searchParams);
 
-  if (!params.get("lang")) {
-    params.set("lang", "ru");
-    replace(`${pathname}?${params.toString()}`, { scroll: false });
-  }
-
-  const handleChangeLanguage = (lang: string) => {
-    params.set("lang", lang);
-    replace(`${pathname}?${params.toString()}`, { scroll: false });
-  };
+  useEffect(() => {
+    if (!params.get("lang")) {
+      params.set("lang", "ru");
+      replace(`${pathname}?${params.toString()}`, { scroll: false });
+    }
+  }, [])
 
   return (
     <Transition
@@ -42,18 +41,7 @@ const LanguagePopup = forwardRef<HTMLDivElement, PopupProps>((props, ref) => {
         {...restProps}
       >
         <div className="p-4 pt-6 pb-0 text-zinc-900 md:pb-4">
-          <ul className="space-y-4" aria-labelledby="mega-menu-dropdown-button">
-            {Object.keys(LandingLocales).map((language) => (
-              <li key={language}>
-                <button
-                  className="bold-transition descriptor-font text-zinc-500  hover:text-red-hovered"
-                  onClick={() => handleChangeLanguage(language)}
-                >
-                  {language}
-                </button>
-              </li>
-            ))}
-          </ul>
+          <LanguageList />
         </div>
       </div>
     </Transition>

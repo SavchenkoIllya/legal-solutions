@@ -4,93 +4,94 @@ import {
 } from "@/app/api/interfaces/mails/mails.api";
 import { Mail } from "@/app/api/interfaces/mails/types";
 import { cn } from "@/app/utils/cn";
-import {
-  Description,
-  Dialog,
-  DialogPanel,
-  DialogTitle,
-} from "@headlessui/react";
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { HiOutlineTrash } from "react-icons/hi";
 import { mailStatus } from "./search/utils/mailStatus";
+import dayjs, { Dayjs } from "dayjs";
+import { Box, Divider, Stack, Typography } from "@mui/material";
 
 export default function MailCard({ mail }: { mail: Mail }) {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const { refresh } = router;
+
+  const formatDate = (date: Dayjs | null) => {
+    return date ? date.format('DD/MM/YYYY') : '';
+  };
+
+  const handleClose = () => (setIsOpen(false));
+
+  const handleOpen = () => (setIsOpen(true));
+
+  const handleDeleteMail = async () => {
+    await deleteMail(mail.id);
+    setIsOpen(false);
+    handleClose();
+    refresh();
+  }
+
   return (
     <>
       <Dialog
         open={isOpen}
-        onClose={() => setIsOpen(false)}
-        className="relative z-[99]"
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
       >
-        <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
-          <DialogPanel className="relative max-w-lg flex flex-col gap-2 items-center rounded-md px-8 py-10 text-zinc-800 shadow-lg bg-white">
-            <div
-              className={cn(
-                "absolute top-0 right-0 w-3 h-3 rounded-full mt-4 mr-2",
-                mailStatus[mail.is_read].styles
-              )}
-            ></div>
-            {/* <button
-              onClick={() => {
-                changeMailStatus(mail.id, "unread");
-                setIsOpen(false);
-                refresh();
-              }}
-              className="absolute top-0 left-0 mt-4 ml-2 text-blue-600 hover:underline"
-            >
-              Mark as unread
-            </button> */}
-            <DialogTitle className="font-bold">{mail.name}</DialogTitle>
-            <Description className="flex justify-between w-full">
-              <span>{mail.email}</span>
-              <span>{mail.phone}</span>
-            </Description>
-            <p>{mail.comment}</p>
-            <p>{mail.region}</p>
-            <p>{mail.created_at?.toString()}</p>
-            <div className="flex gap-4 mt-4">
-              {mailStatus[mail.is_read].callback && (
-                <button
-                  className="dashboard__button__outlined"
-                  onClick={async () => {
-                    try {
-                      await mailStatus[mail.is_read].callback?.(mail.id);
-                      setIsOpen(false);
-                      refresh();
-                    } catch (error) {
-                      console.log(error);
-                    }
-                  }}
-                >
-                  Mark as: {mailStatus[mail.is_read].next}
-                </button>
-              )}
-              <button
-                className="dashboard__button-decline"
-                onClick={async () => {
-                  await deleteMail(mail.id);
-                  setIsOpen(false);
-                  refresh();
-                }}
-              >
-                <span className="mr-2">
-                  <HiOutlineTrash color="white" size={20} />
-                </span>
-                <span>Delete</span>
-              </button>
-            </div>
-          </DialogPanel>
-        </div>
+        <DialogTitle id="alert-dialog-title">
+          <Stack direction="row" justifyContent="space-between" alignItems="center">
+            <Typography fontWeight="bold" variant="h5">
+              {mail.name}
+            </Typography>
+            <Typography>
+              Status: {mail.is_read}
+            </Typography>
+          </Stack>
+        </DialogTitle>
+        <Divider variant="middle" />
+        <DialogContent
+          sx={{ minWidth: "450px" }}
+        >
+          <DialogContentText id="alert-dialog-description">
+            <Stack direction="column">
+              <Typography>{mail.email}</Typography>
+              <Typography>{mail.phone}</Typography>
+            </Stack>
+            {mail.comment && (
+              <Box marginY={2}>
+                <Divider />
+                <Typography sx={{
+                  marginTop: 2
+                }}>{mail.comment}</Typography>
+              </Box>
+            )}
+            <Divider sx={{ marginY: 2 }} />
+            <Typography>{mail.region}</Typography>
+            <Typography>{mail.created_at && formatDate(dayjs(mail.created_at))}</Typography>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} variant="outlined" color="primary">change status</Button>
+          <Button onClick={handleDeleteMail} autoFocus variant="outlined" color="warning" endIcon={<DeleteIcon />}>
+            Delete
+          </Button>
+        </DialogActions>
       </Dialog>
 
+
+
       <button
-        onClick={() => setIsOpen(true)}
+        onClick={handleOpen}
         key={mail.id}
-        className="relative group cursor mx-2 overflow-hidden rounded-2xl bg-white shadow-xl duration-200 hover:-translate-y-4 w-[300px]"
+        className="relative group cursor mx-2 overflow-hidden rounded-2xl bg-white shadow-xl duration-200 hover:-translate-y-1 w-[300px]"
       >
         <div
           className={cn(
@@ -117,7 +118,7 @@ export default function MailCard({ mail }: { mail: Mail }) {
             {mail.region}
           </p>
           <p className="font-normal text-gray-700 dark:text-gray-400 descriptor-font">
-            {mail.created_at?.toString()}
+            {formatDate(dayjs(mail.created_at))}
           </p>
         </div>
       </button>

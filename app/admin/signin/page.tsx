@@ -13,7 +13,7 @@ export default async function SignIn() {
   if (!isUsers) return redirect("/admin");
 
   return (
-    <section className="flex flex-center h-[100dvh] bg-zinc-100">
+    <section className="flex flex-center h-[100dvh] bg-[#F7F8FA]">
       <Login />
     </section>
   );

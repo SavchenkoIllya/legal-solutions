@@ -28,6 +28,7 @@ export default function CustomDropdown({ callback, initialValue, values }: Custo
         if (initialValue)
             setCurrent(initialValue);
     }, [initialValue])
+    
     return (
         <Menu>
             <MenuButton

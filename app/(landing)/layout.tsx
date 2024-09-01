@@ -6,7 +6,7 @@ export default function LandingLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="">
+    <main>
       <Header />
       {children}
     </main>

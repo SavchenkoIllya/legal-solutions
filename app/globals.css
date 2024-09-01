@@ -73,7 +73,7 @@ body {
     @apply p-6 bg-white rounded-[16px]  border border-gray transition-shadow duration-500 hover:shadow;
   }
   .input {
-    @apply block p-4 min-w-[340px] rounded-[5px] border border-gray placeholder:text-gray;
+    @apply block p-4 min-w-[300px] rounded-[5px] border border-gray placeholder:text-gray;
   }
 
   .dial-icon {
