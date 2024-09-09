@@ -97,7 +97,14 @@ export default function GroupsForm({ posts, groupData }: GroupsFormProps) {
       target: { value },
     } = event;
 
-    const selectedPosts = posts.filter((post) => value.includes(post.id));
+    const selectedValues =
+      typeof value === 'string'
+        ? value.split(',').map(Number)
+        : (value as number[]);
+
+    const selectedPosts = posts.filter((post) =>
+      selectedValues.includes(post.id)
+    );
     setCheckedPosts(selectedPosts);
 
     setValue('posts_id', value as number[]);
