@@ -28,8 +28,6 @@ export default function Card({
   link,
   elementId,
 }: CardProps) {
-  console.log(elementId % 4 === 3);
-
   return (
     <a
       href={link || '#'}
