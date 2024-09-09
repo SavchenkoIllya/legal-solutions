@@ -21,7 +21,11 @@ export default async function Groups({
   };
 }) {
   const group = await getGroupById(searchParams.id);
+
+  console.log(group);
+  
   const posts = await getRequestedPosts(group.posts_id);
+  console.log(posts);
 
   return (
     <div className="pt-[80px] container m-auto">
@@ -32,10 +36,16 @@ export default async function Groups({
         <HiArrowNarrowLeft /> Back
       </Link>
       <CategoryToggler />
-      {group.id && (
-        <h1 className="accent-font text-center my-[40px] grid grid-cols-1 gap-6 w-[100%]">
+      <div className="flex flex-col items-center">
+      {group[`title_${searchParams.lang}` as keyof GroupsType] && (
+        <h1 className="accent-font text-center my-[40px] w-[100%]">
           {String(group[`title_${searchParams.lang}` as keyof GroupsType])}
         </h1>
+      )}
+            {group[`description_${searchParams.lang}` as keyof GroupsType] && (
+        <p className="plain-font text-justify my-[40px] max-w-[600px]">
+          {String(group[`description_${searchParams.lang}` as keyof GroupsType])}
+        </p>
       )}
       {!posts.length && (
         <h2 className="accent-font text-center my-[40px] grid grid-cols-1 gap-6 w-[100%]">
@@ -57,6 +67,7 @@ export default async function Groups({
               />
             )
         )}
+      </div>
       </div>
     </div>
   );

@@ -1,26 +1,35 @@
-"use client";
-import { SubmitHandler, useForm } from "react-hook-form";
+'use client';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import {
   GroupsForm as GroupsFormType,
   GroupsSchema,
-} from "@/app/api/interfaces/groups/schema";
-import { useEffect, useState } from "react";
-import { Post } from "@/app/api/interfaces/posts/types";
+} from '@/app/api/interfaces/groups/schema';
+import { useEffect, useState } from 'react';
+import { Post } from '@/app/api/interfaces/posts/types';
 import {
   createGroup,
   updateGroup,
-} from "@/app/api/interfaces/groups/groups.api";
-import { Groups } from "@/app/api/interfaces/groups/types";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { CircularProgress, Divider, MenuItem, Select, Stack, TextField, Typography, SelectChangeEvent } from "@mui/material";
-import { CustomButton } from "@/app/admin/components/login";
-import { Theme, useTheme } from '@mui/material/styles';
+} from '@/app/api/interfaces/groups/groups.api';
+import { Groups } from '@/app/api/interfaces/groups/types';
+import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  CircularProgress,
+  Divider,
+  MenuItem,
+  Select,
+  Stack,
+  TextField,
+  Typography,
+  SelectChangeEvent,
+} from '@mui/material';
+import { CustomButton } from '@/app/admin/components/login';
+import { Theme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Chip from '@mui/material/Chip';
-import { green, red } from "@mui/material/colors";
+import { green, red } from '@mui/material/colors';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -33,20 +42,6 @@ const MenuProps = {
   },
 };
 
-const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
-];
-
-
 function getStyles(name: string, personName: readonly string[], theme: Theme) {
   return {
     fontWeight:
@@ -55,8 +50,6 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
         : theme.typography.fontWeightMedium,
   };
 }
-
-
 
 type GroupsFormProps = { posts: Post[]; groupData?: Groups | undefined };
 
@@ -79,7 +72,7 @@ export default function GroupsForm({ posts, groupData }: GroupsFormProps) {
   const [selected, setIsSelected] = useState<Post[]>([]);
 
   useEffect(() => {
-    if (groupData?.posts_id) setValue("posts_id", groupData?.posts_id);
+    if (groupData?.posts_id) setValue('posts_id', groupData?.posts_id);
     setIsSelected(mapDefaultSelected());
   }, []);
 
@@ -88,7 +81,7 @@ export default function GroupsForm({ posts, groupData }: GroupsFormProps) {
       acc.push(el.id);
       return acc;
     }, []);
-    setValue("posts_id", postsToId);
+    setValue('posts_id', postsToId);
   }, [selected]);
 
   const onSubmit: SubmitHandler<GroupsFormType> = async (
@@ -96,156 +89,158 @@ export default function GroupsForm({ posts, groupData }: GroupsFormProps) {
   ) => {
     try {
       if (groupData?.id) {
+        // console.log(formData);
         await updateGroup(formData, groupData.id);
       } else {
         await createGroup(formData);
       }
       reset();
     } catch (error) {
-      setError("root", {
-        type: "server",
+      setError('root', {
+        type: 'server',
         message: String(error),
       });
     }
   };
 
+  // const theme = useTheme();
+  const [checkedPosts, setCheckedPosts] = useState<any[]>([]);
 
-  const theme = useTheme();
-  const [personName, setPersonName] = useState<string[]>([]);
-
-  const handleChange = (event: SelectChangeEvent<typeof personName>) => {
+  const handleChange = (event: SelectChangeEvent<number[]>) => {
     const {
       target: { value },
     } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
-    );
+
+    const selectedPosts = posts.filter((post) => value.includes(post.id));
+
+    // TODO: Add function that adds this array to formData
+    setCheckedPosts(selectedPosts);
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      noValidate
-    >
+    <form onSubmit={handleSubmit(onSubmit)} noValidate>
       <Stack spacing={2}>
-        <Typography variant="h5" fontWeight="bold">{groupData?.id ? `Update group: ${groupData.id} ${groupData.title_ru}` : "Create group"}</Typography>
+        <Typography variant="h5" fontWeight="bold">
+          {groupData?.id
+            ? `Update group: ${groupData.id} ${groupData.title_ru}`
+            : 'Create group'}
+        </Typography>
         <Divider />
         <TextField
           label="Title in russian"
           required
           type="text"
           size="small"
-          sx={{ width: "100%" }}
+          sx={{ width: '100%' }}
           placeholder="Title in russian"
           error={!!errors.title_ru}
           helperText={errors.title_ru?.message}
           id="title_ru"
-          {...register("title_ru")}
+          {...register('title_ru')}
         />
         <TextField
           label="Title in ukrainian"
           type="text"
           size="small"
-          sx={{ width: "100%" }}
+          sx={{ width: '100%' }}
           placeholder="Title in ukrainian"
           error={!!errors.title_ua}
           helperText={errors.title_ua?.message}
           id="title_ua"
-          {...register("title_ua")}
+          {...register('title_ua')}
         />
         <TextField
           label="Title in polish"
           type="text"
           size="small"
-          sx={{ width: "100%" }}
+          sx={{ width: '100%' }}
           placeholder="Title in polish"
           error={!!errors.title_pl}
           helperText={errors.title_pl?.message}
           id="title_pl"
-          {...register("title_pl")}
+          {...register('title_pl')}
         />
         <TextField
           label="Title in english"
           type="text"
           size="small"
-          sx={{ width: "100%" }}
+          sx={{ width: '100%' }}
           placeholder="Title in english"
           error={!!errors.title_en}
           helperText={errors.title_en?.message}
           id="title_en"
-          {...register("title_en")}
+          {...register('title_en')}
         />
 
         <Select
           labelId="demo-simple-select-label"
           id="category"
-          defaultValue={"private"}
+          defaultValue={'private'}
           label="Category"
-          {...register("category")}
+          {...register('category')}
         >
-          <MenuItem value={"private"}>Private</MenuItem>
-          <MenuItem value={"business"}>Business</MenuItem>
+          <MenuItem value={'private'}>Private</MenuItem>
+          <MenuItem value={'business'}>Business</MenuItem>
         </Select>
 
         <TextField
           label="Description in russian"
           type="text"
           size="small"
-          sx={{ width: "100%" }}
+          sx={{ width: '100%' }}
           placeholder="Description in russian"
           error={!!errors.description_ru}
           helperText={errors.description_ru?.message}
           id="description_ru"
-          {...register("description_ru")}
+          {...register('description_ru')}
         />
 
         <TextField
           label="Description in ukrainian"
           type="text"
           size="small"
-          sx={{ width: "100%" }}
+          sx={{ width: '100%' }}
           placeholder="Description in ukrainian"
           error={!!errors.description_ua}
           helperText={errors.description_ua?.message}
           id="description_ua"
-          {...register("description_ua")}
+          {...register('description_ua')}
         />
 
         <TextField
           label="Description in polish"
           type="text"
           size="small"
-          sx={{ width: "100%" }}
+          sx={{ width: '100%' }}
           placeholder="Description in polish"
           error={!!errors.description_pl}
           helperText={errors.description_pl?.message}
           id="description_pl"
-          {...register("description_pl")}
+          {...register('description_pl')}
         />
 
         <TextField
           label="Description in english"
           type="text"
           size="small"
-          sx={{ width: "100%" }}
+          sx={{ width: '100%' }}
           placeholder="Description in english"
           error={!!errors.description_en}
           helperText={errors.description_en?.message}
           id="description_en"
-          {...register("description_en")}
+          {...register('description_en')}
         />
 
         <TextField
           label="Price range"
           type="text"
           size="small"
-          sx={{ width: "100%" }}
+          sx={{ width: '100%' }}
           error={!!errors.price_range}
           helperText={errors.price_range?.message}
           id="price_range"
           placeholder="Type Price range here"
-          {...register("price_range")}
+          {...register('price_range')}
         />
 
         <FormControl sx={{ m: 1, width: 300 }}>
@@ -254,45 +249,43 @@ export default function GroupsForm({ posts, groupData }: GroupsFormProps) {
             labelId="demo-multiple-chip-label"
             id="demo-multiple-chip"
             multiple
-            value={personName}
+            // В качестве value передаем id выбранных постов
+            value={checkedPosts.map((post) => post.id)}
             onChange={handleChange}
             input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-            renderValue={(selected) => (
+            renderValue={(selectedIds) => (
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                {selected.map((value) => (
-                  <Chip key={value} label={value} />
+                {checkedPosts.map((post) => (
+                  <Chip key={post.id} label={post.title_ru} />
                 ))}
               </Box>
             )}
             MenuProps={MenuProps}
           >
-            {posts.length && posts.map((post) => (
-              <MenuItem
-                key={post.title_ru}
-                value={post.title_ru}
-                style={getStyles(post.title_ru, personName, theme)}
-              >
+            {posts?.map((post) => (
+              <MenuItem key={post.id} value={post.id}>
                 {post.title_ru}
               </MenuItem>
             ))}
           </Select>
         </FormControl>
 
-
         {isSubmitSuccessful && (
           <Typography color={green[500]}>
-            {groupData?.id ? "Updated" : "Created"} successfully
+            {groupData?.id ? 'Updated' : 'Created'} successfully
           </Typography>
         )}
-        {errors.root && <Typography color={red[500]}>{errors.root.message}</Typography>}
+        {errors.root && (
+          <Typography color={red[500]}>{errors.root.message}</Typography>
+        )}
         <CustomButton
           type="submit"
           disabled={!isValid}
           variant="contained"
           color="primary"
-          sx={{ width: "-webkit-fit-content" }}
+          sx={{ width: '-webkit-fit-content' }}
         >
-          {groupData?.id ? "Update" : "Create"}
+          {groupData?.id ? 'Update' : 'Create'}
           {isSubmitting && (
             <span className="mr-4">
               <CircularProgress size="20px" />
@@ -303,4 +296,3 @@ export default function GroupsForm({ posts, groupData }: GroupsFormProps) {
     </form>
   );
 }
-

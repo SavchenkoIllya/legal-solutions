@@ -68,6 +68,8 @@ export async function updateGroup(formData: GroupsForm, id: number) {
     const formattedData: (string | number | number[])[] =
       Object.values(formData);
     formattedData.push(id);
+
+    console.log(formattedData);
     const queryText = `
         UPDATE groups
         SET
