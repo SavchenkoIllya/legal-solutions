@@ -41,15 +41,6 @@ const MenuProps = {
   },
 };
 
-// function getStyles(name: string, personName: readonly string[], theme: Theme) {
-//   return {
-//     fontWeight:
-//       personName.indexOf(name) === -1
-//         ? theme.typography.fontWeightRegular
-//         : theme.typography.fontWeightMedium,
-//   };
-// }
-
 type GroupsFormProps = { posts: Post[]; groupData?: Groups | undefined };
 
 export default function GroupsForm({ posts, groupData }: GroupsFormProps) {
@@ -88,8 +79,7 @@ export default function GroupsForm({ posts, groupData }: GroupsFormProps) {
   ) => {
     try {
       if (groupData?.id) {
-        // await updateGroup(formData, groupData.id);
-        console.log(formData);
+        await updateGroup(formData, groupData.id);
       } else {
         await createGroup(formData);
       }
