@@ -1,7 +1,7 @@
-"use server";
-import { sql } from "@vercel/postgres";
-import { Categories, Groups } from "./types";
-import { GroupsForm } from "./schema";
+'use server';
+import { sql } from '@vercel/postgres';
+import { Categories, Groups } from './types';
+import { GroupsForm } from './schema';
 
 export async function getAllGroups() {
   try {
@@ -9,7 +9,7 @@ export async function getAllGroups() {
     return request.rows;
   } catch (error) {
     console.error(error);
-    throw new Error("Something went wrong on getting groups");
+    throw new Error('Something went wrong on getting groups');
   }
 }
 
@@ -21,7 +21,7 @@ export async function getGroupById(id: number) {
     return request.rows[0];
   } catch (error) {
     console.error(error);
-    throw new Error("Something went wrong on getting group");
+    throw new Error('Something went wrong on getting group');
   }
 }
 
@@ -33,7 +33,7 @@ export async function getCategorizedGroups(category: Categories) {
     return request.rows;
   } catch (error) {
     console.error(error);
-    throw new Error("Something went wrong on getting group");
+    throw new Error('Something went wrong on getting group');
   }
 }
 
@@ -59,7 +59,7 @@ export async function createGroup(formData: GroupsForm) {
     await sql.query(queryText, formattedData);
   } catch (error) {
     console.error(error);
-    throw new Error("Failed to create new group");
+    throw new Error('Failed to create new group');
   }
 }
 
@@ -68,8 +68,6 @@ export async function updateGroup(formData: GroupsForm, id: number) {
     const formattedData: (string | number | number[])[] =
       Object.values(formData);
     formattedData.push(id);
-
-    console.log(formattedData);
     const queryText = `
         UPDATE groups
         SET
@@ -89,7 +87,7 @@ export async function updateGroup(formData: GroupsForm, id: number) {
     await sql.query(queryText, formattedData);
   } catch (error) {
     console.error(error);
-    throw new Error("Failed to update group");
+    throw new Error('Failed to update group');
   }
 }
 
@@ -101,6 +99,6 @@ export async function deleteGroup(id: number) {
                 `;
   } catch (error) {
     console.error(error);
-    throw new Error("Failed deleting group");
+    throw new Error('Failed deleting group');
   }
 }

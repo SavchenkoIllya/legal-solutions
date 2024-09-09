@@ -23,7 +23,6 @@ import {
   SelectChangeEvent,
 } from '@mui/material';
 import { CustomButton } from '@/app/admin/components/login';
-import { Theme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
@@ -42,14 +41,14 @@ const MenuProps = {
   },
 };
 
-function getStyles(name: string, personName: readonly string[], theme: Theme) {
-  return {
-    fontWeight:
-      personName.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
-}
+// function getStyles(name: string, personName: readonly string[], theme: Theme) {
+//   return {
+//     fontWeight:
+//       personName.indexOf(name) === -1
+//         ? theme.typography.fontWeightRegular
+//         : theme.typography.fontWeightMedium,
+//   };
+// }
 
 type GroupsFormProps = { posts: Post[]; groupData?: Groups | undefined };
 
@@ -65,32 +64,32 @@ export default function GroupsForm({ posts, groupData }: GroupsFormProps) {
     resolver: zodResolver(GroupsSchema),
     defaultValues: groupData ? { ...groupData } : {},
   });
+  const [checkedPosts, setCheckedPosts] = useState<any[]>([]);
+  const [select, setSelect] = useState(groupData?.category || 'private');
 
   const mapDefaultSelected = () =>
     posts.filter((item) => groupData?.posts_id.includes(item.id));
 
-  const [selected, setIsSelected] = useState<Post[]>([]);
-
   useEffect(() => {
     if (groupData?.posts_id) setValue('posts_id', groupData?.posts_id);
-    setIsSelected(mapDefaultSelected());
+    setCheckedPosts(mapDefaultSelected());
   }, []);
 
   useEffect(() => {
-    const postsToId = selected.reduce((acc: number[], el: Post): number[] => {
-      acc.push(el.id);
-      return acc;
-    }, []);
-    setValue('posts_id', postsToId);
-  }, [selected]);
+    setValue('category', select);
+  }, [select]);
+
+  const handleChangeSelect = (e: SelectChangeEvent<'private' | 'business'>) => {
+    setSelect(e.target.value as typeof select);
+  };
 
   const onSubmit: SubmitHandler<GroupsFormType> = async (
     formData: GroupsFormType
   ) => {
     try {
       if (groupData?.id) {
-        // console.log(formData);
-        await updateGroup(formData, groupData.id);
+        // await updateGroup(formData, groupData.id);
+        console.log(formData);
       } else {
         await createGroup(formData);
       }
@@ -103,18 +102,15 @@ export default function GroupsForm({ posts, groupData }: GroupsFormProps) {
     }
   };
 
-  // const theme = useTheme();
-  const [checkedPosts, setCheckedPosts] = useState<any[]>([]);
-
   const handleChange = (event: SelectChangeEvent<number[]>) => {
     const {
       target: { value },
     } = event;
 
     const selectedPosts = posts.filter((post) => value.includes(post.id));
-
-    // TODO: Add function that adds this array to formData
     setCheckedPosts(selectedPosts);
+
+    setValue('posts_id', value as number[]);
   };
 
   return (
@@ -173,11 +169,10 @@ export default function GroupsForm({ posts, groupData }: GroupsFormProps) {
         />
 
         <Select
-          labelId="demo-simple-select-label"
           id="category"
-          defaultValue={'private'}
+          value={select}
           label="Category"
-          {...register('category')}
+          onChange={handleChangeSelect}
         >
           <MenuItem value={'private'}>Private</MenuItem>
           <MenuItem value={'business'}>Business</MenuItem>
@@ -249,7 +244,6 @@ export default function GroupsForm({ posts, groupData }: GroupsFormProps) {
             labelId="demo-multiple-chip-label"
             id="demo-multiple-chip"
             multiple
-            // В качестве value передаем id выбранных постов
             value={checkedPosts.map((post) => post.id)}
             onChange={handleChange}
             input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
