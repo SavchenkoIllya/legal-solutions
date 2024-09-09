@@ -1,4 +1,6 @@
-const beforeElement =`first:before:absolute 
+import React from 'react';
+
+const beforeElement = `first:before:absolute 
                     first:before:content-[' '] 
                     first:before:h-[400px] 
                     first:before:w-[400px]
@@ -11,23 +13,34 @@ const beforeElement =`first:before:absolute
                     first:before:rotate-45`;
 
 type CardProps = {
+  elementId: number;
   title: string | undefined;
   description?: string | undefined;
   price: string | undefined;
   link?: string;
+  rest?: React.AnchorHTMLAttributes<HTMLAnchorElement>;
 };
 
-export default function Card({ title, description, price, link }: CardProps) {
+export default function Card({
+  title,
+  description,
+  price,
+  link,
+  elementId,
+}: CardProps) {
+  console.log(elementId % 4 === 3);
+
   return (
     <a
-      href={link || "#"}
+      href={link || '#'}
       id="card"
       className={`animate-reveal overflow-hidden relative min-h-[250px] card col-span-5 
-                  md:first:col-span-3 md:col-span-2 md:last:col-span-3
+                  md:first:col-span-3 md:col-span-2 
                   hover:scale-105
                   transition-all
                   ${beforeElement}
-                  
+                  ${elementId % 4 === 3 ? 'md:col-span-3' : ''}
+                  ${elementId % 5 === 4 ? 'md:col-span-3' : ''}
                   last:bg-dark
                   last:text-light
                   first:bg-red
@@ -38,7 +51,7 @@ export default function Card({ title, description, price, link }: CardProps) {
         <h1 className="plain-bold-font transition-all duration-500 z-[99]">
           {title}
         </h1>
-        <p className="z-[99]">{description}</p>
+        <p className="z-[99] line-clamp-4">{description}</p>
         <p className="self-end mt-[17%] z-[50]">{price}</p>
       </article>
     </a>

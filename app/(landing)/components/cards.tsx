@@ -1,6 +1,6 @@
-import { Groups } from "@/app/api/interfaces/groups/types";
-import Card from "./card/card";
-import CategoryToggler from "./card/category-toggler";
+import { Groups } from '@/app/api/interfaces/groups/types';
+import Card from './card/card';
+import CategoryToggler from './card/category-toggler';
 
 export default async function Cards({
   groups,
@@ -8,7 +8,7 @@ export default async function Cards({
 }: {
   groups: Groups[];
   lang?: string;
-}) {//
+}) {
   return (
     <section id="cards" className="my-16">
       <div id="wrapper" className="container mx-auto flex-center">
@@ -20,8 +20,9 @@ export default async function Cards({
             </h1>
           )}
           <div className="my-[40px] grid grid-cols-5 gap-6 w-[100%]">
-            {groups.map((group) => (
+            {groups.map((group, idx) => (
               <Card
+                elementId={idx}
                 key={group.id}
                 title={String(group[`title_${lang}` as keyof Groups])}
                 description={String(
